@@ -6,7 +6,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "1",
   },
   {
@@ -16,7 +16,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "2",
   },
   {
@@ -26,7 +26,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "3",
   },
   {
@@ -36,7 +36,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "4",
   },
   {
@@ -46,7 +46,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "5",
   },
   {
@@ -56,7 +56,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "6",
   },
   {
@@ -66,7 +66,7 @@ export const products = [
     photoURL:
       "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/246623d990be42b7a60270fc0e188750.jpg",
     price: 12.32,
-    quantity: 54,
+    stock: 54,
     id: "7",
   },
 ];

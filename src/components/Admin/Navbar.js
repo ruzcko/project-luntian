@@ -4,14 +4,14 @@ import logo from "../../assets/logo.png";
 
 function Navbar({ leftActive, setLeftActive, user }) {
   return (
-    <div className="w-full px-4 flex h-14 items-center justify-between relative">
+    <div className="relative flex items-center justify-between w-full px-4 h-14">
       <div className="flex items-center justify-center md:space-x-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          className="h-9 w-9 cursor-pointer z-10"
+          className="z-10 cursor-pointer h-9 w-9"
           onClick={() => setLeftActive(!leftActive)}
         >
           {leftActive ? (
@@ -31,11 +31,11 @@ function Navbar({ leftActive, setLeftActive, user }) {
           )}
         </svg>
 
-        <div className="absolute inset-0 flex items-center justify-center z-0 md:static">
+        <div className="absolute inset-0 z-0 flex items-center justify-center md:static">
           <Link to="/admin">
-            <div className="cursor-pointer select-none flex items-center justify-center">
-              <img className="h-10 w-10" src={logo} alt="app_logo" />
-              <p className="hidden md:block ml-2 font-semibold text-xl uppercase">
+            <div className="flex items-center justify-center cursor-pointer select-none">
+              <img className="w-10 h-10" src={logo} alt="app_logo" />
+              <p className="hidden ml-2 text-xl font-semibold uppercase md:block">
                 Luntian
               </p>
             </div>
@@ -43,7 +43,7 @@ function Navbar({ leftActive, setLeftActive, user }) {
         </div>
       </div>
 
-      <div className="flex items-center space-x-4 text-sm z-10">
+      <div className="z-10 flex items-center space-x-4 text-sm">
         <button
           className={`inline-block text-gray-900 focus:outline-none rounded-full h-9 w-9`}
         >
@@ -62,12 +62,16 @@ function Navbar({ leftActive, setLeftActive, user }) {
           </svg>
         </button>
 
-        {user && (
+        {user?.photoURL ? (
           <img
             src={user.photoURL}
             alt="profile_pic"
             className="h-10 rounded-full"
           />
+        ) : (
+          <div className="flex items-center justify-center w-10 h-10 text-lg bg-gray-300 rounded-full">
+            A
+          </div>
         )}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Navbar from "../../components/Admin/Navbar";
 import OrderItem from "../../components/Admin/Orders/OrderItem";
 import ProductItem from "../../components/Admin/Inventory/ProductItem";
+import AddProductItem from "../../components/Admin/Inventory/AddProductItem";
 
 function AdminDashboard({ user }) {
   const [leftActive, setLeftActive] = useState(false);
@@ -43,7 +44,16 @@ function AdminDashboard({ user }) {
               path={`${path}/farm-monitoring`}
               component={AdminFarmMonitoring}
             />
-            <Route exact path={`${path}/inventory`} component={AdminInventory} />
+            <Route
+              exact
+              path={`${path}/inventory`}
+              component={AdminInventory}
+            />
+            <Route
+              exact
+              path={`${path}/inventory/add-product`}
+              component={AddProductItem}
+            />
             <Route path={`${path}/inventory/:id`} component={ProductItem} />
             <Route path={`${path}/sales`} component={AdminSales} />
             <Route exact path={`${path}/orders`} component={AdminOrders} />
