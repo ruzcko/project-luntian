@@ -6,7 +6,7 @@ import { db, storage } from "../../../utils/firebase";
 function ProductItem() {
   const { id } = useParams();
   const history = useHistory();
-  const [product] = useDocumentData(db.collection("products").doc(id));
+  const [product, loading] = useDocumentData(db.collection("products").doc(id));
   const [photo, setPhoto] = useState();
   const [stock, setStock] = useState(0);
   const nameRef = useRef("");
@@ -19,6 +19,33 @@ function ProductItem() {
       setStock(product.stock);
     }
   }, [product]);
+
+  if (!loading && !product)
+    return (
+      <div className="h-full">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-10 h-10 p-2 rounded-full active:bg-gray-100"
+            onClick={() => history.goBack()}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </div>
+
+        <div className="flex items-center justify-center flex-1 h-full">
+          Product not Found.
+        </div>
+      </div>
+    );
 
   const changeHandler = (e) => {
     let selected = e.target.files[0];

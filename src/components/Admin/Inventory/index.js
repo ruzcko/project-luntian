@@ -6,9 +6,19 @@ import { db } from "../../../utils/firebase";
 function AdminInventory() {
   let { url } = useRouteMatch();
 
-  const [values, loading] = useCollectionData(db.collection("products"), {
-    idField: "id",
-  });
+  const [values, loading, error] = useCollectionData(
+    db.collection("products"),
+    {
+      idField: "id",
+    }
+  );
+
+  const handleStock = (id, stock) => {
+    db.collection("products")
+      .doc(id)
+      .update({ stock })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <div className="flex flex-col divide-y divide-gray-300">
@@ -56,7 +66,12 @@ function AdminInventory() {
 
                 {/* Controls */}
                 <div className="flex flex-row-reverse items-center justify-center mt-2 ml-2 md:flex-col md:mt-0">
-                  <button className="focus:outline-none">
+                  <button
+                    className="focus:outline-none"
+                    onClick={() => {
+                      handleStock(product.id, product.stock + 1);
+                    }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -75,7 +90,12 @@ function AdminInventory() {
 
                   <p className="mx-2 select-none">{product.stock}</p>
 
-                  <button className="focus:outline-none">
+                  <button
+                    className="focus:outline-none"
+                    onClick={() => {
+                      handleStock(product.id, product.stock - 1);
+                    }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

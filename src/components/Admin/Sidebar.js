@@ -1,7 +1,7 @@
 import { auth } from "../../utils/firebase";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 
-function AdminSidebar({ leftActive, setLeftActive }) {
+function AdminSidebar({ leftActive, setLeftActive, privilege }) {
   const history = useHistory();
   let { url } = useRouteMatch();
 
@@ -11,23 +11,25 @@ function AdminSidebar({ leftActive, setLeftActive }) {
         !leftActive && "-ml-sb md:-ml-64"
       }`}
     >
-      <div className="pt-4 pb-4">
-        <Link to={`${url}`}>
-          <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
-            onClick={() => {
-              setLeftActive(false);
-            }}
-          >
-            Admin Controls
-          </button>
-        </Link>
-      </div>
+      {privilege === "ADMIN" && (
+        <div className="pt-4 pb-4">
+          <Link to={`${url}`}>
+            <button
+              className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
+              onClick={() => {
+                setLeftActive(false);
+              }}
+            >
+              Admin Controls
+            </button>
+          </Link>
+        </div>
+      )}
 
       <div className="pt-4 pb-4">
         <Link to={`${url}/farm-monitoring`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -37,7 +39,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
         </Link>
         <Link to={`${url}/inventory`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -47,7 +49,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
         </Link>
         <Link to={`${url}/sales`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -57,7 +59,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
         </Link>
         <Link to={`${url}/orders`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -67,7 +69,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
         </Link>
         <Link to={`${url}/reports`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -80,7 +82,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
       <div className="pt-4 pb-4">
         <Link to={`${url}/profile`}>
           <button
-            className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
               setLeftActive(false);
             }}
@@ -89,7 +91,7 @@ function AdminSidebar({ leftActive, setLeftActive }) {
           </button>
         </Link>
         <button
-          className="w-full px-4 py-2 text-left focus:outline-none active:bg-gray-200 transition-colors duration-150"
+          className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
           onClick={() => {
             auth.signOut();
             history.replace("/");

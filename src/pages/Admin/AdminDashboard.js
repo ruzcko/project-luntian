@@ -13,7 +13,7 @@ import OrderItem from "../../components/Admin/Orders/OrderItem";
 import ProductItem from "../../components/Admin/Inventory/ProductItem";
 import AddProductItem from "../../components/Admin/Inventory/AddProductItem";
 
-function AdminDashboard({ user }) {
+function AdminDashboard({ user, privilege }) {
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
 
@@ -31,6 +31,7 @@ function AdminDashboard({ user }) {
         leftActive={leftActive}
         setLeftActive={setLeftActive}
         user={user}
+        privilege={privilege}
       />
 
       {/* Content Switch */}
@@ -39,7 +40,11 @@ function AdminDashboard({ user }) {
           className={`z-0 absolute inset-0 w-full p-4 max-w-7xl mx-auto overflow-y-scroll no-scrollbar`}
         >
           <Switch>
-            <Route exact path={path} component={AdminControls} />
+            {privilege === "ADMIN" ? (
+              <Route exact path={path} component={AdminControls} />
+            ) : (
+              <Route path={path} component={AdminFarmMonitoring} />
+            )}
             <Route
               path={`${path}/farm-monitoring`}
               component={AdminFarmMonitoring}

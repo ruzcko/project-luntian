@@ -78,7 +78,7 @@ function Signup() {
             firstName: fName,
             lastName: lName,
             email,
-            isAdmin: false,
+            privilege: "USER",
           });
         })
         .catch((err) => setMainError(err.message));
@@ -97,10 +97,10 @@ function Signup() {
             mainError ? "bg-red-600" : "bg-blue-600"
           }`}
         ></div>
-        <h1 className="text-center text-2xl">Create and Account</h1>
+        <h1 className="text-2xl text-center">Create and Account</h1>
 
         {mainError && (
-          <p className="text-red-600 text-center text-sm mt-1">{mainError}</p>
+          <p className="mt-1 text-sm text-center text-red-600">{mainError}</p>
         )}
 
         <form onSubmit={handleSignup}>
@@ -184,7 +184,7 @@ function Signup() {
           </button>
         </form>
 
-        <div className="flex justify-center text-sm mt-4">
+        <div className="flex justify-center mt-4 text-sm">
           <p>
             Have an account?{" "}
             <span

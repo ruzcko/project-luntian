@@ -21,7 +21,7 @@ function Login() {
       });
     }
 
-    history.push("/");
+    history.push("/home");
   };
 
   const handleLogin = (e) => {
@@ -43,7 +43,7 @@ function Login() {
         .catch((error) => setError(error.message));
     }
   };
-  
+
   return (
     <div
       className={`app-container flex w-full h-screen items-center justify-center text-gray-900`}
@@ -56,10 +56,10 @@ function Login() {
             error ? "bg-red-600" : "bg-blue-600"
           }`}
         ></div>
-        <h1 className="text-center text-2xl">Sign In</h1>
+        <h1 className="text-2xl text-center">Sign In</h1>
 
         {error && (
-          <p className="text-red-600 text-center text-sm mt-1">{error}</p>
+          <p className="mt-1 text-sm text-center text-red-600">{error}</p>
         )}
 
         <form onSubmit={handleLogin}>
@@ -114,7 +114,7 @@ function Login() {
           </button>
         </form>
 
-        <div className="flex justify-center text-sm mt-4">
+        <div className="flex justify-center mt-4 text-sm">
           <p>
             Don't have an account?{" "}
             <span

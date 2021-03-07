@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 function PrivateRoute({ component: Component }) {
   const [user, loading] = useAuthState(auth);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [privilege, setPrivilege] = useState("USER");
 
   useEffect(() => {
     setFinished(false);
@@ -16,29 +16,27 @@ function PrivateRoute({ component: Component }) {
         .doc(user.uid)
         .get()
         .then((res) => {
-          if (res.data().isAdmin) setIsAdmin(true);
-          else setIsAdmin(false);
+          setPrivilege(res.data().privilege);
           setFinished(true);
         })
         .catch((err) => {
           alert(err.message);
-          setIsAdmin(false);
           setFinished(true);
         });
     } else {
-      setIsAdmin(false);
       setFinished(true);
     }
   }, [user]);
 
   if (loading || !finished) return <Loading />;
-  else if (isAdmin) return <Component user={user} />;
+  else if (privilege === "FARMER" || privilege === "ADMIN")
+    return <Component user={user} privilege={privilege} />;
   return (
-    <div className="flex flex-col h-screen w-full items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full h-screen">
       <p className="text-3xl">Unauthorized Access</p>
       <p>
         <Link to="/login">
-          <span className="underline text-blue-500">Login</span>
+          <span className="text-blue-500 underline">Login</span>
         </Link>
         &nbsp;to Continue.
       </p>
