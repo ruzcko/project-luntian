@@ -9,13 +9,15 @@ import Cart from "../../components/User/Cart";
 import Checkout from "../../components/User/Checkout";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../utils/firebase";
+import Loading from "../../components/Loading";
 
 function AdminDashboard() {
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
   const [user, loading] = useAuthState(auth);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
+
   return user ? (
     <nav className="flex border-b border-gray-300">
       {/* Navbar */}
@@ -33,7 +35,7 @@ function AdminDashboard() {
       />
 
       {/* Content Switch */}
-      <div className="absolute inset-0 flex overflow-hidden mt-14">
+      <div className="absolute inset-0 flex overflow-hidden bg-gray-100 border-t border-gray-300 mt-14">
         <div
           className={`z-0 absolute inset-0 w-full max-w-7xl mx-auto overflow-y-scroll no-scrollbar`}
         >

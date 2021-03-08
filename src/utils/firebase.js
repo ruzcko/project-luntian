@@ -12,6 +12,14 @@ const firebaseConfig = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+
+  const cacheSizeInMB = 150;
+  firebase.firestore().settings({
+    cacheSizeBytes: cacheSizeInMB * 1000 * 1000,
+  });
+  firebase.firestore().enablePersistence({
+    synchronizeTabs: true,
+  });
 } else {
   firebase.app();
 }

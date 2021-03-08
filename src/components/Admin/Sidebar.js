@@ -11,8 +11,18 @@ function AdminSidebar({ leftActive, setLeftActive, privilege }) {
         !leftActive && "-ml-sb md:-ml-64"
       }`}
     >
-      {privilege === "ADMIN" && (
-        <div className="pt-4 pb-4">
+      <div className="pt-4 pb-4">
+        <Link to={`/`}>
+          <button
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
+            onClick={() => {
+              setLeftActive(false);
+            }}
+          >
+            Home
+          </button>
+        </Link>
+        {privilege === "ADMIN" && (
           <Link to={`${url}`}>
             <button
               className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
@@ -23,8 +33,8 @@ function AdminSidebar({ leftActive, setLeftActive, privilege }) {
               Admin Controls
             </button>
           </Link>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="pt-4 pb-4">
         <Link to={`${url}/farm-monitoring`}>

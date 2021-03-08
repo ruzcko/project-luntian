@@ -6,12 +6,9 @@ import { db } from "../../../utils/firebase";
 function AdminInventory() {
   let { url } = useRouteMatch();
 
-  const [values, loading, error] = useCollectionData(
-    db.collection("products"),
-    {
-      idField: "id",
-    }
-  );
+  const [values, loading] = useCollectionData(db.collection("products"), {
+    idField: "id",
+  });
 
   const handleStock = (id, stock) => {
     db.collection("products")
