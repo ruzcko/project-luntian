@@ -18,10 +18,13 @@ function Login() {
     if (user.additionalUserInfo.isNewUser) {
       await db.collection("users").doc(user.user.uid).set({
         isAdmin: false,
+        firstName: "",
+        lastName: "",
       });
+      history.push("/home/profile");
     }
 
-    history.push("/home");
+    history.push("/");
   };
 
   const handleLogin = (e) => {

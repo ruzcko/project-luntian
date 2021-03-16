@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import UserNavbar from "../../components/User/Navbar";
 import UserSidebar from "../../components/User/Sidebar";
@@ -6,15 +6,21 @@ import ProductList from "../../components/User/ProductList";
 import ProductItem from "../../components/User/ProductItem";
 import OrderItem from "../../components/User/OrderItem";
 import Cart from "../../components/User/Cart";
-import Checkout from "../../components/User/Checkout";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import Loading from "../../components/Loading";
+import Profile from "../../components/User/Profile";
 
 function AdminDashboard() {
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
   const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      const data = db.collection("users").doc(user.uid).get();
+    }
+  }, [user]);
 
   if (loading) return <Loading />;
 
@@ -45,7 +51,7 @@ function AdminDashboard() {
             <Route path={`${path}/order/:id`} component={OrderItem} />
             <Route path={`${path}/rate/:id`} />
             <Route path={`${path}/cart`} component={Cart} />
-            <Route path={`${path}/checkout`} component={Checkout} />
+            <Route path={`${path}/profile`} component={Profile} />
           </Switch>
         </div>
       </div>

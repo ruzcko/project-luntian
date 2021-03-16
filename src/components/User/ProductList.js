@@ -14,7 +14,7 @@ function ProductList() {
       <div>filters</div>
       <div className="flex-1">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-          {!loading &&
+          {!loading ? (
             products.map((product) => (
               <Link to={`${url}/product/${product.id}`} key={product.id}>
                 <div className="h-full overflow-hidden bg-white rounded shadow">
@@ -48,7 +48,10 @@ function ProductList() {
                   </div>
                 </div>
               </Link>
-            ))}
+            ))
+          ) : (
+            <h1>Loading...</h1>
+          )}
         </div>
       </div>
     </div>

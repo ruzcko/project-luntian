@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AdminSidebar from "../../components/Admin/Sidebar";
+import UserSidebar from "../../components/User/Sidebar";
 import AdminControls from "../../components/Admin/Controls";
 import AdminProfile from "../../components/Admin/Profile";
 import AdminFarmMonitoring from "../../components/Admin/FarmMonitoring";
@@ -27,7 +27,7 @@ function AdminDashboard({ user, privilege }) {
       />
 
       {/* Sidebar */}
-      <AdminSidebar
+      <UserSidebar
         leftActive={leftActive}
         setLeftActive={setLeftActive}
         user={user}

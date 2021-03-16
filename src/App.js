@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PrivateRoute from "./components/PrivateRoute";
 import UserDashboard from "./pages/User/UserDashboard";
+import CreateAccount from "./pages/CreateAccount";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -14,11 +16,14 @@ function App() {
         <Route path="/home" component={UserDashboard} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/create-account" component={CreateAccount} />
 
         {/* Private Routes */}
         <Route path="/admin">
           <PrivateRoute component={AdminDashboard} />
         </Route>
+
+        <Route path="*" component={NotFound} />
       </Switch>
     </Router>
   );

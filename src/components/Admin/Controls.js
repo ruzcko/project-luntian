@@ -39,7 +39,7 @@ function AdminControls() {
                   />
                 ) : (
                   <div className="flex items-center justify-center text-xl text-gray-500 bg-gray-300 w-14 h-14">
-                    {user.firstName[0]}
+                    {user.firstName[0] ?? "U"}
                   </div>
                 )}
                 <div>
