@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Loading from "../components/Loading";
@@ -9,6 +9,7 @@ function Home() {
   const [user, loading] = useAuthState(auth);
 
   if (loading) return <Loading />;
+
   return !user ? (
     <div>
       <HomeNav />

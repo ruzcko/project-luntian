@@ -20,6 +20,9 @@ function Login() {
         isAdmin: false,
         firstName: "",
         lastName: "",
+        email: user.user.email,
+        privilege: "USER",
+        signupCompleted: false,
       });
       history.push("/home/profile");
     }

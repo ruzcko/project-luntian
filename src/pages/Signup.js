@@ -74,12 +74,18 @@ function Signup() {
         .createUserWithEmailAndPassword(email, pword)
         .then((res) => {
           //res.user.uid
-          db.collection("users").doc(res.user.uid).set({
-            firstName: fName,
-            lastName: lName,
-            email,
-            privilege: "USER",
-          });
+          db.collection("users")
+            .doc(res.user.uid)
+            .set({
+              firstName: fName,
+              lastName: lName,
+              email,
+              privilege: "USER",
+              signupCompleted: false,
+            })
+            .then(() => {
+              history.push(`/home/profile/${res.user.uid}`);
+            });
         })
         .catch((err) => setMainError(err.message));
     }

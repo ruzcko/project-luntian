@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  Switch,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom";
 import UserNavbar from "../../components/User/Navbar";
 import UserSidebar from "../../components/User/Sidebar";
 import ProductList from "../../components/User/ProductList";
@@ -12,17 +18,22 @@ import Loading from "../../components/Loading";
 import Profile from "../../components/User/Profile";
 
 function AdminDashboard() {
+  const history = useHistory();
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
   const [user, loading] = useAuthState(auth);
 
-  useEffect(() => {
-    if (user) {
-      const data = db.collection("users").doc(user.uid).get();
-    }
-  }, [user]);
-
   if (loading) return <Loading />;
+
+  if (user) {
+    db.collection("users")
+      .doc(user.uid)
+      .get()
+      .then((doc) => doc.data())
+      .then((data) => {
+        !data.signupCompleted && history.replace(`${path}/profile/${user.uid}`);
+      });
+  }
 
   return user ? (
     <nav className="flex border-b border-gray-300">
@@ -51,7 +62,7 @@ function AdminDashboard() {
             <Route path={`${path}/order/:id`} component={OrderItem} />
             <Route path={`${path}/rate/:id`} />
             <Route path={`${path}/cart`} component={Cart} />
-            <Route path={`${path}/profile`} component={Profile} />
+            <Route path={`${path}/profile/:slug`} component={Profile} />
           </Switch>
         </div>
       </div>
