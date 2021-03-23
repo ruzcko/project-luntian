@@ -42,7 +42,7 @@ function AddProductItem() {
     const data = {
       name,
       description,
-      price,
+      price: parseFloat(price),
       stock,
       averageRating: 0,
       sold: 0,

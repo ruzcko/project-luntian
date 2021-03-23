@@ -1,38 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useHistory } from "react-router";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 import { auth, db } from "../../utils/firebase";
 
 function Cart() {
   const history = useHistory();
   const [user] = useAuthState(auth);
-  const [cartItems] = useCollectionData(
-    db.collection("users").doc(user.uid).collection("cart"),
-    { idField: "id" }
-  );
-  const [products, setProducts] = useState([]);
+  // const [cartItems] = useCollectionData(
+  //   db.collection("users").doc(user.uid).collection("cart"),
+  //   { idField: "id" }
+  // );
+  // const [products, setProducts] = useState([]);
+  const { userCart: cartItems, products } = useContext(FirestoreContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const loading = cartItems === undefined || products === undefined;
 
-  const getProduct = async (id) => {
-    const res = await db.collection("products").doc(id).get();
+  // const getProduct = async (id) => {
+  //   const res = await db.collection("products").doc(id).get();
 
-    return { ...res.data(), id: res.id };
-  };
+  //   return { ...res.data(), id: res.id };
+  // };
 
-  useEffect(() => {
-    if (cartItems) {
-      const promises = cartItems.map(async (item) => {
-        return await getProduct(item.productID);
-      });
+  // useEffect(() => {
+  //   if (cartItems) {
+  //     const promises = cartItems.map(async (item) => {
+  //       return await getProduct(item.productID);
+  //     });
 
-      let temp = [];
-      Promise.all(promises).then((prods) => {
-        prods.forEach((x) => temp.push(x));
-        setProducts(temp);
-      });
-    }
-  }, [cartItems]);
+  //     let temp = [];
+  //     Promise.all(promises).then((prods) => {
+  //       prods.forEach((x) => temp.push(x));
+  //       setProducts(temp);
+  //     });
+  //   }
+  // }, [cartItems]);
 
   const handleQuantityChange = (id, quantity) => {
     db.collection("users")
@@ -72,7 +74,8 @@ function Cart() {
   };
 
   function Product({ id, item }) {
-    const x = products?.find((el) => el.id === id);
+    const x = products.find((el) => el.id === id);
+
     return (
       <div className="flex w-full h-36 ">
         <div className="flex flex-col items-center justify-center h-full">
@@ -212,17 +215,21 @@ function Cart() {
       </div>
 
       <div className="flex flex-col m-4 space-y-4 pb-52">
-        {cartItems?.map((item) => (
-          <Product key={item.id} id={item.productID} item={item} />
-        ))}
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          cartItems.map((item) => (
+            <Product key={item.id} id={item.productID} item={item} />
+          ))
+        )}
       </div>
 
-      <div className="fixed bottom-0 flex w-full mt-8 space-x-4 bg-white rounded-md shadow">
+      <div className="fixed inset-x-0 bottom-0 flex w-full mx-auto mt-8 space-x-4 bg-white shadow max-w-7xl">
         <div className="flex items-center justify-between w-3/5 ">
           <div className="flex items-center justify-center">
             <input
               checked={cartItems?.length === selectedProducts.length}
-              onClick={() => {
+              onChange={() => {
                 if (cartItems.length !== selectedProducts.length) {
                   let temp = [];
                   cartItems.forEach(({ productID }) => temp.push(productID));

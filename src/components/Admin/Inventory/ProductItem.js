@@ -1,12 +1,15 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db, storage } from "../../../utils/firebase";
+import { FirestoreContext } from "../../../contexts/FirestoreContext";
 
 function ProductItem() {
   const { id } = useParams();
   const history = useHistory();
-  const [product, loading] = useDocumentData(db.collection("products").doc(id));
+  // const [product, loading] = useDocumentData(db.collection("products").doc(id));
+  const { products } = useContext(FirestoreContext);
+  const loading = products === undefined;
+  const product = products?.find((el) => el.id === id);
   const [photo, setPhoto] = useState();
   const [stock, setStock] = useState(0);
   const nameRef = useRef("");
@@ -86,7 +89,7 @@ function ProductItem() {
     let data = {};
     if (name !== "") data = { ...data, name };
     if (description !== "") data = { ...data, description };
-    if (price !== "") data = { ...data, price };
+    if (price !== "") data = { ...data, price: parseFloat(price) };
 
     data = { ...data, stock };
     nameRef.current.value = "";

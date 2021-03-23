@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 
-function Navbar({ leftActive, setLeftActive, user }) {
+function Navbar({ leftActive, setLeftActive }) {
+  const { userData } = useContext(FirestoreContext);
+
   return (
     <div className="relative flex items-center justify-between w-full px-4 h-14">
       <div className="flex items-center justify-center md:space-x-4">
@@ -62,11 +65,11 @@ function Navbar({ leftActive, setLeftActive, user }) {
           </svg>
         </button>
 
-        {user?.photoURL ? (
+        {userData?.photoURL ? (
           <img
-            src={user.photoURL}
+            src={userData.photoURL}
             alt="profile_pic"
-            className="h-10 rounded-full"
+            className="object-cover w-10 h-10 rounded-full"
           />
         ) : (
           <div className="flex items-center justify-center w-10 h-10 text-lg bg-gray-300 rounded-full">

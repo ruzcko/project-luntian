@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../../../utils/firebase";
+import { FirestoreContext } from "../../../contexts/FirestoreContext";
 
 function AdminInventory() {
   let { url } = useRouteMatch();
-
-  const [values, loading] = useCollectionData(db.collection("products"), {
-    idField: "id",
-  });
+  // const [values, loading] = useCollectionData(db.collection("products"), {
+  //   idField: "id",
+  // });
+  const { products: values } = useContext(FirestoreContext);
+  const loading = values === undefined;
 
   const handleStock = (id, stock) => {
     db.collection("products")

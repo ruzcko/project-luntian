@@ -2,12 +2,12 @@ import React from "react";
 import { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { UserContext } from "../../contexts/UserContext";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 import Loading from "../Loading";
 
 function UserNavbar({ leftActive, setLeftActive }) {
   const { url } = useRouteMatch();
-  const { user, data } = useContext(UserContext);
+  const { user, userData } = useContext(FirestoreContext);
 
   if (user)
     return (
@@ -72,9 +72,9 @@ function UserNavbar({ leftActive, setLeftActive }) {
           </Link>
 
           <Link to={`${url}/profile/${user.uid}`}>
-            {data?.photoURL ? (
+            {userData?.photoURL ? (
               <img
-                src={data?.photoURL}
+                src={userData?.photoURL}
                 alt="profile_pic"
                 className="object-cover w-10 h-10 rounded-full"
               />

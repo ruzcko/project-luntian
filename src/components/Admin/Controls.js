@@ -35,7 +35,7 @@ function AdminControls() {
                   <img
                     src={user.photoURL}
                     alt={user.email}
-                    className="w-14 h-14"
+                    className="object-cover w-14 h-14"
                   />
                 ) : (
                   <div className="flex items-center justify-center text-xl text-gray-500 bg-gray-300 w-14 h-14">

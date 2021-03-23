@@ -1,19 +1,20 @@
-import React from "react";
-import { db } from "../../utils/firebase";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 
 function ProductList() {
-  const [products, loading] = useCollectionData(db.collection("products"), {
-    idField: "id",
-  });
-  let { url } = useRouteMatch();
+  // const [products, loading] = useCollectionData(db.collection("products"), {
+  //   idField: "id",
+  // });
+  const { products } = useContext(FirestoreContext);
+  const loading = products === undefined;
+  const { url } = useRouteMatch();
 
   return (
     <div className="flex flex-col h-full px-4 pt-4">
       <div>filters</div>
       <div className="flex-1">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {!loading ? (
             products.map((product) => (
               <Link to={`${url}/product/${product.id}`} key={product.id}>

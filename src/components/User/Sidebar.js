@@ -1,10 +1,12 @@
-import { auth, db } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 import { Link, useHistory } from "react-router-dom";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import { useContext } from "react";
+import { FirestoreContext } from "../../contexts/FirestoreContext";
 
 function UserSidebar({ leftActive, setLeftActive, user }) {
   const history = useHistory();
-  const [doc] = useDocumentData(db.collection("users").doc(user.uid));
+  // const [doc] = useDocumentData(db.collection("users").doc(user.uid));
+  const { userData: doc } = useContext(FirestoreContext);
   const showAdminPanel =
     doc?.privilege === "FARMER" || doc?.privilege === "ADMIN";
 
