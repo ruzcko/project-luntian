@@ -179,7 +179,7 @@ function Profile() {
 
       <div className="flex flex-col md:flex-row md:space-x-4">
         <div>
-          {values?.photoURL ? (
+          {values?.photoURL || photo ? (
             <img
               id="image-placeholder"
               src={values.photoURL}
