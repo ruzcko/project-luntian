@@ -3,38 +3,15 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 import { auth, db } from "../../utils/firebase";
+import Checkout from "./Checkout";
 
 function Cart() {
   const history = useHistory();
   const [user] = useAuthState(auth);
-  // const [cartItems] = useCollectionData(
-  //   db.collection("users").doc(user.uid).collection("cart"),
-  //   { idField: "id" }
-  // );
-  // const [products, setProducts] = useState([]);
+  const [checkingOut, setCheckingOut] = useState(false);
   const { userCart: cartItems, products } = useContext(FirestoreContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const loading = cartItems === undefined || products === undefined;
-
-  // const getProduct = async (id) => {
-  //   const res = await db.collection("products").doc(id).get();
-
-  //   return { ...res.data(), id: res.id };
-  // };
-
-  // useEffect(() => {
-  //   if (cartItems) {
-  //     const promises = cartItems.map(async (item) => {
-  //       return await getProduct(item.productID);
-  //     });
-
-  //     let temp = [];
-  //     Promise.all(promises).then((prods) => {
-  //       prods.forEach((x) => temp.push(x));
-  //       setProducts(temp);
-  //     });
-  //   }
-  // }, [cartItems]);
 
   const handleQuantityChange = (id, quantity) => {
     db.collection("users")
@@ -61,11 +38,8 @@ function Cart() {
     if (selectedProducts.length > 0 && cartItems) {
       cartItems.forEach((item) => {
         if (selectedProducts.includes(item.productID)) {
-          console.log(item.id, "selected");
           const prod = products.find((el) => el.id === item.productID);
           total += parseFloat(prod?.price) * item.quantity;
-        } else {
-          console.log(item.id, "not selected");
         }
       });
     }
@@ -191,7 +165,7 @@ function Cart() {
     );
   }
 
-  return (
+  return !checkingOut ? (
     <div className="flex flex-col h-full">
       <div className="m-4">
         <div className="flex items-center">
@@ -250,12 +224,25 @@ function Cart() {
         </div>
 
         <div className="flex items-center justify-center w-2/5 text-gray-200">
-          <button className="w-full p-4 bg-green-500 focus:outline-none active:bg-green-600">
+          <button
+            disabled={selectedProducts.length === 0}
+            onClick={() => setCheckingOut(true)}
+            className={`w-full p-4 focus:outline-none ${
+              selectedProducts.length === 0
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 active:bg-green-400"
+            }`}
+          >
             Checkout
           </button>
         </div>
       </div>
     </div>
+  ) : (
+    <Checkout
+      selectedProducts={selectedProducts}
+      setCheckingOut={setCheckingOut}
+    />
   );
 }
 

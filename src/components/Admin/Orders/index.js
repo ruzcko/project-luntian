@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { AdminContext } from "../../../contexts/AdminContext";
+
 function AdminOrders() {
   let { url } = useRouteMatch();
+  const { orders } = useContext(AdminContext);
+  console.log({ orders });
 
   return (
     <div>
       <h1 className="text-2xl">Order List</h1>
-      <div className="flex flex-col space-y-2">
-        {[...Array(10).keys()].map((i) => (
-          <Link key={`order${i}`} to={`${url}/${i}`}>
-            <div className="flex items-center justify-center w-20 h-10 bg-gray-100 active:bg-gray-200">
-              Order {i}
+      <div className="flex flex-col mt-8 space-y-2">
+        {orders.map((order, idx) => (
+          <Link key={order.id} to={`${url}/${order.id}`}>
+            <div className="flex flex-row items-center justify-between px-4 py-2 bg-white shadow">
+              <p>
+                {`${idx + 1}. `}
+                {order.id}
+              </p>
+              <p>{order.status}</p>
             </div>
           </Link>
         ))}

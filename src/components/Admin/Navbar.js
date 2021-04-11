@@ -4,10 +4,10 @@ import logo from "../../assets/logo.png";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 
 function Navbar({ leftActive, setLeftActive }) {
-  const { userData } = useContext(FirestoreContext);
+  const { user, userData } = useContext(FirestoreContext);
 
   return (
-    <div className="relative flex items-center justify-between w-full px-4 h-14">
+    <div className="relative flex items-center justify-between w-full px-4 border-b border-gray-300 h-14">
       <div className="flex items-center justify-center md:space-x-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,35 +47,39 @@ function Navbar({ leftActive, setLeftActive }) {
       </div>
 
       <div className="z-10 flex items-center space-x-4 text-sm">
-        <button
-          className={`inline-block text-gray-900 focus:outline-none rounded-full h-9 w-9`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <Link to={`/home/cart`}>
+          <button
+            className={`inline-block text-gray-900 focus:outline-none rounded-full h-9 w-9`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.25}
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.25}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </button>
+        </Link>
 
-        {userData?.photoURL ? (
-          <img
-            src={userData.photoURL}
-            alt="profile_pic"
-            className="object-cover w-10 h-10 rounded-full"
-          />
-        ) : (
-          <div className="flex items-center justify-center w-10 h-10 text-lg bg-gray-300 rounded-full">
-            A
-          </div>
-        )}
+        <Link to={`/home/profile/${user.uid}`}>
+          {userData?.photoURL ? (
+            <img
+              src={userData.photoURL}
+              alt="profile_pic"
+              className="object-cover w-10 h-10 rounded-full"
+            />
+          ) : (
+            <div className="flex items-center justify-center w-10 h-10 text-lg bg-gray-300 rounded-full">
+              A
+            </div>
+          )}
+        </Link>
       </div>
     </div>
   );

@@ -7,8 +7,6 @@ function AdminControls() {
     idField: "id",
   });
 
-  console.log(users);
-
   const togglePrivilege = (id, privilege) => {
     db.collection("users").doc(id).update({ privilege });
   };
@@ -29,7 +27,7 @@ function AdminControls() {
       {!loading && (
         <div className="flex flex-col space-y-4">
           {users.map((user) => (
-            <div className="flex items-center justify-between">
+            <div key={user.email} className="flex items-center justify-between">
               <div className="flex items-center flex-1 space-x-2">
                 {user.photoURL ? (
                   <img
