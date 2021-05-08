@@ -7,41 +7,46 @@ import {
   faFacebookF,
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
+import firebase from "firebase";
 
-function Login() {
+type ProviderTypes = "GOOGLE" | "FACEBOOK" | "GITHUB";
+
+const Login: React.FC = () => {
   const history = useHistory();
-  const emailRef = useRef();
-  const passRef = useRef();
-  const [error, setError] = useState();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState(null);
 
-  const handleNewUser = async (user) => {
-    if (user.additionalUserInfo.isNewUser) {
-      await db.collection("users").doc(user.user.uid).set({
-        isAdmin: false,
-        firstName: "",
-        lastName: "",
-        email: user.user.email,
-        privilege: "USER",
-        signupCompleted: false,
-      });
-      history.push("/home/profile");
-    }
+  const handleNewUser = async (user: firebase.auth.UserCredential) => {
+    if (user.additionalUserInfo && user.user) {
+      if (user.additionalUserInfo.isNewUser) {
+        await db.collection("users").doc(user.user.uid).set({
+          isAdmin: false,
+          firstName: "",
+          lastName: "",
+          email: user.user.email,
+          privilege: "USER",
+          signupCompleted: false,
+        });
+        history.push("/home/profile");
+      }
 
-    history.push("/");
+      history.push("/");
+    } else alert("Something went wrong.");
   };
 
-  const handleLogin = (e) => {
+  const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
     setError(null);
     e.preventDefault();
-    const email = emailRef.current.value.trim();
-    const pword = passRef.current.value.trim();
+    const email = emailRef.current!.value.trim();
+    const pword = passRef.current!.value.trim();
     auth
       .signInWithEmailAndPassword(email, pword)
       .then(handleNewUser)
       .catch((error) => setError(error.message));
   };
 
-  const handleProviderLogin = (prov) => {
+  const handleProviderLogin = (prov: ProviderTypes) => {
     if (prov === "GOOGLE") {
       auth
         .signInWithPopup(googleProvider)
@@ -134,6 +139,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

@@ -5,7 +5,7 @@ import { Link, Redirect } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Loading from "../components/Loading";
 
-function Home() {
+const Home: React.FC = () => {
   const [user, loading] = useAuthState(auth);
 
   if (loading) return <Loading />;
@@ -17,7 +17,7 @@ function Home() {
   ) : (
     <Redirect to="/home" />
   );
-}
+};
 
 function HomeNav() {
   return (

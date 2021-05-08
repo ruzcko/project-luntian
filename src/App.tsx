@@ -8,7 +8,7 @@ import UserDashboard from "./pages/User/UserDashboard";
 import CreateAccount from "./pages/CreateAccount";
 import NotFound from "./pages/NotFound";
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <Switch>
@@ -27,6 +27,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

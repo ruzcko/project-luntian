@@ -13,20 +13,20 @@ function Signup() {
     retypedPasswordError: false,
   });
   const [mainError, setMainError] = useState();
-  const emailRef = useRef();
-  const passRef = useRef();
-  const retypedPassRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
+  const retypedPassRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
 
   const getErrors = () => {
     let errCount = 0;
     let tempError = errors;
-    const fName = firstNameRef.current.value.trim();
-    const lName = lastNameRef.current.value.trim();
-    const email = emailRef.current.value.trim();
-    const pword = passRef.current.value.trim();
-    const retypedPword = retypedPassRef.current.value.trim();
+    const fName = firstNameRef.current!.value.trim();
+    const lName = lastNameRef.current!.value.trim();
+    const email = emailRef.current!.value.trim();
+    const pword = passRef.current!.value.trim();
+    const retypedPword = retypedPassRef.current!.value.trim();
 
     if (!fName) {
       tempError.firstNameError = true;
@@ -63,7 +63,7 @@ function Signup() {
     return { errCount, errs: tempError, fName, lName, email, pword };
   };
 
-  const handleSignup = async (e) => {
+  const handleSignup: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     const { errCount, errs, fName, lName, email, pword } = getErrors();
@@ -73,19 +73,21 @@ function Signup() {
       await auth
         .createUserWithEmailAndPassword(email, pword)
         .then((res) => {
-          //res.user.uid
-          db.collection("users")
-            .doc(res.user.uid)
-            .set({
-              firstName: fName,
-              lastName: lName,
-              email,
-              privilege: "USER",
-              signupCompleted: false,
-            })
-            .then(() => {
-              history.push(`/home/profile/${res.user.uid}`);
-            });
+          if (res.user) {
+            db.collection("users")
+              .doc(res.user.uid)
+              .set({
+                firstName: fName,
+                lastName: lName,
+                email,
+                privilege: "USER",
+                signupCompleted: false,
+              })
+              .then(() => {
+                if (res.user) history.push(`/home/profile/${res.user.uid}`);
+                else alert("Something went wrong.");
+              });
+          } else alert("Something went wrong.");
         })
         .catch((err) => setMainError(err.message));
     }
