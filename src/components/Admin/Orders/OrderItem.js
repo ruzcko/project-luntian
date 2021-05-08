@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { FirestoreContext } from "../../../contexts/FirestoreContext";
 import { db } from "../../../utils/firebase";
+import { orderStatus } from "../constants";
 
 function OrderItem() {
   const { orders } = useContext(AdminContext);
@@ -65,6 +66,30 @@ function OrderItem() {
 
     return unsub;
   }, [id]);
+
+  const mapStatus = (status) => {
+    if (status === orderStatus.NEW) {
+      return "Book Courier";
+    } else if (status === orderStatus.FOR_DELIVERY) {
+      return "Picked-Up";
+    } else if (status === orderStatus.IN_TRANSIT) {
+      return "";
+    } else if (status === orderStatus.DELIVERED) {
+    } else if (status === orderStatus.CANCELLED) {
+    }
+  };
+
+  const Button = ({ status }) => {
+    return (
+      <div className="flex items-center justify-center w-3/5 text-gray-200">
+        <button
+          className={`w-full p-4 focus:outline-none bg-green-500 active:bg-green-400`}
+        >
+          {mapStatus(status)}
+        </button>
+      </div>
+    );
+  };
 
   return finalProds.length === 0 ? (
     <div>Loading...</div>
@@ -153,13 +178,49 @@ function OrderItem() {
         <p className="text-gray-700">{order.deliveryAddress}</p>
       </div>
 
-      <div className="flex flex-col p-2 mt-8 bg-white shadow">
+      <div className="flex flex-col w-full p-2 mt-8 bg-white shadow md:w-1/2">
         <div className="flex">
           <h3>Order Date: &nbsp;</h3>
           <p className="text-gray-700">
             {formatDate(order.orderDate.toDate())}
           </p>
         </div>
+
+        {order.bookingDate && (
+          <div className="flex">
+            <h3>Booking Date: &nbsp;</h3>
+            <p className="text-gray-700">
+              {formatDate(order.bookingDate.toDate())}
+            </p>
+          </div>
+        )}
+
+        {order.pickupDate && (
+          <div className="flex">
+            <h3>Pick-Up Date: &nbsp;</h3>
+            <p className="text-gray-700">
+              {formatDate(order.pickupDate.toDate())}
+            </p>
+          </div>
+        )}
+
+        {order.deliverDate && (
+          <div className="flex">
+            <h3>Deliver Date: &nbsp;</h3>
+            <p className="text-gray-700">
+              {formatDate(order.deliverDate.toDate())}
+            </p>
+          </div>
+        )}
+
+        {order.reviewDate && (
+          <div className="flex">
+            <h3>Review Date: &nbsp;</h3>
+            <p className="text-gray-700">
+              {formatDate(order.reviewDate.toDate())}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="flex w-full h-64"></div>
@@ -173,13 +234,7 @@ function OrderItem() {
           </button>
         </div>
 
-        <div className="flex items-center justify-center w-3/5 text-gray-200">
-          <button
-            className={`w-full p-4 focus:outline-none bg-green-500 active:bg-green-400`}
-          >
-            Book Courier
-          </button>
-        </div>
+        <Button status={order.status} />
       </div>
     </div>
   );

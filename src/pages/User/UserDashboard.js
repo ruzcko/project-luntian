@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Redirect,
   Route,
@@ -10,7 +10,8 @@ import UserNavbar from "../../components/User/Navbar";
 import UserSidebar from "../../components/User/Sidebar";
 import ProductList from "../../components/User/ProductList";
 import ProductItem from "../../components/User/ProductItem";
-import OrderItem from "../../components/User/OrderItem";
+import OrderItem from "../../components/User/Orders/OrderItem";
+import OrderList from "../../components/User/Orders/index";
 import Cart from "../../components/User/Cart";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
@@ -31,7 +32,9 @@ function AdminDashboard() {
       .get()
       .then((doc) => doc.data())
       .then((data) => {
-        !data.signupCompleted && history.replace(`${path}/profile/${user.uid}`);
+        if (!data.signupCompleted) {
+          history.replace(`${path}/profile/${user.uid}`);
+        }
       });
   }
 
@@ -59,7 +62,8 @@ function AdminDashboard() {
           <Switch>
             <Route exact path={path} component={ProductList} />
             <Route path={`${path}/product/:id`} component={ProductItem} />
-            <Route path={`${path}/order/:id`} component={OrderItem} />
+            <Route exact path={`${path}/orders`} component={OrderList} />
+            <Route path={`${path}/orders/:id`} component={OrderItem} />
             <Route path={`${path}/rate/:id`} />
             <Route path={`${path}/cart`} component={Cart} />
             <Route path={`${path}/profile/:slug`} component={Profile} />

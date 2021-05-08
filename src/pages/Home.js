@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../utils/firebase";
+import { auth } from "../utils/firebase";
 import { Link, Redirect } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Loading from "../components/Loading";

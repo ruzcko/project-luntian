@@ -11,6 +11,7 @@ function AddProductItem() {
   const descriptionRef = useRef();
   const [error, setError] = useState("Select an image.");
   const types = ["image/png", "image/jpeg", "image/jpg"];
+  console.log(error);
 
   const changeHandler = (e) => {
     let selected = e.target.files[0];

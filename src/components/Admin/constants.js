@@ -11,5 +11,3 @@ export const payment = {
   DEBIT_CREDIT: "Credit/Debit Card",
   PAYMAYA: "PayMaya-e-Wallet",
 };
-
-// status: "NEW", "IN_TRANSIT", "FOR_DELIVERY", "DELIVERED", "CANCELLED"

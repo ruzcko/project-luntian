@@ -16,6 +16,7 @@ function Profile() {
   const { slug } = useParams();
   let currentUser = user.uid === userId;
   if (!userLoading) currentUser = user.uid === userId;
+  console.log(error);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
 
