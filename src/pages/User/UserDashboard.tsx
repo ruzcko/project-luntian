@@ -6,17 +6,19 @@ import {
   useRouteMatch,
   useHistory,
 } from "react-router-dom";
-import UserNavbar from "../../components/User/Navbar";
-import UserSidebar from "../../components/User/Sidebar";
-import ProductList from "../../components/User/ProductList";
-import ProductItem from "../../components/User/ProductItem";
-import OrderItem from "../../components/User/Orders/OrderItem";
-import OrderList from "../../components/User/Orders/index";
-import Cart from "../../components/User/Cart";
+import {
+  Cart,
+  OrderItem,
+  OrderList,
+  ProductItem,
+  ProductList,
+  UserNavbar,
+  UserSidebar,
+  Profile,
+} from "../../components/User/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
-import Loading from "../../components/Loading";
-import Profile from "../../components/User/Profile";
+import { Loading } from "../../components/index";
 
 const AdminDashboard: React.FC = () => {
   const history = useHistory();

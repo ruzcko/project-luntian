@@ -4,7 +4,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 import { User } from "../../luntian-types";
-import Loading from "../Loading";
+import { Loading } from "../index";
 
 interface UserNavbarProps {
   leftActive: boolean;
@@ -61,7 +61,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({
         </div>
 
         <div className="z-10 flex items-center space-x-4 text-sm">
-          <Link to={`${url}/cart`}>
+          <Link to={`/home/cart`}>
             <button
               className={`inline-block text-gray-900 focus:outline-none rounded-full h-9 w-9`}
             >

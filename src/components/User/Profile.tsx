@@ -9,12 +9,12 @@ import { User } from "../../luntian-types";
 type RegionData = typeof import("../../assets/regions.json");
 
 function Profile() {
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState<string | undefined>();
   const [user, userLoading] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [values, setValues] = useState<User>({});
   const [errors, setErrors] = useState<User>({});
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   const [error, setError] = useState("");
   const { slug } = useParams<{ slug: string }>();
   let currentUser = user?.uid === userId;
@@ -24,11 +24,13 @@ function Profile() {
   const types = ["image/png", "image/jpeg", "image/jpg"];
 
   useEffect(() => {
-    db.collection("users")
-      .doc(userId)
-      .onSnapshot((snapshot) => {
-        setValues(() => ({ ...snapshot.data() }));
-      });
+    if (userId) {
+      db.collection("users")
+        .doc(userId)
+        .onSnapshot((snapshot) => {
+          setValues(() => ({ ...snapshot.data() }));
+        });
+    }
   }, [userId]);
 
   useEffect(() => {

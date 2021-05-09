@@ -13,7 +13,7 @@ const ProductItem: React.FC = () => {
     () => ({ ...products?.find((el) => el.id === id) }),
     [id, products]
   );
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   const [stock, setStock] = useState(0);
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);

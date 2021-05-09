@@ -4,7 +4,7 @@ import { db, storage } from "../../../utils/firebase";
 
 const AddProductItem: React.FC = () => {
   const history = useHistory();
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   const [stock, setStock] = useState(0);
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
@@ -84,25 +84,29 @@ const AddProductItem: React.FC = () => {
       productsRef
         .add(data)
         .then((docRef) => {
-          const storageRef = storage.ref(`products/${docRef.id}/${photo.name}`);
-          storageRef.put(photo).on(
-            "state_changed",
-            (snap) => {},
-            (error) => {
-              alert(error);
-            },
-            async () => {
-              const photoURL = await storageRef.getDownloadURL();
-              productsRef.doc(docRef.id).set(
-                {
-                  photoURL,
-                },
-                { merge: true }
-              );
-              alert("Product Added");
-              history.goBack();
-            }
-          );
+          if (photo) {
+            const storageRef = storage.ref(
+              `products/${docRef.id}/${photo.name}`
+            );
+            storageRef.put(photo).on(
+              "state_changed",
+              (snap) => {},
+              (error) => {
+                alert(error);
+              },
+              async () => {
+                const photoURL = await storageRef.getDownloadURL();
+                productsRef.doc(docRef.id).set(
+                  {
+                    photoURL,
+                  },
+                  { merge: true }
+                );
+                alert("Product Added");
+                history.goBack();
+              }
+            );
+          }
         })
         .catch(alert);
     } else {

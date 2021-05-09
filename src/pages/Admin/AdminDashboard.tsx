@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import UserSidebar from "../../components/User/Sidebar";
-import AdminControls from "../../components/Admin/Controls";
-import AdminProfile from "../../components/Admin/Profile";
-import AdminFarmMonitoring from "../../components/Admin/FarmMonitoring";
-import AdminInventory from "../../components/Admin/Inventory/index";
-import AdminReports from "../../components/Admin/Reports";
-import AdminSales from "../../components/Admin/Sales";
-import AdminOrders from "../../components/Admin/Orders/index";
+import { UserSidebar } from "../../components/User/index";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import Navbar from "../../components/Admin/Navbar";
-import OrderItem from "../../components/Admin/Orders/OrderItem";
-import ProductItem from "../../components/Admin/Inventory/ProductItem";
-import AddProductItem from "../../components/Admin/Inventory/AddProductItem";
 import { AdminProvider } from "../../contexts/AdminContext";
 import { Privilege } from "../../luntian-types";
+import {
+  AddProductItem,
+  AdminControls,
+  AdminFarmMonitoring,
+  AdminInventory,
+  AdminOrders,
+  AdminReports,
+  AdminSales,
+  OrderItem,
+  ProductItem,
+} from "../../components/Admin/index";
+import { UserNavbar } from "../../components/User/index";
 
 interface AdminDashboardProps {
   privilege: Privilege;
@@ -27,7 +28,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ privilege }) => {
     <AdminProvider>
       <nav className="flex border-b border-gray-300">
         {/* Navbar */}
-        <Navbar leftActive={leftActive} setLeftActive={setLeftActive} />
+        <UserNavbar leftActive={leftActive} setLeftActive={setLeftActive} />
 
         {/* Sidebar */}
         <UserSidebar leftActive={leftActive} setLeftActive={setLeftActive} />
@@ -62,7 +63,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ privilege }) => {
               <Route exact path={`${path}/orders`} component={AdminOrders} />
               <Route path={`${path}/orders/:id`} component={OrderItem} />
               <Route path={`${path}/reports`} component={AdminReports} />
-              <Route path={`${path}/profile`} component={AdminProfile} />
             </Switch>
           </div>
         </div>
