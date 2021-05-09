@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import UserDashboard from "./pages/User/UserDashboard";
 import CreateAccount from "./pages/CreateAccount";
 import NotFound from "./pages/NotFound";
+import { Monitoring } from "./pages/Monitoring";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,9 @@ const App: React.FC = () => {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/create-account" component={CreateAccount} />
+        <Route path="/monitoring">
+          <PrivateRoute component={Monitoring} />
+        </Route>
 
         {/* Private Routes */}
         <Route path="/admin">

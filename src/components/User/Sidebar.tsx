@@ -49,7 +49,7 @@ const UserSidebar: React.FC<SidebarProps> = ({ leftActive, setLeftActive }) => {
 
       {showAdminPanel && (
         <div className="pt-4 pb-4">
-          <Link to={`admin/farm-monitoring`}>
+          <Link to={`/monitoring?tab=hydroponics`}>
             <button
               className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
               onClick={() => {

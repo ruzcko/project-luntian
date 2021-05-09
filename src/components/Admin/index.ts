@@ -1,5 +1,4 @@
 export { default as AdminControls } from "./Controls";
-export { default as AdminFarmMonitoring } from "./FarmMonitoring";
 export { default as AdminInventory } from "./Inventory/index";
 export { default as AdminReports } from "./Reports";
 export { default as AdminSales } from "./Sales";

@@ -6,7 +6,6 @@ import { Privilege } from "../../luntian-types";
 import {
   AddProductItem,
   AdminControls,
-  AdminFarmMonitoring,
   AdminInventory,
   AdminOrders,
   AdminReports,
@@ -15,6 +14,7 @@ import {
   ProductItem,
 } from "../../components/Admin/index";
 import { UserNavbar } from "../../components/User/index";
+import { Monitoring } from "../Monitoring";
 
 interface AdminDashboardProps {
   privilege: Privilege;
@@ -42,12 +42,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ privilege }) => {
               {privilege === "ADMIN" ? (
                 <Route exact path={path} component={AdminControls} />
               ) : (
-                <Route path={path} component={AdminFarmMonitoring} />
+                <Route path={`/monitoring`} component={Monitoring} />
               )}
-              <Route
-                path={`${path}/farm-monitoring`}
-                component={AdminFarmMonitoring}
-              />
+              <Route path={`/monitoring`} component={Monitoring} />
               <Route
                 exact
                 path={`${path}/inventory`}
