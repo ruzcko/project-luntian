@@ -26,8 +26,8 @@ const TabButton: React.FC<TabButtonProps> = ({ currentTab, tab }) => {
           history.push({ pathname: "/monitoring", search: `?tab=${t}` });
       }}
       className={`${
-        currentTab === t && "bg-gray-200"
-      } px-4 py-2 mt-2 transition-colors duration-300 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-200`}
+        currentTab === t ? "bg-gray-200 text-gray-900" : "text-gray-500"
+      } px-4 py-2 mt-2 transition-colors duration-300 rounded hover:bg-gray-100 focus:outline-none focus:bg-gray-100`}
     >
       <h3 className="text-sm text-left capitalize">{tab}</h3>
     </button>
@@ -39,10 +39,9 @@ interface SwitcherProps {
 }
 
 const Switcher: React.FC<SwitcherProps> = ({ to }) => {
-  if (to === "hydroponics") return <Hydroponics />;
-  else if (to === "aquaculture") return <Aquaculture />;
+  if (to === "aquaculture") return <Aquaculture />;
   else if (to === "energy") return <Energy />;
-  return null;
+  return <Hydroponics />;
 };
 
 const AdminFarmMonitoring: React.FC = () => {
@@ -55,7 +54,7 @@ const AdminFarmMonitoring: React.FC = () => {
         <div className="flex items-center w-full">
           <button
             onClick={() => history.replace("/admin")}
-            className="flex items-center justify-center w-10 h-10 p-1 transition-colors duration-300 rounded-full hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+            className="flex items-center justify-center w-10 h-10 p-1 transition-colors duration-300 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -83,9 +82,10 @@ const AdminFarmMonitoring: React.FC = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="w-full h-full p-6 ml-64 ">
-        <div className="flex w-full">
+      <div className="flex flex-col flex-1 p-6 ml-64 ">
+        <div className="flex items-center w-full mb-8 divide-x-8">
           <h1 className="text-3xl font-semibold">Farm Monitoring</h1>
+          <h6 className="text-xl capitalize">{tab}</h6>
         </div>
         <Switcher to={tab} />
       </div>
