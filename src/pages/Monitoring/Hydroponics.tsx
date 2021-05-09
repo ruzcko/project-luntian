@@ -3,12 +3,7 @@ import React from "react";
 interface HydroponicsProps {}
 
 const Hydroponics: React.FC<HydroponicsProps> = () => {
-  return (
-    <div>
-      Hydroponics
-      <p>Shaine Panget</p>
-    </div>
-  );
+  return <div>Hydroponics</div>;
 };
 
 export default Hydroponics;
