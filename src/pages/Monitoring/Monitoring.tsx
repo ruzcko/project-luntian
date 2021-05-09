@@ -4,10 +4,10 @@ import Aquaculture from "./Aquaculture";
 import Energy from "./Energy";
 import Hydroponics from "./Hydroponics";
 
-type Tab = "Hydroponics" | "Aquaculture" | "Energy";
+type Tab = "hydroponics" | "aquaculture" | "energy";
 
 interface TabButtonProps {
-  currentTab: string | null;
+  currentTab: Tab;
   tab: Tab;
 }
 
@@ -35,7 +35,7 @@ const TabButton: React.FC<TabButtonProps> = ({ currentTab, tab }) => {
 };
 
 interface SwitcherProps {
-  to: string | null;
+  to: Tab | null;
 }
 
 const Switcher: React.FC<SwitcherProps> = ({ to }) => {
@@ -47,7 +47,7 @@ const Switcher: React.FC<SwitcherProps> = ({ to }) => {
 
 const AdminFarmMonitoring: React.FC = () => {
   const history = useHistory();
-  let tab = useQuery().get("tab");
+  let tab = useQuery().get("tab") as Tab;
 
   return (
     <div className="w-full h-screen overflow-x-hidden overflow-y-scroll bg-gray-200">
@@ -77,9 +77,9 @@ const AdminFarmMonitoring: React.FC = () => {
 
         <div className="w-full h-px my-4 bg-gray-100" />
 
-        <TabButton currentTab={tab} tab="Hydroponics" />
-        <TabButton currentTab={tab} tab="Aquaculture" />
-        <TabButton currentTab={tab} tab="Energy" />
+        <TabButton currentTab={tab} tab="hydroponics" />
+        <TabButton currentTab={tab} tab="aquaculture" />
+        <TabButton currentTab={tab} tab="energy" />
       </div>
 
       {/* CONTENT */}
