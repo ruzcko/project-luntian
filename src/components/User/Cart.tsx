@@ -2,30 +2,36 @@ import React, { useContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
+import { CartProduct, CheckoutProduct } from "../../luntian-types";
 import { auth, db } from "../../utils/firebase";
 import Checkout from "./Checkout";
 
-function Cart() {
+const Cart: React.FC = () => {
   const history = useHistory();
   const [user] = useAuthState(auth);
   const [checkingOut, setCheckingOut] = useState(false);
-  const { userCart: cartItems, products } = useContext(FirestoreContext);
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const { userCart: citem, products } = useContext(FirestoreContext);
+  const cartItems: Array<CartProduct> = [...citem];
+  const [selectedProducts, setSelectedProducts] = useState<Array<string>>([]);
   const loading = cartItems === undefined || products === undefined;
 
-  const handleQuantityChange = (id, quantity) => {
-    db.collection("users")
-      .doc(user.uid)
-      .collection("cart")
-      .doc(id)
-      .update({ quantity });
+  const handleQuantityChange = (id: string, quantity: number) => {
+    if (user) {
+      db.collection("users")
+        .doc(user.uid)
+        .collection("cart")
+        .doc(id)
+        .update({ quantity });
+    } else alert("No user found.");
   };
 
-  const handleDelete = (id) => {
-    db.collection("users").doc(user.uid).collection("cart").doc(id).delete();
+  const handleDelete = (id: string) => {
+    if (user) {
+      db.collection("users").doc(user.uid).collection("cart").doc(id).delete();
+    } else alert("No user found.");
   };
 
-  const handleCheckboxChange = (id, checked) => {
+  const handleCheckboxChange = (id: string, checked: boolean) => {
     setSelectedProducts((curr) => {
       if (checked) return [...curr, id];
       else return curr.filter((el) => el !== id);
@@ -37,9 +43,9 @@ function Cart() {
 
     if (selectedProducts.length > 0 && cartItems) {
       cartItems.forEach((item) => {
-        if (selectedProducts.includes(item.productID)) {
+        if (selectedProducts.includes(item.productID!)) {
           const prod = products.find((el) => el.id === item.productID);
-          total += parseFloat(prod?.price) * item.quantity;
+          total += parseFloat(prod?.price) * item.quantity!;
         }
       });
     }
@@ -47,7 +53,10 @@ function Cart() {
     return total.toFixed(2);
   };
 
-  function Product({ id, item }) {
+  const Product: React.FC<{ id: string; item: CheckoutProduct }> = ({
+    id,
+    item,
+  }) => {
     const x = products.find((el) => el.id === id);
 
     return (
@@ -80,7 +89,9 @@ function Cart() {
           <div className="flex items-center justify-between">
             <div className="flex text-gray-700">
               <button
-                onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                onClick={() =>
+                  handleQuantityChange(item.id!, item.quantity! - 1)
+                }
                 disabled={item?.quantity === 1}
                 className={`bg-gray-300 rounded-full focus:outline-none focus:ring-0 ${
                   item?.quantity === 1
@@ -109,10 +120,12 @@ function Cart() {
               </p>
 
               <button
-                onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                disabled={item?.quantity >= x?.stock}
+                onClick={() =>
+                  handleQuantityChange(item.id!, item.quantity! + 1)
+                }
+                disabled={item?.quantity! >= x?.stock}
                 className={`bg-gray-300 rounded-full focus:outline-none focus:ring-0 ${
-                  item?.quantity >= x?.stock
+                  item?.quantity! >= x?.stock
                     ? "opacity-50 cursor-not-allowed"
                     : "active:bg-gray-400"
                 }`}
@@ -140,7 +153,7 @@ function Cart() {
                   "Are you sure you want to delete this item?"
                 );
 
-                if (willDelete) handleDelete(item?.id);
+                if (willDelete) handleDelete(item?.id!);
               }}
               className="rounded-full focus:outline-none focus:ring-0 active:bg-gray-200"
             >
@@ -163,7 +176,7 @@ function Cart() {
         </div>
       </div>
     );
-  }
+  };
 
   return !checkingOut ? (
     <div className="flex flex-col h-full">
@@ -193,7 +206,7 @@ function Cart() {
           <div>Loading...</div>
         ) : (
           cartItems.map((item) => (
-            <Product key={item.id} id={item.productID} item={item} />
+            <Product key={item.id} id={item.productID!} item={item} />
           ))
         )}
       </div>
@@ -205,8 +218,8 @@ function Cart() {
               checked={cartItems?.length === selectedProducts.length}
               onChange={() => {
                 if (cartItems.length !== selectedProducts.length) {
-                  let temp = [];
-                  cartItems.forEach(({ productID }) => temp.push(productID));
+                  let temp: Array<string> = [];
+                  cartItems.forEach(({ productID }) => temp.push(productID!));
                   setSelectedProducts(() => temp);
                 } else {
                   setSelectedProducts([]);
@@ -244,6 +257,6 @@ function Cart() {
       setCheckingOut={setCheckingOut}
     />
   );
-}
+};
 
 export default Cart;

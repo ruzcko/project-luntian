@@ -1,13 +1,28 @@
 import React, { useState, useEffect, createContext } from "react";
 import { auth, db } from "../utils/firebase";
+import firebase from "firebase";
 
-export const FirestoreContext = createContext();
+type docData = firebase.firestore.DocumentData;
 
-export const FirestoreProvider = ({ children }) => {
-  const [products, setProducts] = useState();
-  const [user, setUser] = useState();
-  const [userData, setUserData] = useState();
-  const [userCart, setUserCart] = useState();
+interface Output {
+  products: Array<docData>;
+  user: firebase.User | undefined | null;
+  userData: docData;
+  userCart: Array<docData>;
+}
+
+export const FirestoreContext = createContext<Output>({
+  products: [],
+  user: undefined,
+  userCart: [],
+  userData: {},
+});
+
+export const FirestoreProvider: React.FC = ({ children }) => {
+  const [products, setProducts] = useState<Array<docData>>([]);
+  const [user, setUser] = useState<firebase.User | undefined | null>();
+  const [userData, setUserData] = useState<docData>({});
+  const [userCart, setUserCart] = useState<Array<docData>>([]);
 
   useEffect(() => {
     const authSubscription = auth.onAuthStateChanged((res) => {

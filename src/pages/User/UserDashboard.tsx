@@ -18,7 +18,7 @@ import { auth, db } from "../../utils/firebase";
 import Loading from "../../components/Loading";
 import Profile from "../../components/User/Profile";
 
-function AdminDashboard() {
+const AdminDashboard: React.FC = () => {
   const history = useHistory();
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
@@ -32,7 +32,7 @@ function AdminDashboard() {
       .get()
       .then((doc) => doc.data())
       .then((data) => {
-        if (!data.signupCompleted) {
+        if (data && !data.signupCompleted) {
           history.replace(`${path}/profile/${user.uid}`);
         }
       });
@@ -41,18 +41,10 @@ function AdminDashboard() {
   return user ? (
     <nav className="flex border-b border-gray-300">
       {/* Navbar */}
-      <UserNavbar
-        leftActive={leftActive}
-        setLeftActive={setLeftActive}
-        user={user}
-      />
+      <UserNavbar leftActive={leftActive} setLeftActive={setLeftActive} />
 
       {/* Sidebar */}
-      <UserSidebar
-        leftActive={leftActive}
-        setLeftActive={setLeftActive}
-        user={user}
-      />
+      <UserSidebar leftActive={leftActive} setLeftActive={setLeftActive} />
 
       {/* Content Switch */}
       <div className="absolute inset-0 flex overflow-hidden bg-gray-100 border-t border-gray-300 mt-14">
@@ -74,6 +66,6 @@ function AdminDashboard() {
   ) : (
     <Redirect to="/" />
   );
-}
+};
 
 export default AdminDashboard;

@@ -3,11 +3,21 @@ import { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
+import { User } from "../../luntian-types";
 import Loading from "../Loading";
 
-function UserNavbar({ leftActive, setLeftActive }) {
+interface UserNavbarProps {
+  leftActive: boolean;
+  setLeftActive(arg0: boolean): void;
+}
+
+const UserNavbar: React.FC<UserNavbarProps> = ({
+  leftActive,
+  setLeftActive,
+}) => {
   const { url } = useRouteMatch();
-  const { user, userData } = useContext(FirestoreContext);
+  const { user, userData: data } = useContext(FirestoreContext);
+  const userData: User = { ...data };
 
   if (user)
     return (
@@ -89,6 +99,6 @@ function UserNavbar({ leftActive, setLeftActive }) {
     );
 
   return <Loading />;
-}
+};
 
 export default UserNavbar;

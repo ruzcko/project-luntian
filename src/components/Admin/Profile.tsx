@@ -1,15 +1,15 @@
 import React from "react";
 
-function AdminProfile() {
+const AdminProfile: React.FC = () => {
   return (
     <div>
-      <h1 className="text-2xl border-t border-b border-r px-6 py-1 border-gray-300 inline-block">
+      <h1 className="inline-block px-6 py-1 text-2xl border-t border-b border-r border-gray-300">
         Profile
       </h1>
 
       <div className="flex flex-col md:flex-row">
         {/* Picture */}
-        <div className="mt-4 w-1/2 md:w-60">
+        <div className="w-1/2 mt-4 md:w-60">
           <div className="border border-gray-300 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,11 +26,11 @@ function AdminProfile() {
             </svg>
           </div>
 
-          <div className="mt-2 relative cursor-pointer w-3/4 bg-green-500 active:bg-green-600 rounded-md flex items-center justify-center py-2 text-white">
+          <div className="relative flex items-center justify-center w-3/4 py-2 mt-2 text-white bg-green-500 rounded-md cursor-pointer active:bg-green-600">
             <button className="">Change Photo</button>
             <input
               type="file"
-              className="absolute inset-0 opacity-0 w-full cursor-pointer"
+              className="absolute inset-0 w-full opacity-0 cursor-pointer"
             />
           </div>
         </div>
@@ -41,7 +41,7 @@ function AdminProfile() {
             <label className="border-b border-gray-300">Nickname</label>
             <input
               type="text"
-              className="border-none focus:outline-none focus:ring-0 focus:border-b border-gray-300"
+              className="border-gray-300 border-none focus:outline-none focus:ring-0 focus:border-b"
               placeholder="Nickname"
             />
           </div>
@@ -51,7 +51,7 @@ function AdminProfile() {
               <label className="border-b border-gray-300">First Name</label>
               <input
                 type="text"
-                className="border-none focus:outline-none focus:ring-0 focus:border-b border-gray-300"
+                className="border-gray-300 border-none focus:outline-none focus:ring-0 focus:border-b"
                 placeholder="First Name"
               />
             </div>
@@ -59,7 +59,7 @@ function AdminProfile() {
               <label className="border-b border-gray-300">Last Name</label>
               <input
                 type="text"
-                className="border-none focus:outline-none focus:ring-0 focus:border-b border-gray-300"
+                className="border-gray-300 border-none focus:outline-none focus:ring-0 focus:border-b"
                 placeholder="Last Name"
               />
             </div>
@@ -68,6 +68,6 @@ function AdminProfile() {
       </div>
     </div>
   );
-}
+};
 
 export default AdminProfile;

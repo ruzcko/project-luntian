@@ -1,7 +1,19 @@
+import React from "react";
 import { auth } from "../../utils/firebase";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Privilege } from "../../luntian-types";
 
-function AdminSidebar({ leftActive, setLeftActive, privilege }) {
+interface AdminSidebarProps {
+  leftActive: boolean;
+  setLeftActive(arg0: boolean): void;
+  privilege: Privilege;
+}
+
+const AdminSidebar: React.FC<AdminSidebarProps> = ({
+  leftActive,
+  setLeftActive,
+  privilege,
+}) => {
   const history = useHistory();
   let { url } = useRouteMatch();
 
@@ -112,6 +124,6 @@ function AdminSidebar({ leftActive, setLeftActive, privilege }) {
       </div>
     </div>
   );
-}
+};
 
 export default AdminSidebar;

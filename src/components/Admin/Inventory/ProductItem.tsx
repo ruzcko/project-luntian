@@ -1,105 +1,147 @@
-import React, { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useRef, useState, useEffect, useContext, useMemo } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { db, storage } from "../../../utils/firebase";
+import { FirestoreContext } from "../../../contexts/FirestoreContext";
+import { Product } from "../../../luntian-types";
 
-function AddProductItem() {
+const ProductItem: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const [photo, setPhoto] = useState();
+  const { products } = useContext(FirestoreContext);
+  const loading = products === undefined;
+  const product: Product = useMemo(
+    () => ({ ...products?.find((el) => el.id === id) }),
+    [id, products]
+  );
+  const [photo, setPhoto] = useState<any>(null);
   const [stock, setStock] = useState(0);
-  const nameRef = useRef();
-  const priceRef = useRef();
-  const descriptionRef = useRef();
-  const [error, setError] = useState("Select an image.");
+  const nameRef = useRef<HTMLInputElement>(null);
+  const priceRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const types = ["image/png", "image/jpeg", "image/jpg"];
-  console.log(error);
 
-  const changeHandler = (e) => {
-    let selected = e.target.files[0];
-    if (selected && types.includes(selected.type)) {
-      setPhoto(selected);
-      handleImage(selected);
-    } else {
-      setPhoto(null);
-      setError("Please select an image file (png/jpg)");
+  useEffect(() => {
+    if (product && product.stock) {
+      setStock(product.stock);
+    } else alert("Something went wrong.");
+  }, [product]);
+
+  if (!loading && !product)
+    return (
+      <div className="h-full">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-10 h-10 p-2 rounded-full active:bg-gray-100"
+            onClick={() => history.goBack()}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </div>
+
+        <div className="flex items-center justify-center flex-1 h-full">
+          Product not Found.
+        </div>
+      </div>
+    );
+
+  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      let selected = e.target.files[0];
+      if (selected && types.includes(selected.type)) {
+        setPhoto(selected);
+        handleImage(selected);
+      } else {
+        setPhoto(null);
+        console.log("Please select an image file (png/jpg)");
+      }
     }
   };
 
-  const handleImage = (photo) => {
+  const handleImage = (photo: File) => {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      let productImage = document.getElementById("product-placeholder");
-      productImage.src = e.target.result;
+      let productImage = document.getElementById(
+        "product-placeholder"
+      ) as HTMLImageElement;
+
+      if (e.target?.result) {
+        productImage.src = e.target.result as string;
+      }
     };
 
     reader.readAsDataURL(photo);
   };
 
-  const handleAdd = () => {
-    const name = nameRef.current.value;
-    const description = descriptionRef.current.value;
-    const price = priceRef.current.value;
+  const handleDelete = () => {
+    db.collection("products")
+      .doc(id)
+      .delete()
+      .then(() => {
+        history.goBack();
+      });
+  };
 
-    const data = {
-      name,
-      description,
-      price: parseFloat(price),
-      stock,
-      averageRating: 0,
-      sold: 0,
-    };
+  const reset = () => {
+    nameRef.current!.value = "";
+    descriptionRef.current!.value = "";
+    priceRef.current!.value = "";
+  };
 
-    let errorMsg = "";
-    let errorCount = 0;
-    let valid = false;
+  const handleUpdate = () => {
+    const name = nameRef.current!.value;
+    const description = descriptionRef.current!.value;
+    const price = priceRef.current!.value;
 
-    if (name === "") {
-      errorMsg += "Name is required.\n";
-      errorCount++;
-    }
-    if (description === "") {
-      errorMsg += "Description is required.\n";
-      errorCount++;
-    }
-    if (price === "") {
-      errorMsg += "Price is required.\n";
-      errorCount++;
-    }
-    if (!photo) {
-      errorMsg += "Photo is required.\n";
-      errorCount++;
-    }
+    let data: Product = {};
+    if (name !== "") data = { ...data, name };
+    if (description !== "") data = { ...data, description };
+    if (price !== "") data = { ...data, price: parseFloat(price) };
 
-    if (errorCount === 0) valid = true;
+    data = { ...data, stock };
 
-    if (valid) {
-      const productsRef = db.collection("products");
-      productsRef
-        .add(data)
-        .then((docRef) => {
-          const storageRef = storage.ref(`products/${docRef.id}/${photo.name}`);
-          storageRef.put(photo).on(
-            "state_changed",
-            (snap) => {},
-            (error) => {
-              alert(error);
-            },
-            async () => {
-              const photoURL = await storageRef.getDownloadURL();
-              productsRef.doc(docRef.id).set(
-                {
-                  photoURL,
-                },
-                { merge: true }
-              );
-              alert("Product Added");
-              history.goBack();
-            }
-          );
-        })
-        .catch(alert);
+    reset();
+
+    if (photo) {
+      const storageRef = storage.ref(`products/${id}/${photo.name}`);
+      storageRef.put(photo).on(
+        "state_changed",
+        () => {},
+        (error) => {
+          alert(error);
+        },
+        async () => {
+          const photoURL = await storageRef.getDownloadURL();
+          data = { ...data, photoURL };
+
+          reset();
+
+          db.collection("products")
+            .doc(id)
+            .update(data)
+            .then(() => {
+              alert(`Updated product ${id}`);
+            });
+        }
+      );
     } else {
-      alert(errorMsg);
+      reset();
+
+      db.collection("products")
+        .doc(id)
+        .update(data)
+        .then(() => {
+          alert(`Updated product ${id}`);
+        });
     }
   };
 
@@ -125,22 +167,23 @@ function AddProductItem() {
         </div>
 
         <div className="flex items-center justify-between w-full pb-4 mt-8 border-b border-gray-300">
-          <h1 className="text-xl ">Add Product</h1>
+          <h1 className="text-xl ">{product?.name}</h1>
 
           <div className="flex items-center justify-center space-x-2 text-sm">
             <button
               onClick={() => {
-                history.goBack();
+                const res = window.confirm("are you sure you want to delete?");
+                if (res) handleDelete();
               }}
               className="w-20 px-4 py-2 text-red-500 rounded-md active:bg-gray-100 focus:outline-none"
             >
-              Cancel
+              Delete
             </button>
             <button
-              onClick={handleAdd}
+              onClick={handleUpdate}
               className="w-20 px-4 py-2 text-white bg-green-500 rounded-md active:bg-green-600 focus:outline-none"
             >
-              Add
+              Update
             </button>
           </div>
         </div>
@@ -156,22 +199,14 @@ function AddProductItem() {
                   className="object-cover w-full h-full rounded-md"
                 />
               ) : (
-                <div className="flex items-center justify-center w-full h-full bg-gray-300 rounded-md select-none">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-20 h-20 text-gray-500"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
+                <img
+                  src={product?.photoURL}
+                  alt={product?.name}
+                  className="object-cover w-full h-full rounded-md"
+                />
               )}
             </div>
+
             <div className="relative flex items-center justify-center w-3/4 py-2 mt-2 text-gray-800 bg-gray-200 rounded-md cursor-pointer md:w-full md:max-w-lg active:bg-gray-300">
               <button className="">Change Photo</button>
               <input
@@ -188,6 +223,7 @@ function AddProductItem() {
                 <label className="font-semibold ">Product Name</label>
                 <input
                   ref={nameRef}
+                  placeholder={product?.name}
                   type="text"
                   className="mr-4 border-gray-300 rounded focus:outline-none focus:border-gray-500 focus:ring-0"
                 />
@@ -196,7 +232,7 @@ function AddProductItem() {
                 <label className="font-semibold">Price</label>
                 <input
                   ref={priceRef}
-                  placeholder={0.0}
+                  placeholder={`${product?.price}`}
                   step="0.01"
                   type="number"
                   className="border-gray-300 rounded focus:outline-none focus:border-gray-500 focus:ring-0"
@@ -208,7 +244,7 @@ function AddProductItem() {
               <label className="font-semibold">Description</label>
               <textarea
                 ref={descriptionRef}
-                type="text"
+                placeholder={product?.description}
                 className="h-32 border-gray-300 rounded resize-none md:h-full focus:outline-none focus:border-gray-500 focus:ring-0"
               />
             </div>
@@ -238,7 +274,7 @@ function AddProductItem() {
                   </svg>
                 </button>
 
-                <p className="select-none md:text-xl"> {stock}</p>
+                <p className="select-none md:text-xl">{stock}</p>
 
                 <button
                   className="focus:outline-none"
@@ -268,6 +304,6 @@ function AddProductItem() {
       </div>
     </div>
   );
-}
+};
 
-export default AddProductItem;
+export default ProductItem;

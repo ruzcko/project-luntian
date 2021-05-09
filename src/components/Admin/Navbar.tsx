@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 
-function Navbar({ leftActive, setLeftActive }) {
+interface NavbarProps {
+  leftActive: boolean;
+  setLeftActive(arg0: boolean): void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ leftActive, setLeftActive }) => {
   const { user, userData } = useContext(FirestoreContext);
 
   return (
@@ -67,7 +72,7 @@ function Navbar({ leftActive, setLeftActive }) {
           </button>
         </Link>
 
-        <Link to={`/home/profile/${user.uid}`}>
+        <Link to={`/home/profile/${user?.uid}`}>
           {userData?.photoURL ? (
             <img
               src={userData.photoURL}
@@ -83,6 +88,6 @@ function Navbar({ leftActive, setLeftActive }) {
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;

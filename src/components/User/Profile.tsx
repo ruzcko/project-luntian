@@ -4,18 +4,21 @@ import { auth, db, storage } from "../../utils/firebase";
 import Loading from "../Loading";
 import regions from "../../assets/regions.json";
 import { useParams } from "react-router";
+import { User } from "../../luntian-types";
+
+type RegionData = typeof import("../../assets/regions.json");
 
 function Profile() {
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState("");
   const [user, userLoading] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
-  const [photo, setPhoto] = useState();
-  const [error, setError] = useState();
-  const { slug } = useParams();
-  let currentUser = user.uid === userId;
-  if (!userLoading) currentUser = user.uid === userId;
+  const [values, setValues] = useState<User>({});
+  const [errors, setErrors] = useState<User>({});
+  const [photo, setPhoto] = useState<any>(null);
+  const [error, setError] = useState("");
+  const { slug } = useParams<{ slug: string }>();
+  let currentUser = user?.uid === userId;
+  if (!userLoading) currentUser = user?.uid === userId;
   console.log(error);
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
@@ -32,32 +35,39 @@ function Profile() {
     const getId = async () => {
       const docs = await (await db.collection("users").get()).docs;
       const doc = docs.find((doc) => doc.id === slug);
-      return doc.id;
+      return doc?.id;
     };
     setLoading(true);
     getId().then((id) => {
       setLoading(false);
-      setUserId(id);
+      setUserId(id!);
     });
   }, [slug]);
 
-  const changeHandler = (e) => {
-    let selected = e.target.files[0];
-    if (selected && types.includes(selected.type)) {
-      setPhoto(selected);
-      handleImage(selected);
-    } else {
-      setPhoto(null);
-      setError("Please select an image file (png/jpg)");
+  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.files) {
+      let selected = e.target.files[0];
+      if (selected && types.includes(selected.type)) {
+        setPhoto(selected);
+        handleImage(selected);
+      } else {
+        setPhoto(null);
+        setError("Please select an image file (png/jpg)");
+      }
     }
   };
 
-  const handleImage = (photo) => {
+  const handleImage = (photo: File) => {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      let productImage = document.getElementById("image-placeholder");
-      productImage.src = e.target.result;
+      let productImage = document.getElementById(
+        "image-placeholder"
+      ) as HTMLImageElement;
+
+      if (e.target?.result) {
+        productImage.src = e.target.result as string;
+      }
     };
 
     reader.readAsDataURL(photo);
@@ -65,7 +75,7 @@ function Profile() {
 
   if (loading) return <Loading />;
 
-  const handleChange = (e, key) => {
+  const handleChange = (e: string | null, key: string) => {
     setValues((old) => ({
       ...old,
       [key]: e,
@@ -83,7 +93,7 @@ function Profile() {
       barangay,
       zipCode,
       phoneNumber,
-    } = values;
+    } = values as User;
     let errCount = 0;
 
     if (!firstName) {
@@ -275,7 +285,6 @@ function Profile() {
                 onChange={(e) => {
                   handleChange(e.target.value, "bio");
                 }}
-                type="text"
                 className="w-full px-4 py-2 bg-gray-100 border-gray-400 rounded focus:outline-none focus:ring-0"
               />
             )}
@@ -302,12 +311,12 @@ function Profile() {
                     }`}
                     value={values.region ?? "disable"}
                   >
-                    <option disabled defaultValue value="disable">
+                    <option disabled value="disable">
                       Select a Region
                     </option>
                     {Object.keys(regions).map((key) => (
                       <option value={key} key={key}>
-                        {regions[key]["region_name"]}
+                        {regions[key as keyof RegionData]["region_name"]}
                       </option>
                     ))}
                   </select>
@@ -338,17 +347,19 @@ function Profile() {
                       errors.province ? "border-red-500" : "border-gray-400"
                     }`}
                   >
-                    <option disabled defaultValue value="disable">
+                    <option disabled value="disable">
                       Select a Province
                     </option>
                     {values.region &&
-                      Object.keys(regions[values.region]["province_list"]).map(
-                        (key) => (
-                          <option value={key} key={key}>
-                            {key}
-                          </option>
-                        )
-                      )}
+                      Object.keys(
+                        regions[values.region as keyof RegionData][
+                          "province_list"
+                        ]
+                      ).map((key) => (
+                        <option value={key} key={key}>
+                          {key}
+                        </option>
+                      ))}
                   </select>
 
                   {errors.province && (
@@ -376,11 +387,12 @@ function Profile() {
                       errors.city ? "border-red-500" : "border-gray-400"
                     }`}
                   >
-                    <option disabled defaultValue value="disable">
+                    <option disabled value="disable">
                       Select a City
                     </option>
                     {values.province &&
                       Object.keys(
+                        // @ts-ignore
                         regions[values.region]["province_list"][
                           values.province
                         ]["municipality_list"]
@@ -485,7 +497,7 @@ function Profile() {
                     }}
                     type="text"
                     placeholder="09XXXXXXXXX"
-                    maxLength="11"
+                    maxLength={11}
                     className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                       errors.phoneNumber ? "border-red-500" : "border-gray-400"
                     }`}

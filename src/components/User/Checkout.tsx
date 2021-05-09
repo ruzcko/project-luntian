@@ -1,10 +1,23 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
+import {
+  CheckoutProduct,
+  Order,
+  PaymentMethod,
+  User,
+} from "../../luntian-types";
 import { db, timestamp } from "../../utils/firebase";
-import { orderStatus, payment } from "../Admin/constants";
 
-function Checkout({ selectedProducts, setCheckingOut }) {
+interface CheckoutProps {
+  selectedProducts: Array<string>;
+  setCheckingOut(arg0: boolean): void;
+}
+
+const Checkout: React.FC<CheckoutProps> = ({
+  selectedProducts,
+  setCheckingOut,
+}) => {
   const history = useHistory();
   const { products, userCart, userData } = useContext(FirestoreContext);
   const filteredProds = products.filter((el) =>
@@ -14,7 +27,7 @@ function Checkout({ selectedProducts, setCheckingOut }) {
     selectedProducts.includes(el.productID)
   );
   const finalProds = filteredProds.map((item) => {
-    var newItem = { ...item };
+    var newItem: CheckoutProduct = { ...item };
     prodQtys.forEach((x) => {
       if (x.productID === item.id)
         newItem = { ...newItem, quantity: x.quantity };
@@ -24,25 +37,20 @@ function Checkout({ selectedProducts, setCheckingOut }) {
   });
 
   const getFullName = () => {
-    const { firstName, lastName } = userData;
+    const { firstName, lastName } = userData as User;
     return firstName + " " + lastName;
   };
 
   const getDeliveryAddress = () => {
-    const { houseNumber, barangay, city, province, region, zipCode } = userData;
-    return (
-      houseNumber +
-      ", " +
-      barangay +
-      ", " +
-      city +
-      ", " +
-      province +
-      ", " +
-      region +
-      ", " +
-      zipCode
-    );
+    const {
+      houseNumber,
+      barangay,
+      city,
+      province,
+      region,
+      zipCode,
+    } = userData as User;
+    return `${houseNumber} ${barangay}, ${city}, ${province}, ${region}, ${zipCode}`;
   };
 
   const getETA = () => {
@@ -51,7 +59,7 @@ function Checkout({ selectedProducts, setCheckingOut }) {
     return now;
   };
 
-  const formatDate = (now) => {
+  const formatDate = (now: Date) => {
     const months = [
       "Jan",
       "Feb",
@@ -88,25 +96,28 @@ function Checkout({ selectedProducts, setCheckingOut }) {
 
   // PAYMENT OPTIONS
   const [selectedPayment, setSelectedPayment] = useState(0);
-  const paymentOptions = [
+  const paymentOptions: Array<{
+    name: PaymentMethod;
+    accountNumber: string;
+  }> = [
     {
-      name: payment.GCASH,
-      accountNumber: "12387147612",
+      name: "GCash-e-Wallet",
+      accountNumber: "823794012897",
     },
     {
-      name: payment.DEBIT_CREDIT,
-      accountNumber: "12387147612",
+      name: "Credit/Debit Card",
+      accountNumber: "26378041095",
     },
     {
-      name: payment.PAYMAYA,
-      accountNumber: "12387147612",
+      name: "PayMaya-e-Wallet",
+      accountNumber: "028361723892",
     },
   ];
 
   const getTotal = () => {
     var total = 0;
     finalProds.forEach((x) => {
-      total += x.price * x.quantity;
+      total += x.price! * x.quantity!;
     });
     return total;
   };
@@ -127,7 +138,7 @@ function Checkout({ selectedProducts, setCheckingOut }) {
       orderDate: timestamp(),
       toRate,
       userID: userData.id,
-      status: orderStatus.NEW,
+      status: "NEW",
       paymentMethod: paymentOptions[selectedPayment].name,
       courier: deliveryOptions[selectedDelivery].name,
       deliveryAddress: getDeliveryAddress(),
@@ -135,7 +146,7 @@ function Checkout({ selectedProducts, setCheckingOut }) {
       receiverEmail: userData.email,
       receiverPhone: userData.phoneNumber,
       receiverPhoto: userData?.photoURL ?? "DEFAULT",
-    });
+    } as Order);
 
     prods.forEach(async (prod) => {
       await docRef.collection("products").add({
@@ -169,7 +180,9 @@ function Checkout({ selectedProducts, setCheckingOut }) {
           viewBox="0 0 24 24"
           stroke="currentColor"
           className="w-10 h-10 p-2 rounded-full active:bg-gray-100"
-          onClick={() => setCheckingOut(false)}
+          onClick={() => {
+            setCheckingOut(false);
+          }}
         >
           <path
             strokeLinecap="round"
@@ -183,7 +196,7 @@ function Checkout({ selectedProducts, setCheckingOut }) {
 
       {/* ITEM SUMMARY */}
       {finalProds.map((item) => (
-        <Product key={item.id} item={item} />
+        <ProductItem key={item.id} item={item} />
       ))}
 
       {/* ADDRESS */}
@@ -286,9 +299,9 @@ function Checkout({ selectedProducts, setCheckingOut }) {
       </div>
     </div>
   );
-}
+};
 
-function Product({ item }) {
+const ProductItem: React.FC<{ item: CheckoutProduct }> = ({ item }) => {
   return (
     <div className="flex w-full mt-4 h-36 ">
       <div className="w-1/3 shadow">
@@ -315,6 +328,6 @@ function Product({ item }) {
       </div>
     </div>
   );
-}
+};
 
 export default Checkout;

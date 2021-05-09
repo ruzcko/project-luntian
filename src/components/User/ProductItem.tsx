@@ -4,14 +4,16 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { auth, db } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Toast from "../Toast";
+import { Product } from "../../luntian-types";
 
-function ProductItem() {
+const ProductItem: React.FC = () => {
   const [user] = useAuthState(auth);
   const [quantity, setQuantity] = useState(0);
   const [showToast, setShowToast] = useState(false);
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const [product, loading] = useDocumentData(db.collection("products").doc(id));
+  const [prod, loading] = useDocumentData(db.collection("products").doc(id));
+  const product: Product = { ...(prod as Product) };
 
   const addToCart = async () => {
     if (user) {
@@ -93,8 +95,8 @@ function ProductItem() {
                 <div className="flex items-center divide-x divide-gray-300">
                   <div className="flex items-center mr-4 space-x-2">
                     <p className="text-lg">
-                      {"★".repeat(product.averageRating)}
-                      {"☆".repeat(5 - product.averageRating)}
+                      {"★".repeat(product.averageRating!)}
+                      {"☆".repeat(5 - product.averageRating!)}
                     </p>
                     <p>{product.averageRating}</p>
                   </div>
@@ -142,7 +144,7 @@ function ProductItem() {
                       <button
                         className="focus:outline-none"
                         onClick={() => {
-                          if (quantity < product.stock)
+                          if (quantity < product.stock!)
                             setQuantity(quantity + 1);
                         }}
                       >
@@ -177,8 +179,8 @@ function ProductItem() {
 
                 <div className="flex items-center space-x-2">
                   <p className="text-lg">
-                    {"★".repeat(product.averageRating)}
-                    {"☆".repeat(5 - product.averageRating)}
+                    {"★".repeat(product.averageRating!)}
+                    {"☆".repeat(5 - product.averageRating!)}
                   </p>
                   <p>{product.averageRating}/5</p>
                 </div>
@@ -215,7 +217,7 @@ function ProductItem() {
               <button
                 className="focus:outline-none"
                 onClick={() => {
-                  if (quantity < product.stock) setQuantity(quantity + 1);
+                  if (quantity < product.stock!) setQuantity(quantity + 1);
                 }}
               >
                 <svg
@@ -247,6 +249,6 @@ function ProductItem() {
       )}
     </div>
   );
-}
+};
 
 export default ProductItem;

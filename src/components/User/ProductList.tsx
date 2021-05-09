@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
+import { Product } from "../../luntian-types";
 
-function ProductList() {
-  // const [products, loading] = useCollectionData(db.collection("products"), {
-  //   idField: "id",
-  // });
-  const { products } = useContext(FirestoreContext);
+const ProductList: React.FC = () => {
+  const { products: prod } = useContext(FirestoreContext);
+  const products: Array<Product> = [...prod];
   const loading = products === undefined;
   const { url } = useRouteMatch();
 
@@ -39,8 +38,8 @@ function ProductList() {
 
                       <div className="flex justify-end space-x-2">
                         <p className="hidden text-xs md:block">
-                          {"★".repeat(product.averageRating)}
-                          {"☆".repeat(5 - product.averageRating)}
+                          {"★".repeat(product.averageRating!)}
+                          {"☆".repeat(5 - product.averageRating!)}
                         </p>
 
                         <p className="text-xs">{product.sold} Sold</p>
@@ -57,6 +56,6 @@ function ProductList() {
       </div>
     </div>
   );
-}
+};
 
 export default ProductList;

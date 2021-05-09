@@ -1,7 +1,7 @@
 import React from "react";
 
-function AdminSales() {
+const AdminSales: React.FC = () => {
   return <div>Sales Content</div>;
-}
+};
 
 export default AdminSales;

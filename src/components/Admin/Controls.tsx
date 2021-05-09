@@ -1,13 +1,14 @@
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { Privilege } from "../../luntian-types";
 import { db } from "../../utils/firebase";
 
-function AdminControls() {
+const AdminControls: React.FC = () => {
   const [users, loading] = useCollectionData(db.collection("users"), {
     idField: "id",
   });
 
-  const togglePrivilege = (id, privilege) => {
+  const togglePrivilege = (id: string, privilege: Privilege) => {
     db.collection("users").doc(id).update({ privilege });
   };
 
@@ -24,7 +25,7 @@ function AdminControls() {
         </div>
       </div>
 
-      {!loading && (
+      {!loading && users && (
         <div className="flex flex-col space-y-4">
           {users.map((user) => (
             <div key={user.email} className="flex items-center justify-between">
@@ -52,9 +53,9 @@ function AdminControls() {
                 <div className="flex items-center justify-center flex-1">
                   <input
                     type="checkbox"
-                    checked={user.privilege === "FARMER"}
+                    checked={(user.privilege as Privilege) === "FARMER"}
                     onChange={() => {
-                      if (user.privilege === "FARMER")
+                      if ((user.privilege as Privilege) === "FARMER")
                         togglePrivilege(user.id, "USER");
                       else togglePrivilege(user.id, "FARMER");
                     }}
@@ -63,9 +64,9 @@ function AdminControls() {
                 <div className="flex items-center justify-center flex-1">
                   <input
                     type="checkbox"
-                    checked={user.privilege === "ADMIN"}
+                    checked={(user.privilege as Privilege) === "ADMIN"}
                     onChange={() => {
-                      if (user.privilege === "ADMIN")
+                      if ((user.privilege as Privilege) === "ADMIN")
                         togglePrivilege(user.id, "USER");
                       else togglePrivilege(user.id, "ADMIN");
                     }}
@@ -78,6 +79,6 @@ function AdminControls() {
       )}
     </div>
   );
-}
+};
 
 export default AdminControls;

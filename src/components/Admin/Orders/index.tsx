@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
 
-function AdminOrders() {
+const AdminOrders: React.FC = () => {
   let { url } = useRouteMatch();
   const { orders } = useContext(AdminContext);
   console.log({ orders });
@@ -25,6 +25,6 @@ function AdminOrders() {
       </div>
     </div>
   );
-}
+};
 
 export default AdminOrders;

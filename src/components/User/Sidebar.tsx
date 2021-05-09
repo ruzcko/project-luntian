@@ -2,13 +2,19 @@ import { auth } from "../../utils/firebase";
 import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
+import { Privilege } from "../../luntian-types";
 
-function UserSidebar({ leftActive, setLeftActive, user }) {
+interface SidebarProps {
+  leftActive: boolean;
+  setLeftActive(arg0: boolean): void;
+}
+
+const UserSidebar: React.FC<SidebarProps> = ({ leftActive, setLeftActive }) => {
   const history = useHistory();
-  // const [doc] = useDocumentData(db.collection("users").doc(user.uid));
   const { userData: doc } = useContext(FirestoreContext);
   const showAdminPanel =
-    doc?.privilege === "FARMER" || doc?.privilege === "ADMIN";
+    (doc?.privilege as Privilege) === "FARMER" ||
+    (doc?.privilege as Privilege) === "ADMIN";
 
   return (
     <div
@@ -119,6 +125,6 @@ function UserSidebar({ leftActive, setLeftActive, user }) {
       </div>
     </div>
   );
-}
+};
 
 export default UserSidebar;

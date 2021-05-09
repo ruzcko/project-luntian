@@ -3,11 +3,22 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../utils/firebase";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
+import firebase from "firebase";
+import { Privilege } from "../luntian-types";
 
-function PrivateRoute({ component: Component }) {
+interface PrivateRouteProps {
+  component: React.FC<{
+    user: firebase.User | null | undefined;
+    privilege: Privilege;
+  }>;
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  component: Component,
+}) => {
   const [user, loading] = useAuthState(auth);
   const [finished, setFinished] = useState(false);
-  const [privilege, setPrivilege] = useState("USER");
+  const [privilege, setPrivilege] = useState<Privilege>("USER");
 
   useEffect(() => {
     setFinished(false);
@@ -16,7 +27,7 @@ function PrivateRoute({ component: Component }) {
         .doc(user.uid)
         .get()
         .then((res) => {
-          setPrivilege(res.data().privilege);
+          setPrivilege(res.data()?.privilege);
           setFinished(true);
         })
         .catch((err) => {
@@ -29,7 +40,10 @@ function PrivateRoute({ component: Component }) {
   }, [user]);
 
   if (loading || !finished) return <Loading />;
-  else if (privilege === "FARMER" || privilege === "ADMIN")
+  else if (
+    (privilege as Privilege) === "FARMER" ||
+    (privilege as Privilege) === "ADMIN"
+  )
     return <Component user={user} privilege={privilege} />;
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
@@ -42,6 +56,6 @@ function PrivateRoute({ component: Component }) {
       </p>
     </div>
   );
-}
+};
 
 export default PrivateRoute;

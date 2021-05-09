@@ -1,6 +1,6 @@
 import React from "react";
 
-const index = () => {
+const index: React.FC = () => {
   return <div>user Order List</div>;
 };
 

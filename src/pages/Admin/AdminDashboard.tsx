@@ -13,8 +13,13 @@ import OrderItem from "../../components/Admin/Orders/OrderItem";
 import ProductItem from "../../components/Admin/Inventory/ProductItem";
 import AddProductItem from "../../components/Admin/Inventory/AddProductItem";
 import { AdminProvider } from "../../contexts/AdminContext";
+import { Privilege } from "../../luntian-types";
 
-function AdminDashboard({ user, privilege }) {
+interface AdminDashboardProps {
+  privilege: Privilege;
+}
+
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ privilege }) => {
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
 
@@ -22,19 +27,10 @@ function AdminDashboard({ user, privilege }) {
     <AdminProvider>
       <nav className="flex border-b border-gray-300">
         {/* Navbar */}
-        <Navbar
-          leftActive={leftActive}
-          setLeftActive={setLeftActive}
-          user={user}
-        />
+        <Navbar leftActive={leftActive} setLeftActive={setLeftActive} />
 
         {/* Sidebar */}
-        <UserSidebar
-          leftActive={leftActive}
-          setLeftActive={setLeftActive}
-          user={user}
-          privilege={privilege}
-        />
+        <UserSidebar leftActive={leftActive} setLeftActive={setLeftActive} />
 
         {/* Content Switch */}
         <div className="absolute inset-0 flex overflow-hidden bg-gray-100 mt-14">
@@ -73,6 +69,6 @@ function AdminDashboard({ user, privilege }) {
       </nav>
     </AdminProvider>
   );
-}
+};
 
 export default AdminDashboard;

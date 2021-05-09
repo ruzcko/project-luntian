@@ -1,10 +1,17 @@
 import React, { createContext, useEffect, useState } from "react";
 import { db } from "../utils/firebase";
+import firebase from "firebase";
 
-export const AdminContext = createContext();
+interface Output {
+  orders: Array<firebase.firestore.DocumentData>;
+}
 
-export const AdminProvider = ({ children }) => {
-  const [orders, setOrders] = useState([]);
+export const AdminContext = createContext<Output>({ orders: [] });
+
+export const AdminProvider: React.FC = ({ children }) => {
+  const [orders, setOrders] = useState<Array<firebase.firestore.DocumentData>>(
+    []
+  );
 
   useEffect(() => {
     const ordersSubscription = db

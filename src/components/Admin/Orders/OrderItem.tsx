@@ -4,15 +4,43 @@ import { useParams, useHistory } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { FirestoreContext } from "../../../contexts/FirestoreContext";
 import { db } from "../../../utils/firebase";
-import { orderStatus } from "../constants";
+import firebase from "firebase";
+import { OrderStatus } from "../../../luntian-types";
 
-function OrderItem() {
+const Button: React.FC<{ status: OrderStatus }> = ({ status }) => {
+  const mapStatus = (status: OrderStatus) => {
+    if (status === "NEW") {
+      return "Book Courier";
+    } else if (status === "FOR_DELIVERY") {
+      return "Picked-Up";
+    } else if (status === "IN_TRANSIT") {
+      return "";
+    } else if (status === "DELIVERED") {
+    } else if (status === "CANCELLED") {
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center w-3/5 text-gray-200">
+      <button
+        className={`w-full p-4 focus:outline-none bg-green-500 active:bg-green-400`}
+      >
+        {mapStatus(status)}
+      </button>
+    </div>
+  );
+};
+
+const OrderItem: React.FC = () => {
   const { orders } = useContext(AdminContext);
   const { products } = useContext(FirestoreContext);
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const order = orders.find((el) => el.id === id);
-  const [productIDs, setProductIDs] = useState([]);
+  const [productIDs, setProductIDs] = useState<
+    Array<firebase.firestore.DocumentData>
+  >([]);
+
   const filteredProds = products.filter((el) => {
     var found = false;
     productIDs.forEach(({ productID }) => {
@@ -20,6 +48,7 @@ function OrderItem() {
     });
     return found;
   });
+
   const finalProds = filteredProds.map((item) => {
     var newItem = { ...item };
     productIDs.forEach((x) => {
@@ -30,7 +59,7 @@ function OrderItem() {
     return newItem;
   });
 
-  const formatDate = (now) => {
+  const formatDate = (now: Date) => {
     const months = [
       "Jan",
       "Feb",
@@ -67,33 +96,9 @@ function OrderItem() {
     return unsub;
   }, [id]);
 
-  const mapStatus = (status) => {
-    if (status === orderStatus.NEW) {
-      return "Book Courier";
-    } else if (status === orderStatus.FOR_DELIVERY) {
-      return "Picked-Up";
-    } else if (status === orderStatus.IN_TRANSIT) {
-      return "";
-    } else if (status === orderStatus.DELIVERED) {
-    } else if (status === orderStatus.CANCELLED) {
-    }
-  };
-
-  const Button = ({ status }) => {
-    return (
-      <div className="flex items-center justify-center w-3/5 text-gray-200">
-        <button
-          className={`w-full p-4 focus:outline-none bg-green-500 active:bg-green-400`}
-        >
-          {mapStatus(status)}
-        </button>
-      </div>
-    );
-  };
-
   return finalProds.length === 0 ? (
     <div>Loading...</div>
-  ) : (
+  ) : order ? (
     <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -237,7 +242,7 @@ function OrderItem() {
         <Button status={order.status} />
       </div>
     </div>
-  );
-}
+  ) : null;
+};
 
 export default OrderItem;
