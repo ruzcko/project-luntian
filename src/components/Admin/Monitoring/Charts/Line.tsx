@@ -1,20 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Line } from "react-chartjs-2";
-
-const data = {
-  labels: ["1", "2", "3", "4", "5", "6"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      fill: false,
-      backgroundColor: "rgb(255, 99, 132)",
-      borderColor: "rgba(255, 99, 132, 0.2)",
-    },
-  ],
-};
+import useDtWaterLevel from "../../../../hooks/useDtWaterLevel";
 
 const options = {
+  animation: { duration: 0 },
   scales: {
     yAxes: [
       {
@@ -23,12 +12,43 @@ const options = {
         },
       },
     ],
+    xAxes: [
+      {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 90,
+        },
+      },
+    ],
   },
   maintainAspectRatio: false,
 };
 
-const LineChart: React.FC = () => (
-  <Line type="Line" data={data} options={options} />
-);
+const LineChart: React.FC = () => {
+  const [dtdata, labels, _, hour] = useDtWaterLevel({ frequency: 1000, n: 10 });
+  const chart = useRef<React.Ref<any>>(null);
+
+  return (
+    <Line
+      ref={chart}
+      type="Line"
+      data={{
+        labels,
+        datasets: [
+          {
+            label: `DT Water Level (${hour}:00)`,
+            data: dtdata,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            tension: 0.5,
+          },
+        ],
+      }}
+      options={options}
+    />
+  );
+};
 
 export default LineChart;
