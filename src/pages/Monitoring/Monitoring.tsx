@@ -50,7 +50,7 @@ const AdminFarmMonitoring: React.FC = () => {
 
   return (
     <div className="w-full h-screen overflow-x-hidden overflow-y-scroll bg-gray-200">
-      <div className="absolute inset-y-0 left-0 flex flex-col w-64 p-4 bg-gray-300">
+      <div className="absolute inset-y-0 left-0 flex flex-col w-64 p-4 -ml-64 bg-gray-300 md:ml-0">
         <div className="flex items-center w-full">
           <button
             onClick={() => history.replace("/admin")}
@@ -82,7 +82,7 @@ const AdminFarmMonitoring: React.FC = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="flex flex-col flex-1 p-6 ml-64 ">
+      <div className="flex flex-col flex-1 p-6 ml-0 md:ml-64">
         <div className="flex items-center w-full mb-8 divide-x-8">
           <h1 className="text-3xl font-semibold">Farm Monitoring</h1>
           <h6 className="text-xl capitalize">{tab}</h6>

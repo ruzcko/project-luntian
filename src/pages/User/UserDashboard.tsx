@@ -20,7 +20,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 import { Loading } from "../../components/index";
 
-const AdminDashboard: React.FC = () => {
+const UserDashboard: React.FC = () => {
   const history = useHistory();
   const [leftActive, setLeftActive] = useState(false);
   const { path } = useRouteMatch();
@@ -70,4 +70,4 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-export default AdminDashboard;
+export default UserDashboard;
