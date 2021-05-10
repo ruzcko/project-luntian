@@ -16,29 +16,30 @@ const useDtWaterLevel = ({ max = 100, frequency = 2000, n = 10 }: Props) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const date = new Date();
-      if (date.getHours() !== hour) setHour(() => date.getHours());
-      const time = `${date.getMinutes()}:${date.getSeconds()}`;
-      const level = rand(max);
+      setData((oldData) => {
+        if (date.getHours() !== hour) setHour(() => date.getHours());
+        const time = `${date.getMinutes()}:${date.getSeconds()}`;
+        const level = rand(max);
 
-      setColors((old) => {
-        const nd = old.splice(-n + 1);
-        const c = level < 30 ? "#B91C1C4D" : "#1D4ED84D";
-        return [...nd, c];
-      });
+        setColors((oldColors) => {
+          const nd = oldColors.splice(-n + 1);
+          const c = level < 30 ? "#B91C1C4D" : "#1D4ED84D";
+          return [...nd, c];
+        });
 
-      setData((old) => {
-        const nd = old.splice(-n + 1);
+        setLabels((oldLabels) => {
+          const nd = oldLabels.splice(-n + 1);
+          return [...nd, time];
+        });
+
+        console.log(oldData);
+        const nd = oldData.splice(-n + 1);
         return [...nd, level];
-      });
-
-      setLabels((old) => {
-        const nd = old.splice(-n + 1);
-        return [...nd, time];
       });
     }, frequency);
 
     return () => clearInterval(interval);
-  }, [frequency, max, hour, n]);
+  }, [frequency, n, max, hour]);
 
   return [data, labels, colors, hour];
 };
