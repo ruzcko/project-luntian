@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-google-charts";
+import { csv } from "d3";
 
 interface HydroponicsProps {}
 
@@ -11,7 +12,26 @@ const TestCard: React.FC<{ classes?: string }> = ({ classes, children }) => {
   );
 };
 
+type DT = {
+  date_time: number;
+  water_level: number;
+};
+
 const Hydroponics: React.FC<HydroponicsProps> = () => {
+  const [data, setData] = useState<Array<DT>>([]);
+  console.log(...data);
+  useEffect(() => {
+    // @ts-ignore
+    csv("/data/MOCK_DT.csv", (d: DT) => {
+      d.water_level = +d.water_level;
+      d.date_time = +d.date_time;
+      return [new Date(d.date_time), d.water_level];
+    }).then((data) => {
+      // @ts-ignore
+      setData(data);
+    });
+  }, []);
+
   return (
     <div className="w-full">
       <div className="grid grid-cols-12 gap-6">
@@ -83,33 +103,16 @@ const Hydroponics: React.FC<HydroponicsProps> = () => {
         </TestCard>
         <TestCard classes="col-span-8 p-4">
           <Chart
-            width="100%"
-            height="350px"
+            width={"100%"}
+            height={"300px"}
             chartType="Calendar"
+            style={{ color: "#000" }}
             loader={<div>Loading Chart</div>}
-            data={[
-              [
-                { type: "date", id: "Date" },
-                { type: "number", id: "Won/Loss" },
-              ],
-              [new Date(2012, 3, 13), 37032],
-              [new Date(2012, 3, 14), 38024],
-              [new Date(2012, 3, 15), 38024],
-              [new Date(2012, 3, 16), 38108],
-              [new Date(2012, 3, 17), 38229],
-              [new Date(2013, 1, 4), 38177],
-              [new Date(2013, 1, 5), 38705],
-              [new Date(2013, 1, 12), 38210],
-              [new Date(2013, 1, 13), 38029],
-              [new Date(2013, 1, 19), 38823],
-              [new Date(2013, 1, 23), 38345],
-              [new Date(2013, 1, 24), 38436],
-              [new Date(2013, 2, 10), 38447],
-            ]}
+            data={[["Year", "DT Level"], ...data]}
             options={{
-              title: "Red Sox Attendance",
+              backgroundColor: "#D1D5DB",
+              colors: ["#000", "#0d0d0d"],
             }}
-            rootProps={{ "data-testid": "1" }}
           />
         </TestCard>
       </div>
