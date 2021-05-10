@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { csv } from "d3";
-import { VerticalBar, Doughnut, Line, MultiAxisLine } from "./Charts";
+import {
+  VerticalBar,
+  Doughnut,
+  Line,
+  MultiAxisLine,
+} from "../../components/Admin/Monitoring/Charts";
 
 interface HydroponicsProps {}
 
