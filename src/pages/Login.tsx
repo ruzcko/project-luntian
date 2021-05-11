@@ -67,14 +67,14 @@ const Login: React.FC = () => {
             error ? "bg-red-600" : "bg-blue-600"
           }`}
         ></div>
-        <h1 className="text-2xl text-center">Sign In</h1>
+        <h1 className="text-2xl text-center">Login / Sign Up</h1>
 
         {error && (
           <p className="mt-1 text-sm text-center text-red-600">{error}</p>
         )}
 
         <form onSubmit={handleLogin}>
-          <p className="mt-6">Email</p>
+          {/* <p className="mt-6">Email</p>
           <input
             onChange={() => setError(null)}
             ref={emailRef}
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
             ref={passRef}
             type="password"
             className={`mt-2 w-full border border-gray-300 focus:outline-none ring-0 focus:ring-0 focus:border-blue-600 rounded px-4 py-2`}
-          />
+          /> */}
 
           <div className="flex items-center justify-center mt-8 space-x-2">
             <button
@@ -117,15 +117,15 @@ const Login: React.FC = () => {
             </button>
           </div>
 
-          <button
+          {/* <button
             type="submit"
             className={`bg-blue-600 px-4 py-2 rounded-md mt-4 w-full text-white tracking-wide active:bg-blue-700 focus:outline-none focus:ring-1 ring-gray-900`}
           >
             Login
-          </button>
+          </button> */}
         </form>
 
-        <div className="flex justify-center mt-4 text-sm">
+        {/* <div className="flex justify-center mt-4 text-sm">
           <p>
             Don't have an account?{" "}
             <span
@@ -135,7 +135,7 @@ const Login: React.FC = () => {
               Sign Up
             </span>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

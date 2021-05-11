@@ -82,6 +82,14 @@ const OrderItem: React.FC = () => {
     return formatted;
   };
 
+  const cancelOrder = async () => {
+    if (order) {
+      console.log(order);
+      await db.collection("orders").doc(order.id).delete();
+      history.replace("/admin/orders");
+    }
+  };
+
   useEffect(() => {
     const unsub = db
       .collection("orders")
@@ -233,6 +241,7 @@ const OrderItem: React.FC = () => {
       <div className="fixed inset-x-0 bottom-0 flex w-full mx-auto mt-8 bg-white shadow max-w-7xl">
         <div className="flex items-center justify-center w-2/5 ">
           <button
+            onClick={cancelOrder}
             className={`w-full p-4 focus:outline-none bg-white active:bg-gray-200`}
           >
             Cancel
