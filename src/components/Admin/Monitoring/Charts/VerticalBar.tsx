@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { csv, DSVParsedArray } from "d3";
 import { Bar } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
+import { csv } from "d3-fetch";
 
 const options: ChartOptions = {
-  animation: { delay: 0, duration: 400, easing: "easeOutCubic" },
+  animation: { duration: 300 },
   animations: {},
   scales: {
     y: {
@@ -30,7 +30,9 @@ const formatDate = (n: Date) => {
 };
 
 const VerticalBar: React.FC = () => {
-  const [data, setData] = useState<DSVParsedArray<DToutput>>();
+  const [data, setData] = useState<Array<DToutput>>();
+  const bars = 10;
+  const frequency = 1000;
   const ref = useRef<any>(null);
 
   useEffect(() => {
@@ -38,9 +40,12 @@ const VerticalBar: React.FC = () => {
       const d = _ as DTinput;
       return { date: new Date(+d.unix_time), water_level: +d.water_level };
     }).then((data) => {
-      setData(data);
+      setData(() => {
+        data.splice(0, data.length - bars - 1);
+        return data;
+      });
     });
-  }, []);
+  }, [bars]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,20 +53,22 @@ const VerticalBar: React.FC = () => {
       let line = ref.current?.data.datasets[1].data as Array<number>;
       let labels = ref.current?.data.labels as Array<string>;
 
-      bar?.splice(0, 1);
+      const n = bar.length;
+
+      bar?.splice(0, n - bars);
       bar?.push(Math.floor(Math.random() * 100));
 
-      line?.splice(0, 1);
+      line?.splice(0, n - bars);
       line?.push(Math.floor(Math.random() * 100));
 
-      labels?.splice(0, 1);
+      labels?.splice(0, n - bars);
       labels?.push(formatDate(new Date()));
 
       ref.current?.update();
-    }, 1000);
+    }, frequency);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [bars, frequency]);
 
   return (
     <Bar
