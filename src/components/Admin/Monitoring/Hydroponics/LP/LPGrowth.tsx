@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 import { csv } from "d3-fetch";
+import { months } from "../LPGraphs";
 
 const options: ChartOptions = {
   animation: { duration: 0 },
@@ -13,7 +14,6 @@ const options: ChartOptions = {
         },
       },
       min: 0,
-      max: 20,
     },
   },
   maintainAspectRatio: false,
@@ -30,7 +30,7 @@ type LPoutput = {
 };
 
 const formatDate = (n: Date) => {
-  return `${n.getMinutes()}:${n.getSeconds()}`;
+  return `${months[n.getMonth()]}:${n.getDay()}`;
 };
 
 const LPGrowth: React.FC<{ index: number }> = ({ index }) => {

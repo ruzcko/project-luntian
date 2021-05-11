@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 import { csv } from "d3-fetch";
+import { months } from "../LPGraphs";
 
 const options: ChartOptions = {
   animation: { duration: 0 },
@@ -33,7 +34,7 @@ type LPoutput = {
 };
 
 const formatDate = (n: Date) => {
-  return `${n.getMinutes()}:${n.getSeconds()}`;
+  return `${months[n.getMonth()]}:${n.getDay()}`;
 };
 
 const LPData: React.FC<{ index: number }> = ({ index }) => {
@@ -70,7 +71,6 @@ const LPData: React.FC<{ index: number }> = ({ index }) => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
-            pointRadius: 2,
           },
           {
             type: "line",
@@ -79,7 +79,6 @@ const LPData: React.FC<{ index: number }> = ({ index }) => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
-            pointRadius: 2,
           },
           {
             type: "line",
@@ -88,7 +87,6 @@ const LPData: React.FC<{ index: number }> = ({ index }) => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
-            pointRadius: 2,
           },
         ],
       }}

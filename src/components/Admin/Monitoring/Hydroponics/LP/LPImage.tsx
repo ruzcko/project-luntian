@@ -25,7 +25,7 @@ const LPImage: React.FC<LPImageProps> = ({ setIndex }) => {
                 key={`lpimg-${i + 1}`}
                 src={`/data/hydroponics/images/${i + 1}.jpg`}
                 alt={`lpimg-${i + 1}`}
-                className="object-cover w-full"
+                className="object-cover w-full rounded"
                 style={{ height: "300px" }}
               />
             );

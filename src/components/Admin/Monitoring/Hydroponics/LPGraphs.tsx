@@ -13,6 +13,7 @@ type LPinput = {
   vitamin_c: string;
   freshweight: string;
   week_number: string;
+  growth_stage: string;
 };
 
 type LPoutput = {
@@ -22,9 +23,10 @@ type LPoutput = {
   vitamin_c: number;
   freshweight: number;
   week_number: number;
+  growth_stage: string;
 };
 
-const months = [
+export const months = [
   "Jan",
   "Feb",
   "Mar",
@@ -57,6 +59,7 @@ const LPGraphs: React.FC = () => {
         vitamin_c: +d.vitamin_c,
         freshweight: +d.freshweight,
         week_number: +d.week_number,
+        growth_stage: d.growth_stage,
       };
     }).then((data) => {
       setData(() => {
@@ -99,14 +102,44 @@ const LPGraphs: React.FC = () => {
             <Disclosure.Panel>
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
-                  <p className="text-sm text-center">Temperature</p>
                   <div style={{ height: "300px" }}>
                     <LPImage setIndex={setIndex} />
                   </div>
                   {data && (
-                    <div className="pt-2">
-                      <p>{formatDate(data[index].date)}</p>
-                      <p>{data[index].chlorophyll_a}</p>
+                    <div className="pt-2 font-mono">
+                      <p className="flex-1">{`${formatDate(
+                        data[index].date
+                      )} | Week ${data[index].week_number}`}</p>
+
+                      <div className="flex flex-col space-x-0 md:space-x-2 md:flex-row">
+                        <p className="flex-1 text-sm text-gray-700">
+                          Chlorophyll A:{" "}
+                          <span className="text-base text-black">
+                            {data[index].chlorophyll_a.toFixed(2)} mg/g
+                          </span>
+                        </p>
+
+                        <p className="flex-1 text-sm text-gray-700">
+                          Chlorophyll B:{" "}
+                          <span className="text-base text-black">
+                            {data[index].chlorophyll_b.toFixed(2)} mg/g
+                          </span>
+                        </p>
+                      </div>
+
+                      <p className="flex-1 text-sm text-gray-700">
+                        Growth Stage:{" "}
+                        <span className="text-base text-black">
+                          {data[index].growth_stage}
+                        </span>
+                      </p>
+
+                      <p className="flex-1 text-sm text-gray-700">
+                        Freshweight:{" "}
+                        <span className="text-base text-black">
+                          {data[index].freshweight.toFixed(2)} g
+                        </span>
+                      </p>
                     </div>
                   )}
                 </ChartCard>
