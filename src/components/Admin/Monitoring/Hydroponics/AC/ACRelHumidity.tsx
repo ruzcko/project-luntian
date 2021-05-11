@@ -43,7 +43,7 @@ const ACRelHumidity: React.FC = () => {
     csv("/data/hydroponics/ac_humidity.csv", (_): ACoutput => {
       const d = _ as ACinput;
       return {
-        date: new Date(+d.unix_time),
+        date: new Date(+d.unix_time * 1000),
         relative_humidity: +d.relative_humidity,
       };
     }).then((data) => {

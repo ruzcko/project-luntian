@@ -43,7 +43,7 @@ const NMElecCond: React.FC = () => {
     csv("/data/hydroponics/nm_electric_conductivity.csv", (_): NMoutput => {
       const d = _ as NMinput;
       return {
-        date: new Date(+d.unix_time),
+        date: new Date(+d.unix_time * 1000),
         electric_conductivity: +d.electric_conductivity,
       };
     }).then((data) => {

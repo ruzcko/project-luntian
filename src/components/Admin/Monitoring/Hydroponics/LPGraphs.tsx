@@ -1,11 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import ChartCard from "../ChartCard";
 import LPData from "./LP/LPData";
 import LPGrowth from "./LP/LPGrowth";
-interface LPGraphsProps {}
+import LPImage from "./LP/LPImage";
+import { csv } from "d3-fetch";
 
-const LPGraphs: React.FC<LPGraphsProps> = () => {
+type LPinput = {
+  unix_time: string;
+  chlorophyll_a: string;
+  chlorophyll_b: string;
+  vitamin_c: string;
+  freshweight: string;
+  week_number: string;
+};
+
+type LPoutput = {
+  date: Date;
+  chlorophyll_a: number;
+  chlorophyll_b: number;
+  vitamin_c: number;
+  freshweight: number;
+  week_number: number;
+};
+
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const formatDate = (n: Date) => {
+  return `${months[n.getMonth()]} ${n.getDay()}, ${n.getFullYear()}`;
+};
+
+const LPGraphs: React.FC = () => {
+  const [index, setIndex] = useState(0);
+  const [data, setData] = useState<Array<LPoutput>>();
+
+  useEffect(() => {
+    csv("/data/hydroponics/lettuce_phenotype.csv", (_): LPoutput => {
+      const d = _ as LPinput;
+      return {
+        date: new Date(+d.unix_time * 1000),
+        chlorophyll_a: +d.chlorophyll_a,
+        chlorophyll_b: +d.chlorophyll_b,
+        vitamin_c: +d.vitamin_c,
+        freshweight: +d.freshweight,
+        week_number: +d.week_number,
+      };
+    }).then((data) => {
+      setData(() => {
+        return data;
+      });
+    });
+  }, []);
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -41,20 +100,28 @@ const LPGraphs: React.FC<LPGraphsProps> = () => {
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Temperature</p>
-                  <div style={{ height: "350px" }}></div>
+                  <div style={{ height: "300px" }}>
+                    <LPImage setIndex={setIndex} />
+                  </div>
+                  {data && (
+                    <div className="pt-2">
+                      <p>{formatDate(data[index].date)}</p>
+                      <p>{data[index].chlorophyll_a}</p>
+                    </div>
+                  )}
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Lettuce Phenotype</p>
-                  <div style={{ height: "350px", width: "100%" }}>
-                    <LPData />
+                  <div className="w-full h-full">
+                    <LPData index={index} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Fresh Weight</p>
-                  <div style={{ height: "350px" }}>
-                    <LPGrowth />
+                  <div className="w-full h-full">
+                    <LPGrowth index={index} />
                   </div>
                 </ChartCard>
               </div>

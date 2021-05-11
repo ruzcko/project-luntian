@@ -42,7 +42,7 @@ const DTPHLevel: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/dt_ph_level.csv", (_): DToutput => {
       const d = _ as DTinput;
-      return { date: new Date(+d.unix_time), ph_level: +d.ph_level };
+      return { date: new Date(+d.unix_time * 1000), ph_level: +d.ph_level };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

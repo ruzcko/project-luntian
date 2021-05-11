@@ -43,7 +43,7 @@ const DTElecCond: React.FC = () => {
     csv("/data/hydroponics/dt_electric_conductivity.csv", (_): DToutput => {
       const d = _ as DTinput;
       return {
-        date: new Date(+d.unix_time),
+        date: new Date(+d.unix_time * 1000),
         electric_conductivity: +d.electric_conductivity,
       };
     }).then((data) => {

@@ -44,7 +44,10 @@ const NMWaterLevel: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/nm_water_level.csv", (_): NMoutput => {
       const d = _ as NMinput;
-      return { date: new Date(+d.unix_time), water_level: +d.water_level };
+      return {
+        date: new Date(+d.unix_time * 1000),
+        water_level: +d.water_level,
+      };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

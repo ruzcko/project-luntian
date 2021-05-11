@@ -42,7 +42,10 @@ const ACTemperature: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/ac_temperature.csv", (_): ACoutput => {
       const d = _ as ACinput;
-      return { date: new Date(+d.unix_time), temperature: +d.temperature };
+      return {
+        date: new Date(+d.unix_time * 1000),
+        temperature: +d.temperature,
+      };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

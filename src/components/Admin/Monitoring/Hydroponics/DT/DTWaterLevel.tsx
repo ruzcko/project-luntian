@@ -44,7 +44,10 @@ const DTWaterLevel: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/dt_water_level.csv", (_): DToutput => {
       const d = _ as DTinput;
-      return { date: new Date(+d.unix_time), water_level: +d.water_level };
+      return {
+        date: new Date(+d.unix_time * 1000),
+        water_level: +d.water_level,
+      };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

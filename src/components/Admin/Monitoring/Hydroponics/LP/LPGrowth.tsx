@@ -4,7 +4,7 @@ import { ChartOptions } from "chart.js";
 import { csv } from "d3-fetch";
 
 const options: ChartOptions = {
-  animation: { duration: 300 },
+  animation: { duration: 0 },
   scales: {
     y: {
       ticks: {
@@ -33,7 +33,7 @@ const formatDate = (n: Date) => {
   return `${n.getMinutes()}:${n.getSeconds()}`;
 };
 
-const LPGrowth: React.FC = () => {
+const LPGrowth: React.FC<{ index: number }> = ({ index }) => {
   const [data, setData] = useState<Array<LPoutput>>();
   const ref = useRef<any>(null);
 
@@ -41,15 +41,15 @@ const LPGrowth: React.FC = () => {
     csv("/data/hydroponics/lettuce_phenotype.csv", (_): LPoutput => {
       const d = _ as LPinput;
       return {
-        date: new Date(+d.unix_time),
+        date: new Date(+d.unix_time * 1000),
         freshweight: +d.freshweight,
       };
     }).then((data) => {
       setData(() => {
-        return data;
+        return data.slice(0, index + 1);
       });
     });
-  }, []);
+  }, [index]);
 
   return (
     <Line

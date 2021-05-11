@@ -42,7 +42,7 @@ const NMPHLevel: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/nm_ph_level.csv", (_): NMoutput => {
       const d = _ as NMinput;
-      return { date: new Date(+d.unix_time), ph_level: +d.ph_level };
+      return { date: new Date(+d.unix_time * 1000), ph_level: +d.ph_level };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

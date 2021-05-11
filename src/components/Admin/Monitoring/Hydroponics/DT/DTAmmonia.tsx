@@ -42,7 +42,10 @@ const DTAmmonia: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/dt_ammonia_level.csv", (_): DToutput => {
       const d = _ as DTinput;
-      return { date: new Date(+d.unix_time), ammonia_level: +d.ammonia_level };
+      return {
+        date: new Date(+d.unix_time * 1000),
+        ammonia_level: +d.ammonia_level,
+      };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

@@ -42,7 +42,10 @@ const DTTemperature: React.FC = () => {
   useEffect(() => {
     csv("/data/hydroponics/dt_temperature.csv", (_): DToutput => {
       const d = _ as DTinput;
-      return { date: new Date(+d.unix_time), temperature: +d.temperature };
+      return {
+        date: new Date(+d.unix_time * 1000),
+        temperature: +d.temperature,
+      };
     }).then((data) => {
       setData(() => {
         data.splice(0, data.length - bars - 1);

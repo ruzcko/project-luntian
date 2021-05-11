@@ -4,7 +4,7 @@ import { ChartOptions } from "chart.js";
 import { csv } from "d3-fetch";
 
 const options: ChartOptions = {
-  animation: { duration: 300 },
+  animation: { duration: 0 },
   scales: {
     y: {
       ticks: {
@@ -36,7 +36,7 @@ const formatDate = (n: Date) => {
   return `${n.getMinutes()}:${n.getSeconds()}`;
 };
 
-const LPData: React.FC = () => {
+const LPData: React.FC<{ index: number }> = ({ index }) => {
   const [data, setData] = useState<Array<LPoutput>>();
   const ref = useRef<any>(null);
 
@@ -44,17 +44,17 @@ const LPData: React.FC = () => {
     csv("/data/hydroponics/lettuce_phenotype.csv", (_): LPoutput => {
       const d = _ as LPinput;
       return {
-        date: new Date(+d.unix_time),
+        date: new Date(+d.unix_time * 1000),
         chlorophyll_a: +d.chlorophyll_a,
         chlorophyll_b: +d.chlorophyll_b,
         vitamin_c: +d.vitamin_c,
       };
     }).then((data) => {
       setData(() => {
-        return data;
+        return data.slice(0, index + 1);
       });
     });
-  }, []);
+  }, [index]);
 
   return (
     <Line
@@ -70,6 +70,7 @@ const LPData: React.FC = () => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
+            pointRadius: 2,
           },
           {
             type: "line",
@@ -78,6 +79,7 @@ const LPData: React.FC = () => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
+            pointRadius: 2,
           },
           {
             type: "line",
@@ -86,6 +88,7 @@ const LPData: React.FC = () => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
+            pointRadius: 2,
           },
         ],
       }}
