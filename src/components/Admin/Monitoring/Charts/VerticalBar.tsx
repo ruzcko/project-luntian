@@ -5,7 +5,6 @@ import { csv } from "d3-fetch";
 
 const options: ChartOptions = {
   animation: { duration: 300 },
-  animations: {},
   scales: {
     y: {
       min: 0,
@@ -50,16 +49,12 @@ const VerticalBar: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       let bar = ref.current?.data.datasets[0].data as Array<number>;
-      let line = ref.current?.data.datasets[1].data as Array<number>;
       let labels = ref.current?.data.labels as Array<string>;
 
       const n = bar.length;
 
       bar?.splice(0, n - bars);
       bar?.push(Math.floor(Math.random() * 100));
-
-      line?.splice(0, n - bars);
-      line?.push(Math.floor(Math.random() * 100));
 
       labels?.splice(0, n - bars);
       labels?.push(formatDate(new Date()));
@@ -84,15 +79,6 @@ const VerticalBar: React.FC = () => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
-          },
-          {
-            type: "line",
-            label: "DT Water Line",
-            data: data?.map((el) => el.water_level),
-            backgroundColor: "#1118274D",
-            borderColor: "#11182780",
-            borderWidth: 1,
-            tension: 0.5,
           },
         ],
       }}
