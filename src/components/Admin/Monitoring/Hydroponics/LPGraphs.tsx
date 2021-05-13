@@ -41,8 +41,8 @@ export const months = [
   "Dec",
 ];
 
-const formatDate = (n: Date) => {
-  return `${months[n.getMonth()]} ${n.getDay()}, ${n.getFullYear()}`;
+export const formatDate = (n: Date) => {
+  return `${months[n.getMonth()]} ${n.getDate()}, ${n.getFullYear()}`;
 };
 
 const LPGraphs: React.FC = () => {
@@ -101,17 +101,17 @@ const LPGraphs: React.FC = () => {
           >
             <Disclosure.Panel>
               <div className="grid grid-cols-12 gap-6 mt-4">
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
+                <ChartCard className="flex flex-col col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <div style={{ height: "300px" }}>
                     <LPImage setIndex={setIndex} />
                   </div>
-                  {data && (
-                    <div className="pt-2 font-mono">
-                      <p className="flex-1">{`${formatDate(
-                        data[index].date
-                      )} | Week ${data[index].week_number}`}</p>
+                  <div>
+                    {data && (
+                      <div className="pt-2 font-mono">
+                        <p className="flex-1">{`${formatDate(
+                          data[index].date
+                        )} | Week ${data[index].week_number}`}</p>
 
-                      <div className="flex flex-col space-x-0 md:space-x-2 md:flex-row">
                         <p className="flex-1 text-sm text-gray-700">
                           Chlorophyll A:{" "}
                           <span className="text-base text-black">
@@ -125,23 +125,23 @@ const LPGraphs: React.FC = () => {
                             {data[index].chlorophyll_b.toFixed(2)} mg/g
                           </span>
                         </p>
+
+                        <p className="flex-1 text-sm text-gray-700">
+                          Growth Stage:{" "}
+                          <span className="text-base text-black">
+                            {data[index].growth_stage}
+                          </span>
+                        </p>
+
+                        <p className="flex-1 text-sm text-gray-700">
+                          Freshweight:{" "}
+                          <span className="text-base text-black">
+                            {data[index].freshweight.toFixed(2)} g
+                          </span>
+                        </p>
                       </div>
-
-                      <p className="flex-1 text-sm text-gray-700">
-                        Growth Stage:{" "}
-                        <span className="text-base text-black">
-                          {data[index].growth_stage}
-                        </span>
-                      </p>
-
-                      <p className="flex-1 text-sm text-gray-700">
-                        Freshweight:{" "}
-                        <span className="text-base text-black">
-                          {data[index].freshweight.toFixed(2)} g
-                        </span>
-                      </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">

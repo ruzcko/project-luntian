@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "uS/m";
         },
       },
-      min: 500,
+      min: 0,
       max: 1500,
     },
   },

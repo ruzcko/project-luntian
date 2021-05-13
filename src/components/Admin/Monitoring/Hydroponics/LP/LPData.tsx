@@ -34,7 +34,7 @@ type LPoutput = {
 };
 
 const formatDate = (n: Date) => {
-  return `${months[n.getMonth()]}:${n.getDay()}`;
+  return `${months[n.getMonth()]}:${n.getDate()}`;
 };
 
 const LPData: React.FC<{ index: number }> = ({ index }) => {

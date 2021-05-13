@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "NTU";
         },
       },
-      min: 1,
+      min: 0,
       max: 15,
     },
   },

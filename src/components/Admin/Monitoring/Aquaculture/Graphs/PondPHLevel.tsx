@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "pH";
         },
       },
-      min: 6,
+      min: 0,
       max: 10,
     },
   },

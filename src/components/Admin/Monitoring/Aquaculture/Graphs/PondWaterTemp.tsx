@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "°C";
         },
       },
-      min: 25,
+      min: 0,
       max: 30,
     },
   },
@@ -87,7 +87,6 @@ const PondWaterTemp: React.FC = () => {
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
-            tension: 0.5,
           },
         ],
       }}

@@ -19,7 +19,7 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
       {({ open }) => (
         <div className="mt-4">
           <Disclosure.Button className="flex items-center space-x-2">
-            <h2 className="text-lg font-semibold">Aquaculture Graphs</h2>
+            <h2 className="text-lg font-semibold">Water Quality</h2>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className={`w-6 h-6 transition-transform duration-300 ${

@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "ppm";
         },
       },
-      min: 250,
+      min: 0,
       max: 1000,
     },
   },

@@ -12,7 +12,7 @@ const options: ChartOptions = {
           return value + "mg/L";
         },
       },
-      min: 2,
+      min: 0,
       max: 8,
     },
   },
