@@ -5,11 +5,12 @@ TODO: FINISHED:
 [x] Labels on Lettuce Image
 [x] Confirm on Add Product
 
-TODO:
+TODO: Easy
 [] Fan Status
 [] Light Status
-[] Incremental/decremental graph for Temp, RH, Feed Level
-[] Landing Page
+[] Incremental/decremental graph for TEMP, RH
+
+TODO: Hard
 [] Energy graphs/icons
 [] E-commerce dashboard
 [] Order process, both admin and user
