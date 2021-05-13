@@ -527,9 +527,6 @@ function Profile() {
               >
                 Update Profile
               </button>
-              <button className="px-4 py-2 mx-auto text-gray-900 rounded md:w-48 md:ml-auto md:mr-0">
-                Set Password
-              </button>
             </div>
           )}
         </div>

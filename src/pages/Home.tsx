@@ -21,7 +21,7 @@ const Home: React.FC = () => {
 
 function HomeNav() {
   return (
-    <div className="relative flex items-center justify-between w-full px-4 h-14">
+    <div className="relative flex items-center justify-between w-full px-4 mx-auto max-w-7xl h-14">
       <div className="flex items-center justify-center md:space-x-4">
         <div className="absolute inset-0 z-0 flex items-center justify-center md:static">
           <Link to="/home">
@@ -38,9 +38,6 @@ function HomeNav() {
       <div className="z-10 flex items-center space-x-4 text-sm">
         <Link to="/login">
           <p>Login</p>
-        </Link>
-        <Link to="signup">
-          <p>Signup</p>
         </Link>
       </div>
     </div>
