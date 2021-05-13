@@ -24,9 +24,9 @@ Landing Page
 Predictions
 
 BARS: E-commerce Tab
-stock - bar, only end date range
-sales - doughnut, bar, start to end date range, cumulative
-expenses - stacked bar, start to end date range, cumulative
-profit - line, start to end date range, cumulative
-site_visits - [pie, start to end date range, cumulative] [line, start to end date range, per day]
-users - [bar, start to end date range, not cumulative] [title, end date, current and new user]
+stock - bar chart, only end date range
+sales - doughnut chart, bar, start to end date range, cumulative
+expenses - stacked bar chart, start to end date range, cumulative
+profit - line chart, start to end date range, cumulative
+site_visits - [pie chart, start to end date range, cumulative] [line chart, start to end date range, per day]
+users - [bar chart, start to end date range, not cumulative] [title, end date, current and new user]
