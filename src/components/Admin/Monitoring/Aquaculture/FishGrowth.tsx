@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
-import { FishArea, FishConv, FishData, FishImage } from "./FG";
+import {
+  FishMS,
+  FishArea,
+  FishConv,
+  FishData,
+  FishEntropy,
+  FishImage,
+} from "./FG";
 import ChartCard from "../ChartCard";
 import { csv } from "d3-fetch";
 import { formatDate } from "../Hydroponics/LPGraphs";
@@ -205,6 +212,20 @@ const FishGrowth: React.FC = () => {
                   <p className="text-sm text-center">Growth Parameters</p>
                   <div style={{ height: "300px" }}>
                     <FishArea index={index} />
+                  </div>
+                </ChartCard>
+
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
+                  <p className="text-sm text-center">Growth Parameters</p>
+                  <div style={{ height: "300px" }}>
+                    <FishEntropy index={index} />
+                  </div>
+                </ChartCard>
+
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-8">
+                  <p className="text-sm text-center">Growth Parameters</p>
+                  <div style={{ height: "300px" }}>
+                    <FishMS index={index} />
                   </div>
                 </ChartCard>
               </div>
