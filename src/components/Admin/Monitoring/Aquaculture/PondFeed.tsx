@@ -3,7 +3,7 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { FeedAmount, FeedLevel } from "./Graphs";
 import ChartCard from "../ChartCard";
 
-const PongFeed: React.FC = () => {
+const PondFeed: React.FC = () => {
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -59,4 +59,4 @@ const PongFeed: React.FC = () => {
   );
 };
 
-export default PongFeed;
+export default PondFeed;

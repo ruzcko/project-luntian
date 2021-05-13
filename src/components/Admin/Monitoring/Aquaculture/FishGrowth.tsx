@@ -121,6 +121,13 @@ const FishGrowth: React.FC = () => {
                         )} | Week ${data[index].week}`}</p>
 
                         <p className="flex-1 text-sm text-gray-700">
+                          growth_stage:{" "}
+                          <span className="text-base text-black">
+                            {data[index].growth_stage}
+                          </span>
+                        </p>
+
+                        <p className="flex-1 text-sm text-gray-700">
                           convhull_length:{" "}
                           <span className="text-base text-black">
                             {data[index].convhull_length}

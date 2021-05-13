@@ -5,6 +5,8 @@ import {
   PondAmmonia,
   PondDissolved,
   PondElecCond,
+  PondNitrate,
+  PondNitrite,
   PondPHLevel,
   PondTotalSolids,
   PondTurbidity,
@@ -48,21 +50,21 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
             <Disclosure.Panel>
               <div className="grid grid-cols-12 gap-6 mt-4">
                 {/* First Row */}
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Water Temperature</p>
                   <div style={{ height: "300px" }}>
                     <PondWaterTemp />
                   </div>
                 </ChartCard>
 
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Ammonia Level</p>
                   <div style={{ height: "300px" }}>
                     <PondAmmonia />
                   </div>
                 </ChartCard>
 
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Dissolved Oxygen</p>
                   <div style={{ height: "300px" }}>
                     <PondDissolved />
@@ -70,7 +72,7 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                 </ChartCard>
 
                 {/* Second Row */}
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">
                     Pond Electric Conductivity
                   </p>
@@ -79,7 +81,7 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                   </div>
                 </ChartCard>
 
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">
                     Pond Total Dissolved Solids
                   </p>
@@ -100,6 +102,20 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                   <p className="text-sm text-center">Pond pH Level</p>
                   <div style={{ height: "300px" }}>
                     <PondPHLevel />
+                  </div>
+                </ChartCard>
+
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                  <p className="text-sm text-center">Pond pH Level</p>
+                  <div style={{ height: "300px" }}>
+                    <PondNitrate />
+                  </div>
+                </ChartCard>
+
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                  <p className="text-sm text-center">Pond pH Level</p>
+                  <div style={{ height: "300px" }}>
+                    <PondNitrite />
                   </div>
                 </ChartCard>
               </div>
