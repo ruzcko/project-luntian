@@ -19,7 +19,7 @@ const AdminControls: React.FC = () => {
       <div className="flex mt-8 mb-4">
         <p className="flex-1">User</p>
 
-        <div className="flex items-center w-40">
+        <div className="flex items-center w-32">
           <p className="flex items-center justify-center flex-1">Farmer</p>
           <p className="flex items-center justify-center flex-1">Admin</p>
         </div>
@@ -34,22 +34,24 @@ const AdminControls: React.FC = () => {
                   <img
                     src={user.photoURL}
                     alt={user.email}
-                    className="object-cover w-14 h-14"
+                    className="flex-shrink-0 object-cover w-14 h-14"
                   />
                 ) : (
                   <div className="flex items-center justify-center text-xl text-gray-500 bg-gray-300 w-14 h-14">
                     {user.firstName[0] ?? "U"}
                   </div>
                 )}
-                <div>
-                  <p>
+                <div className="flex flex-col">
+                  <p className="text-sm md:text-base">
                     {user.firstName} {user.lastName}
                   </p>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <p className="flex text-xs text-gray-500 truncate md:text-sm">
+                    {user.email}
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center w-40">
+              <div className="flex items-center flex-shrink-0 w-32">
                 <div className="flex items-center justify-center flex-1">
                   <input
                     type="checkbox"
