@@ -16,7 +16,7 @@ const Member: React.FC<MemberProps> = ({
   return (
     <div className={`flex flex-col items-center space-y-4 ${className}`}>
       <img
-        className="object-cover rounded-full w-36 h-36 md:w-40 md:h-40"
+        className="object-cover w-32 h-32 rounded-full md:w-36 md:h-36 xl:w-40 xl:h-40"
         src={image}
         alt={name}
       />

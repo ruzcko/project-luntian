@@ -235,7 +235,7 @@ function HomeNav() {
             <Member name="Engr. Heinrick Aquino" image={msc_heinrick_aquino} />
             <Member
               className="xl:col-start-2"
-              name="Engr. Christian Hail Mendigori"
+              name="Engr. Christian Hail Mendigoria"
               image={msc_christian_hail_mendigoria}
             />
             <Member

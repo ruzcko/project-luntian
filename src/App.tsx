@@ -8,8 +8,28 @@ import UserDashboard from "./pages/User/UserDashboard";
 import CreateAccount from "./pages/CreateAccount";
 import NotFound from "./pages/NotFound";
 import { Monitoring } from "./pages/Monitoring";
+import { detect } from "detect-browser";
+import { Loading } from "./components";
 
 const App: React.FC = () => {
+  const browser = detect();
+  const supported = ["chrome", "firefox", "safari", "opera"];
+
+  if (!browser) return <Loading />;
+
+  if (!supported.includes(browser.name))
+    return (
+      <div className="grid w-full h-screen place-items-center">
+        <div className="flex flex-col items-center">
+          <p className="text-lg font-semibold">Browser not Supported.</p>
+          <p className="mt-4">Supported Browsers:</p>
+          {supported.map((item) => (
+            <p className="text-sm text-gray-700 capitalize">{item}</p>
+          ))}
+        </div>
+      </div>
+    );
+
   return (
     <Router>
       <Switch>
