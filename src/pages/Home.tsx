@@ -105,7 +105,7 @@ function HomeNav() {
                 <img src={logo} alt="logo" className="h-10" />
               </div>
               <h1
-                className={`font-bold transition-colors duration-300 tracking-widest uppercase ${
+                className={`font-bold text-sm md:text-lg transition-colors duration-300 tracking-widest uppercase ${
                   yOff > 0 ? "text-gray-700" : "text-white"
                 }`}
               >

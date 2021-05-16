@@ -103,7 +103,7 @@ const UserSidebar: React.FC<SidebarProps> = ({ leftActive, setLeftActive }) => {
       )}
 
       <div className="pt-4 pb-4">
-        <Link to={`/home/profile`}>
+        <Link to={`/home/profile/${doc.id}`}>
           <button
             className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
             onClick={() => {
