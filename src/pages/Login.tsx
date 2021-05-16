@@ -2,11 +2,7 @@ import React, { useRef, useState } from "react";
 import { auth, db, googleProvider } from "../utils/firebase";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGoogle,
-  faFacebookF,
-  faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import firebase from "firebase";
 
 type ProviderTypes = "GOOGLE" | "FACEBOOK" | "GITHUB";
@@ -97,23 +93,6 @@ const Login: React.FC = () => {
               className={`flex items-center px-4 py-2 border border-gray-300 focus:outline-none focus:bg-blue-300 rounded-md`}
             >
               <FontAwesomeIcon icon={faGoogle} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleProviderLogin("GOOGLE")}
-              className={`flex items-center px-4 py-2 border border-gray-300 focus:outline-none focus:bg-blue-300 rounded-md`}
-            >
-              <FontAwesomeIcon icon={faFacebookF} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleProviderLogin("GOOGLE")}
-              className={`flex items-center px-4 py-2 border border-gray-300 
-              focus:outline-none focus:bg-blue-300 rounded-md`}
-            >
-              <FontAwesomeIcon icon={faGithub} />
             </button>
           </div>
 
