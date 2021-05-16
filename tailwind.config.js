@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "jit",
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class",
   theme: {
@@ -12,11 +13,7 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {
-      backgroundColor: ["active"],
-    },
-  },
+  variants: {},
   plugins: [
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
