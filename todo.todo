@@ -9,20 +9,25 @@ TODO: Easy
 [] Fan Status
 [] Light Status
 [] Incremental/decremental graph for TEMP, RH
+[] E-Commerce functions
+[] Mobile Layout
 
 TODO: Hard
 [] Energy graphs/icons
 [] E-commerce dashboard
 [] Order process, both admin and user
 [] Sales Data
+[] Image classifier UI
+[] Predictions tab/graphs
 
 FIXME:
-[] Single Page app bug
+[x] Single Page app bug
 [] Edit Profile Tab in sidebar
 
 (Ruzcko)
 Landing Page
-Predictions
+Prediction Models
+Image Classification Models
 
 BARS: E-commerce Tab
 stock - bar chart, only end date range
