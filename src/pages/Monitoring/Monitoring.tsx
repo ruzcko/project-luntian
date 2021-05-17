@@ -83,7 +83,7 @@ const AdminFarmMonitoring: React.FC = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="flex flex-col flex-1 p-6 ml-0 md:ml-64">
+      <div className="flex flex-col flex-1 p-2 ml-0 md:p-6 md:ml-64">
         <div className="flex items-center w-full mb-8 divide-x-8">
           <h1 className="text-xl font-semibold md:text-3xl">Farm Monitoring</h1>
           <Menu as="div" className="relative inline-block">
