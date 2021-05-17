@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import Aquaculture from "./Aquaculture";
 import Energy from "./Energy";
 import Hydroponics from "./Hydroponics";
+import { Menu, Transition } from "@headlessui/react";
 
 type Tab = "hydroponics" | "aquaculture" | "energy";
 
@@ -84,8 +85,82 @@ const AdminFarmMonitoring: React.FC = () => {
       {/* CONTENT */}
       <div className="flex flex-col flex-1 p-6 ml-0 md:ml-64">
         <div className="flex items-center w-full mb-8 divide-x-8">
-          <h1 className="text-3xl font-semibold">Farm Monitoring</h1>
-          <h6 className="text-xl capitalize">{tab}</h6>
+          <h1 className="text-xl font-semibold md:text-3xl">Farm Monitoring</h1>
+          <Menu as="div" className="relative inline-block">
+            <Menu.Button className="flex items-center space-x-2 capitalize">
+              <div>
+                <p>{tab}</p>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`w-6 h-6 duration-300 transform rotate-180`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 15l7-7 7 7"
+                />
+              </svg>
+            </Menu.Button>
+            <Transition
+              as={React.Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 z-30 w-40 p-2 mt-2 text-gray-500 bg-white divide-y rounded">
+                <Menu.Item>
+                  <button
+                    onClick={() => {
+                      if (tab !== "hydroponics")
+                        history.push({
+                          pathname: "/monitoring",
+                          search: `?tab=hydroponics`,
+                        });
+                    }}
+                    className="w-full px-2 py-1 text-left hover:bg-gray-100"
+                  >
+                    Hydroponics
+                  </button>
+                </Menu.Item>
+                <Menu.Item>
+                  <button
+                    onClick={() => {
+                      if (tab !== "aquaculture")
+                        history.push({
+                          pathname: "/monitoring",
+                          search: `?tab=aquaculture`,
+                        });
+                    }}
+                    className="w-full px-2 py-1 text-left hover:bg-gray-100"
+                  >
+                    Aquaculture
+                  </button>
+                </Menu.Item>
+                <Menu.Item>
+                  <button
+                    onClick={() => {
+                      if (tab !== "energy")
+                        history.push({
+                          pathname: "/monitoring",
+                          search: `?tab=energy`,
+                        });
+                    }}
+                    className="w-full px-2 py-1 text-left hover:bg-gray-100"
+                  >
+                    Energy
+                  </button>
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
         <Switcher to={tab} />
       </div>

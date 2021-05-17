@@ -106,14 +106,11 @@ const FishGrowth: React.FC = () => {
           >
             <Disclosure.Panel>
               <div className="grid grid-cols-12 gap-6 mt-4">
-                <ChartCard
-                  row
-                  className="flex flex-row items-center col-span-12 p-4 lg:col-span-6 xl:col-span-6"
-                >
-                  <div className="w-1/2" style={{ height: "300px" }}>
+                <ChartCard className="flex flex-col items-center col-span-12 p-4 md:flex-row md:space-x-4 lg:col-span-6 xl:col-span-6">
+                  <div className="w-full md:w-1/2" style={{ height: "300px" }}>
                     <FishImage setIndex={setIndex} />
                   </div>
-                  <div className="flex-shrink-0 w-1/2">
+                  <div className="flex-shrink-0 w-full md:w-1/2">
                     {data && (
                       <div className="pt-2 font-mono">
                         <p className="flex-1">{`${formatDate(
