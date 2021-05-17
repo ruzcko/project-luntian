@@ -40,6 +40,9 @@ const ACGraphs: React.FC<ACGraphsProps> = () => {
             leaveTo="transform scale-95 opacity-0 -mt-20"
           >
             <Disclosure.Panel>
+              <p className="mt-2 text-sm text-gray-600">
+                To turn on/off the exhaust fans and lights
+              </p>
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
                   <p className="text-sm text-center">Temperature</p>

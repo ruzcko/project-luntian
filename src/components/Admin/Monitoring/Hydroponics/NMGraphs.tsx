@@ -42,6 +42,11 @@ const NMGraphs: React.FC = () => {
             leaveTo="transform scale-95 opacity-0 -mt-20"
           >
             <Disclosure.Panel>
+              <p className="mt-2 text-sm text-gray-600">
+                (1) Turns on and off the solenoid valves of freshwater,
+                pondwater and NPK; (2) Controls pump for water flow and air pump
+                for mixing
+              </p>
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">PH Level</p>

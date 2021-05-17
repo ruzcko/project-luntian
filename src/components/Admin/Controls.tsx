@@ -36,7 +36,7 @@ const AdminControls: React.FC = () => {
       </div>
 
       <div className="flex mt-8 mb-4">
-        <p className="flex-1">User</p>
+        <p className="flex-1">Users</p>
 
         <div className="items-center hidden w-32 md:flex">
           <p className="flex items-center justify-center flex-1">Farmer</p>

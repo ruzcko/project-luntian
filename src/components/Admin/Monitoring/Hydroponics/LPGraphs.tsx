@@ -100,6 +100,10 @@ const LPGraphs: React.FC = () => {
             leaveTo="transform scale-95 opacity-0 -mt-20"
           >
             <Disclosure.Panel>
+              <p className="mt-2 text-sm text-gray-600">
+                Captures lettuce image for generating lettuce phenes (Pigment,
+                Vitamin C, Freshweight)
+              </p>
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="flex flex-col col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <div style={{ height: "300px" }}>

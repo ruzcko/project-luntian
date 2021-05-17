@@ -84,6 +84,23 @@ const AdminFarmMonitoring: React.FC = () => {
 
       {/* CONTENT */}
       <div className="flex flex-col flex-1 p-2 ml-0 md:p-6 md:ml-64">
+        <div className="items-center block space-x-2 md:hidden">
+          <svg
+            onClick={() => history.replace("/home")}
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6 mb-4 rounded-full cursor-pointer hover:bg-gray-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </div>
         <div className="flex items-center w-full mb-8 divide-x-8">
           <h1 className="text-xl font-semibold md:text-3xl">Farm Monitoring</h1>
           <Menu as="div" className="relative inline-block">
