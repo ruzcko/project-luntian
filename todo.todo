@@ -10,7 +10,7 @@ TODO: Easy
 [] Light Status
 [] Incremental/decremental graph for TEMP, RH
 [] E-Commerce functions
-[] Mobile Layout
+[x] Mobile Layout
 
 TODO: Hard
 [] Energy graphs/icons
@@ -22,7 +22,7 @@ TODO: Hard
 
 FIXME:
 [x] Single Page app bug
-[] Edit Profile Tab in sidebar
+[x] Edit Profile Tab in sidebar
 
 (Ruzcko)
 Landing Page
