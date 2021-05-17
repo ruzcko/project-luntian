@@ -189,7 +189,7 @@ function HomeNav() {
             description="Project Head and Adviser"
           />
 
-          <p className="pt-10 pb-4 text-3xl text-gray-800">PhD Candidates</p>
+          <p className="pt-10 pb-4 text-2xl text-gray-800">PhD Candidates</p>
 
           <div className="grid grid-cols-2 gap-4 md:gap-8 xl:gap-x-16 md:grid-cols-3">
             <Member
@@ -213,7 +213,7 @@ function HomeNav() {
             <Member name="Engr. Michael Pareja" image={phd_michael_pareja} />
           </div>
 
-          <p className="pt-10 pb-4 text-3xl text-gray-800">MS Candidates</p>
+          <p className="pt-10 pb-4 text-2xl text-gray-800">MS Candidates</p>
 
           <div className="grid grid-cols-2 gap-4 md:gap-8 xl:gap-x-16 md:grid-cols-3 xl:grid-cols-4">
             <Member
