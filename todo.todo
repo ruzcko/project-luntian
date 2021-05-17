@@ -37,7 +37,7 @@ profit - line chart, start to end date range, cumulative
 site_visits - [pie chart, start to end date range, cumulative] [line chart, start to end date range, per day]
 users - [bar chart, start to end date range, not cumulative] [title, end date, current and new user]
 
-TODO: Landing Page
+TODO: [x] Landing Page
 -------- Image BG ------------
 Welcome to Poject Luntian
 

@@ -216,8 +216,8 @@ function Profile() {
             </div>
           )}
           {currentUser && (
-            <div className="relative flex items-center justify-center w-1/2 py-2 mt-2 text-gray-800 bg-gray-200 rounded-md cursor-pointer md:w-full md:max-w-lg active:bg-gray-300">
-              <button className="">Change Photo</button>
+            <div className="relative flex items-center justify-center w-1/2 py-2 mt-2 mb-4 text-gray-800 bg-gray-200 rounded-md cursor-pointer md:w-full md:max-w-lg active:bg-gray-300">
+              <button className="text-xs">Change Photo</button>
               <input
                 type="file"
                 onChange={changeHandler}
@@ -227,7 +227,7 @@ function Profile() {
           )}
         </div>
 
-        <div className="flex flex-col flex-1 space-y-2">
+        <div className="flex flex-col flex-1 space-y-2 text-sm">
           <div className="flex w-full space-x-2">
             <div className="flex-1">
               <p className="text-gray-600">First Name</p>
@@ -242,7 +242,7 @@ function Profile() {
                     handleChange(e.target.value, "firstName");
                   }}
                   type="text"
-                  className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                  className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                     errors.firstName ? "border-red-500" : "border-gray-400"
                   }`}
                 />
@@ -264,7 +264,7 @@ function Profile() {
                     handleChange(e.target.value, "lastName");
                   }}
                   type="text"
-                  className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                  className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                     errors.lastName ? "border-red-500" : "border-gray-400"
                   }`}
                 />
@@ -287,12 +287,12 @@ function Profile() {
                 onChange={(e) => {
                   handleChange(e.target.value, "bio");
                 }}
-                className="w-full px-4 py-2 bg-gray-100 border-gray-400 rounded focus:outline-none focus:ring-0"
+                className="w-full px-4 py-2 text-sm bg-gray-100 border-gray-400 rounded focus:outline-none focus:ring-0"
               />
             )}
           </div>
 
-          <div className="flex flex-col pt-8 md:space-x-2 md:flex-row">
+          <div className="flex flex-col md:space-x-2 md:flex-row">
             <div className="flex flex-col flex-1 ">
               <p className="text-gray-600">Region</p>
               {!currentUser ? (
@@ -308,7 +308,7 @@ function Profile() {
                       handleChange(null, "province");
                       handleChange(null, "city");
                     }}
-                    className={`bg-gray-100  rounded focus:outline-none focus:ring-0 ${
+                    className={`text-sm bg-gray-100  rounded focus:outline-none focus:ring-0 ${
                       errors.region ? "border-red-500" : "border-gray-400"
                     }`}
                     value={values.region ?? "disable"}
@@ -345,7 +345,7 @@ function Profile() {
                       handleChange(null, "city");
                     }}
                     value={values.province ?? "disable"}
-                    className={`bg-gray-100  rounded focus:outline-none focus:ring-0 ${
+                    className={`text-sm bg-gray-100  rounded focus:outline-none focus:ring-0 ${
                       errors.province ? "border-red-500" : "border-gray-400"
                     }`}
                   >
@@ -385,7 +385,7 @@ function Profile() {
                       handleChange(e.target.value, "city");
                     }}
                     value={values.city ?? "disable"}
-                    className={`bg-gray-100  rounded focus:outline-none focus:ring-0 ${
+                    className={`text-sm bg-gray-100  rounded focus:outline-none focus:ring-0 ${
                       errors.city ? "border-red-500" : "border-gray-400"
                     }`}
                   >
@@ -414,7 +414,7 @@ function Profile() {
           </div>
 
           <div className="flex flex-col space-y-2">
-            <div className="flex space-x-2">
+            <div className="flex flex-col space-x-0 md:space-x-2 md:flex-row">
               <div className="flex-1">
                 <p className="text-gray-600">House Number and Street</p>
                 {!currentUser ? (
@@ -428,7 +428,7 @@ function Profile() {
                       handleChange(e.target.value, "houseNumber");
                     }}
                     type="text"
-                    className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                    className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                       errors.houseNumber ? "border-red-500" : "border-gray-400"
                     }`}
                   />
@@ -437,7 +437,8 @@ function Profile() {
                   <p className="text-xs text-red-500">{errors.houseNumber}</p>
                 )}
               </div>
-              <div className="flex flex-1 space-x-2">
+
+              <div className="flex flex-1 mt-2 space-x-2 md:mt-0">
                 <div className="flex-1">
                   <p className="text-gray-600">Barangay</p>
                   {!currentUser ? (
@@ -451,7 +452,7 @@ function Profile() {
                         handleChange(e.target.value, "barangay");
                       }}
                       type="text"
-                      className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                      className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                         errors.barangay ? "border-red-500" : "border-gray-400"
                       }`}
                     />
@@ -460,6 +461,7 @@ function Profile() {
                     <p className="text-xs text-red-500">{errors.barangay}</p>
                   )}
                 </div>
+
                 <div className="flex-1">
                   <p className="text-gray-600">Zip Code</p>
                   {!currentUser ? (
@@ -473,7 +475,7 @@ function Profile() {
                         handleChange(e.target.value, "zipCode");
                       }}
                       type="text"
-                      className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                      className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                         errors.zipCode ? "border-red-500" : "border-gray-400"
                       }`}
                     />
@@ -484,7 +486,7 @@ function Profile() {
                 </div>
               </div>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-col space-x-0 md:space-x-2 md:flex-row">
               <div className="flex-1">
                 <p className="text-gray-600">Contact Number</p>
                 {!currentUser ? (
@@ -500,7 +502,7 @@ function Profile() {
                     type="text"
                     placeholder="09XXXXXXXXX"
                     maxLength={11}
-                    className={`w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
+                    className={`text-sm w-full px-4 py-2 bg-gray-100 rounded focus:outline-none focus:ring-0 ${
                       errors.phoneNumber ? "border-red-500" : "border-gray-400"
                     }`}
                   />
@@ -510,7 +512,7 @@ function Profile() {
                 )}
               </div>
 
-              <div className="flex flex-col flex-1 h-full">
+              <div className="flex flex-col flex-1 h-full mt-2 md:mt-0">
                 <p className="text-gray-600">Email</p>
                 <p className="w-full px-4 py-2 bg-gray-300 border-gray-400 rounded focus:outline-none focus:ring-0">
                   {values.email}

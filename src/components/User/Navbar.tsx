@@ -21,7 +21,7 @@ const UserNavbar: React.FC<UserNavbarProps> = ({
 
   if (user)
     return (
-      <div className="relative flex items-center justify-between w-full px-4 h-14">
+      <div className="relative flex items-center justify-between w-full px-4 border-b border-gray-300 h-14">
         <div className="flex items-center justify-center md:space-x-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
