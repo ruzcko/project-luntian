@@ -42,10 +42,10 @@ const FishVideo: React.FC<FishVideoProps> = () => {
                 feeds when the fish are deemed satiated)
               </p>
 
-              <img
+              {/* <img
                 src="https://media.giphy.com/media/l2QDPStBfVQjHXSOk/giphy.gif"
                 alt="test_gif"
-              />
+              /> */}
             </Disclosure.Panel>
           </Transition>
         </div>
