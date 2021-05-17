@@ -110,7 +110,7 @@ const AdminFarmMonitoring: React.FC = () => {
               </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className={`w-6 h-6 duration-300 transform rotate-180`}
+                className={`block md:hidden w-6 h-6 duration-300 transform rotate-180`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
