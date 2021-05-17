@@ -3,6 +3,8 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 import { Product } from "../../luntian-types";
 import { useHistory } from "react-router-dom";
+import { motion } from "framer-motion";
+import { fadeInUp, stagger } from "../../utils/framer-constants";
 
 const Marketplace: React.FC = () => {
   const { products: prod } = useContext(FirestoreContext);
@@ -33,11 +35,20 @@ const Marketplace: React.FC = () => {
       </div>
 
       <div className="flex-1">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={stagger}
+          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
           {!loading ? (
             products.map((product) => (
               <Link to={`${url}/product/${product.id}`} key={product.id}>
-                <div className="h-full overflow-hidden bg-white rounded shadow">
+                <motion.div
+                  variants={fadeInUp}
+                  className="h-full overflow-hidden bg-white rounded shadow"
+                >
                   <img
                     className="object-cover w-full h-44"
                     src={product.photoURL}
@@ -66,13 +77,13 @@ const Marketplace: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </Link>
             ))
           ) : (
             <h1>Loading...</h1>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

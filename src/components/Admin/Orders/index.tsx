@@ -1,6 +1,8 @@
+import { motion } from "framer-motion";
 import React, { useContext } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
+import { fadeInUp, stagger } from "../../../utils/framer-constants";
 
 const AdminOrders: React.FC = () => {
   const history = useHistory();
@@ -29,19 +31,27 @@ const AdminOrders: React.FC = () => {
         <h2 className="text-xl">Orders</h2>
       </div>
 
-      <div className="flex flex-col mt-8 space-y-2">
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={stagger}
+        className="flex flex-col mt-8 space-y-2"
+      >
         {orders.map((order, idx) => (
-          <Link key={order.id} to={`${url}/${order.id}`}>
-            <div className="flex flex-row items-center justify-between px-4 py-2 bg-white shadow">
-              <p>
-                {`${idx + 1}. `}
-                {order.id}
-              </p>
-              <p>{order.status}</p>
-            </div>
-          </Link>
+          <motion.div variants={fadeInUp}>
+            <Link key={order.id} to={`${url}/${order.id}`}>
+              <div className="flex flex-row items-center justify-between px-4 py-2 bg-white shadow">
+                <p>
+                  {`${idx + 1}. `}
+                  {order.id}
+                </p>
+                <p>{order.status}</p>
+              </div>
+            </Link>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

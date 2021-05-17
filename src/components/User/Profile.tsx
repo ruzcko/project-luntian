@@ -5,6 +5,8 @@ import Loading from "../Loading";
 import regions from "../../assets/regions.json";
 import { useHistory, useParams } from "react-router";
 import { User } from "../../luntian-types";
+import { motion } from "framer-motion";
+import { fadeInUp, stagger } from "../../utils/framer-constants";
 
 type RegionData = typeof import("../../assets/regions.json");
 
@@ -206,8 +208,14 @@ function Profile() {
         <h2 className="text-xl">Profile</h2>
       </div>
 
-      <div className="flex flex-col md:flex-row md:space-x-4">
-        <div>
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={stagger}
+        className="flex flex-col md:flex-row md:space-x-4"
+      >
+        <motion.div variants={fadeInUp}>
           {values?.photoURL || photo ? (
             <img
               id="image-placeholder"
@@ -241,10 +249,16 @@ function Profile() {
               />
             </div>
           )}
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col flex-1 space-y-2 text-sm">
-          <div className="flex w-full space-x-2">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={stagger}
+          className="flex flex-col flex-1 space-y-2 text-sm"
+        >
+          <motion.div variants={fadeInUp} className="flex w-full space-x-2">
             <div className="flex-1">
               <p className="text-gray-600">First Name</p>
               {!currentUser ? (
@@ -289,9 +303,9 @@ function Profile() {
                 <p className="text-xs text-red-500">{errors.lastName}</p>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div variants={fadeInUp}>
             <p className="text-gray-600">Bio</p>
             {!currentUser ? (
               <p className="w-full px-4 py-2 bg-gray-300 border-gray-400 rounded focus:outline-none focus:ring-0">
@@ -306,9 +320,12 @@ function Profile() {
                 className="w-full px-4 py-2 text-sm bg-gray-100 border-gray-400 rounded focus:outline-none focus:ring-0"
               />
             )}
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col md:space-x-2 md:flex-row">
+          <motion.div
+            variants={fadeInUp}
+            className="flex flex-col md:space-x-2 md:flex-row"
+          >
             <div className="flex flex-col flex-1 ">
               <p className="text-gray-600">Region</p>
               {!currentUser ? (
@@ -427,9 +444,9 @@ function Profile() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col space-y-2">
+          <motion.div variants={fadeInUp} className="flex flex-col space-y-2">
             <div className="flex flex-col space-x-0 md:space-x-2 md:flex-row">
               <div className="flex-1">
                 <p className="text-gray-600">House Number and Street</p>
@@ -535,20 +552,23 @@ function Profile() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {currentUser && (
-            <div className="flex flex-col pt-8 space-y-2 text-gray-200">
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-col pt-8 space-y-2 text-gray-200"
+            >
               <button
                 onClick={handleUpdate}
                 className="px-4 py-2 mx-auto bg-green-500 rounded md:w-48 md:ml-auto md:mr-0"
               >
                 Update Profile
               </button>
-            </div>
+            </motion.div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

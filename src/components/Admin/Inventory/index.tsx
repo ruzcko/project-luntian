@@ -3,6 +3,8 @@ import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { db } from "../../../utils/firebase";
 import { FirestoreContext } from "../../../contexts/FirestoreContext";
 import { Product } from "../../../luntian-types";
+import { motion } from "framer-motion";
+import { fadeInUp, stagger } from "../../../utils/framer-constants";
 
 const AdminInventory: React.FC = () => {
   let { url } = useRouteMatch();
@@ -57,12 +59,22 @@ const AdminInventory: React.FC = () => {
         </Link>
       </div>
       <div className="h-full pt-4">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={stagger}
+          className="grid grid-cols-2 gap-4 lg:grid-cols-3"
+        >
           {!loading &&
             values.map((p) => {
               const product: Product = { ...p };
               return (
-                <div className="flex flex-col md:flex-row" key={product.id}>
+                <motion.div
+                  variants={fadeInUp}
+                  className="flex flex-col md:flex-row"
+                  key={product.id}
+                >
                   <Link
                     to={`${url}/${product.id}`}
                     className="flex flex-col items-center flex-1 bg-white border rounded shadow-md select-none active:bg-gray-50 md:flex-row"
@@ -134,10 +146,10 @@ const AdminInventory: React.FC = () => {
                       </svg>
                     </button>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
