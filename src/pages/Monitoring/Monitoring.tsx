@@ -54,7 +54,7 @@ const AdminFarmMonitoring: React.FC = () => {
       <div className="absolute inset-y-0 left-0 flex flex-col w-64 p-4 -ml-64 bg-gray-300 md:ml-0">
         <div className="flex items-center w-full">
           <button
-            onClick={() => history.replace("/admin")}
+            onClick={() => history.replace("/home")}
             className="flex items-center justify-center w-10 h-10 p-1 transition-colors duration-300 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
           >
             <svg

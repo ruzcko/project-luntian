@@ -124,7 +124,7 @@ function HomeNav() {
         </Container>
       </nav>
 
-      <div className="relative z-10 w-full pt-14 h-[600px]">
+      <div className="relative z-10 w-full h-screen pt-14">
         <div className="absolute inset-0 z-[-2]">
           <img
             src={bg}

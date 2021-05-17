@@ -1,5 +1,6 @@
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useHistory } from "react-router";
 import { Privilege } from "../../luntian-types";
 import { db } from "../../utils/firebase";
 
@@ -7,6 +8,7 @@ const AdminControls: React.FC = () => {
   const [users, loading] = useCollectionData(db.collection("users"), {
     idField: "id",
   });
+  const history = useHistory();
 
   const togglePrivilege = (id: string, privilege: Privilege) => {
     db.collection("users").doc(id).update({ privilege });
@@ -14,7 +16,24 @@ const AdminControls: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-xl">Admin Controls</h1>
+      <div className="flex items-center mb-4 space-x-2">
+        <svg
+          onClick={() => history.goBack()}
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10 p-2 rounded-full cursor-pointer hover:bg-gray-200"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+        <h2 className="text-xl">Admin Controls</h2>
+      </div>
 
       <div className="flex mt-8 mb-4">
         <p className="flex-1">User</p>

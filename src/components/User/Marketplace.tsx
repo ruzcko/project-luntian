@@ -2,16 +2,36 @@ import React, { useContext } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { FirestoreContext } from "../../contexts/FirestoreContext";
 import { Product } from "../../luntian-types";
+import { useHistory } from "react-router-dom";
 
-const ProductList: React.FC = () => {
+const Marketplace: React.FC = () => {
   const { products: prod } = useContext(FirestoreContext);
   const products: Array<Product> = [...prod];
   const loading = products === undefined;
   const { url } = useRouteMatch();
+  const history = useHistory();
 
   return (
-    <div className="flex flex-col h-full px-4 pt-4">
-      <div></div>
+    <div className="px-4 pt-4">
+      <div className="flex items-center mb-4 space-x-2">
+        <svg
+          onClick={() => history.goBack()}
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10 p-2 rounded-full cursor-pointer hover:bg-gray-200"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+        <h2 className="text-xl">Marketplace</h2>
+      </div>
+
       <div className="flex-1">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {!loading ? (
@@ -58,4 +78,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+export default Marketplace;

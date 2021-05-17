@@ -3,12 +3,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db, storage } from "../../utils/firebase";
 import Loading from "../Loading";
 import regions from "../../assets/regions.json";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { User } from "../../luntian-types";
 
 type RegionData = typeof import("../../assets/regions.json");
 
 function Profile() {
+  const history = useHistory();
   const [userId, setUserId] = useState<string | undefined>();
   const [user, userLoading] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
@@ -186,8 +187,23 @@ function Profile() {
 
   return (
     <div className="flex flex-col h-full m-4">
-      <div className="">
-        <h1 className="text-xl">Profile</h1>
+      <div className="flex items-center mb-4 space-x-2">
+        <svg
+          onClick={() => history.goBack()}
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10 p-2 rounded-full cursor-pointer hover:bg-gray-200"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+        <h2 className="text-xl">Profile</h2>
       </div>
 
       <div className="flex flex-col md:flex-row md:space-x-4">

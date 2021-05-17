@@ -59,7 +59,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ privilege }) => {
               <Route path={`${path}/sales`} component={AdminSales} />
               <Route exact path={`${path}/orders`} component={AdminOrders} />
               <Route path={`${path}/orders/:id`} component={OrderItem} />
-              <Route path={`${path}/reports`} component={AdminReports} />
+              <Route path={`${path}/projections`} component={AdminReports} />
             </Switch>
           </div>
         </div>

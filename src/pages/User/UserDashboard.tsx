@@ -11,10 +11,11 @@ import {
   OrderItem,
   OrderList,
   ProductItem,
-  ProductList,
+  HomeDashboard,
   UserNavbar,
   UserSidebar,
   Profile,
+  Marketplace,
 } from "../../components/User/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
@@ -41,7 +42,7 @@ const UserDashboard: React.FC = () => {
   }
 
   return user ? (
-    <nav className="flex border-b border-gray-300">
+    <div>
       {/* Navbar */}
       <UserNavbar leftActive={leftActive} setLeftActive={setLeftActive} />
 
@@ -49,12 +50,13 @@ const UserDashboard: React.FC = () => {
       <UserSidebar leftActive={leftActive} setLeftActive={setLeftActive} />
 
       {/* Content Switch */}
-      <div className="absolute inset-0 flex overflow-hidden bg-gray-100 border-t border-gray-300 mt-14">
+      <div className="absolute inset-0 flex overflow-hidden bg-gray-100 border-gray-300 mt-14">
         <div
           className={`z-0 absolute inset-0 w-full max-w-7xl mx-auto overflow-y-scroll no-scrollbar`}
         >
           <Switch>
-            <Route exact path={path} component={ProductList} />
+            <Route exact path={path} component={HomeDashboard} />
+            <Route path={`${path}/marketplace`} component={Marketplace} />
             <Route path={`${path}/product/:id`} component={ProductItem} />
             <Route exact path={`${path}/orders`} component={OrderList} />
             <Route path={`${path}/orders/:id`} component={OrderItem} />
@@ -64,7 +66,7 @@ const UserDashboard: React.FC = () => {
           </Switch>
         </div>
       </div>
-    </nav>
+    </div>
   ) : (
     <Redirect to="/" />
   );

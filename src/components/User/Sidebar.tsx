@@ -33,6 +33,16 @@ const UserSidebar: React.FC<SidebarProps> = ({ leftActive, setLeftActive }) => {
             Home
           </button>
         </Link>
+        <Link to={`/home/marketplace`}>
+          <button
+            className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
+            onClick={() => {
+              setLeftActive(false);
+            }}
+          >
+            Marketplace
+          </button>
+        </Link>
         {doc?.privilege === "ADMIN" && (
           <Link to={`/admin`}>
             <button
@@ -89,14 +99,14 @@ const UserSidebar: React.FC<SidebarProps> = ({ leftActive, setLeftActive }) => {
               Orders
             </button>
           </Link>
-          <Link to={`/admin/reports`}>
+          <Link to={`/admin/projections`}>
             <button
               className="w-full px-4 py-2 text-left transition-colors duration-150 focus:outline-none active:bg-gray-200"
               onClick={() => {
                 setLeftActive(false);
               }}
             >
-              Reports
+              Projections
             </button>
           </Link>
         </div>
