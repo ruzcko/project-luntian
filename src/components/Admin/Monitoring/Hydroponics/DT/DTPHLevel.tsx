@@ -14,7 +14,7 @@ const options: ChartOptions = {
         },
       },
       min: 0,
-      max: 6.5,
+      max: 7,
     },
   },
   maintainAspectRatio: false,
