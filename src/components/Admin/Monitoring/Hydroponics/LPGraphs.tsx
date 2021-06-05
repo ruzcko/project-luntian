@@ -71,7 +71,7 @@ const LPGraphs: React.FC = () => {
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
-        <div>
+        <div className="mt-4">
           <Disclosure.Button className="flex items-center space-x-2">
             <h2 className="text-lg font-semibold">Lettuce Phenotype</h2>
             <svg

@@ -36,11 +36,11 @@ const ACTemperature: React.FC<Props> = ({ data, frequency }) => {
       let _time = ref.current?.data.labels as Array<string>;
       n.current = n.current >= 23 ? 0 : n.current + 1;
 
-      _time.splice(0, 1);
-      _time.push(formatDate(new Date(data[n.current].unix_time * 1000)));
+      _time?.splice(0, 1);
+      _time?.push(formatDate(new Date(data[n.current].unix_time * 1000)));
 
-      _data.splice(0, 1);
-      _data.push(data[n.current].ac_temperature);
+      _data?.splice(0, 1);
+      _data?.push(data[n.current].ac_temperature);
 
       ref.current?.update();
     }, frequency);
