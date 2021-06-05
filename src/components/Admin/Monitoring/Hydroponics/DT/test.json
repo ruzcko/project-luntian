@@ -1,0 +1,98 @@
+[
+  {
+    "unix_time": 1614528000,
+    "relative_humidity": 84
+  },
+  {
+    "unix_time": 1614531600,
+    "relative_humidity": 35
+  },
+  {
+    "unix_time": 1614535200,
+    "relative_humidity": 71
+  },
+  {
+    "unix_time": 1614538800,
+    "relative_humidity": 54
+  },
+  {
+    "unix_time": 1614542400,
+    "relative_humidity": 23
+  },
+  {
+    "unix_time": 1614546000,
+    "relative_humidity": 92
+  },
+  {
+    "unix_time": 1614549600,
+    "relative_humidity": 58
+  },
+  {
+    "unix_time": 1614553200,
+    "relative_humidity": 62
+  },
+  {
+    "unix_time": 1614556800,
+    "relative_humidity": 17
+  },
+  {
+    "unix_time": 1614560400,
+    "relative_humidity": 4
+  },
+  {
+    "unix_time": 1614564000,
+    "relative_humidity": 63
+  },
+  {
+    "unix_time": 1614567600,
+    "relative_humidity": 55
+  },
+  {
+    "unix_time": 1614571200,
+    "relative_humidity": 65
+  },
+  {
+    "unix_time": 1614574800,
+    "relative_humidity": 86
+  },
+  {
+    "unix_time": 1614578400,
+    "relative_humidity": 30
+  },
+  {
+    "unix_time": 1614582000,
+    "relative_humidity": 25
+  },
+  {
+    "unix_time": 1614585600,
+    "relative_humidity": 74
+  },
+  {
+    "unix_time": 1614589200,
+    "relative_humidity": 82
+  },
+  {
+    "unix_time": 1614592800,
+    "relative_humidity": 33
+  },
+  {
+    "unix_time": 1614596400,
+    "relative_humidity": 38
+  },
+  {
+    "unix_time": 1614600000,
+    "relative_humidity": 28
+  },
+  {
+    "unix_time": 1614603600,
+    "relative_humidity": 24
+  },
+  {
+    "unix_time": 1614607200,
+    "relative_humidity": 94
+  },
+  {
+    "unix_time": 1614610800,
+    "relative_humidity": 10
+  }
+]

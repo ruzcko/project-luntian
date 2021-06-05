@@ -8,10 +8,11 @@ import {
   DTTemperature,
   DTWaterLevel,
 } from "./DT";
+import data from "./hydroponics.json";
 
-interface DTGraphsProps {}
+const DTGraphs: React.FC = () => {
+  const frequency = 1500;
 
-const DTGraphs: React.FC<DTGraphsProps> = () => {
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -52,35 +53,35 @@ const DTGraphs: React.FC<DTGraphsProps> = () => {
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">PH Level</p>
                   <div style={{ height: "350px" }}>
-                    <DTPHLevel />
+                    <DTPHLevel {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Ammonia Level</p>
                   <div style={{ height: "350px" }}>
-                    <DTAmmonia />
+                    <DTAmmonia {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Temperature</p>
                   <div style={{ height: "350px" }}>
-                    <DTTemperature />
+                    <DTTemperature {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-8">
                   <p className="text-sm text-center">Water Level</p>
                   <div style={{ height: "400px", width: "100%" }}>
-                    <DTWaterLevel />
+                    <DTWaterLevel {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Electric Conductivity</p>
                   <div style={{ height: "350px" }}>
-                    <DTElecCond />
+                    <DTElecCond {...{ data, frequency }} />
                   </div>
                 </ChartCard>
               </div>
