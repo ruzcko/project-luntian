@@ -8,8 +8,11 @@ import {
   NMTemperature,
   NMWaterLevel,
 } from "./NM";
+import data from "./hydroponics.json";
 
 const NMGraphs: React.FC = () => {
+  const frequency = 1500;
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -51,35 +54,35 @@ const NMGraphs: React.FC = () => {
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">PH Level</p>
                   <div style={{ height: "350px" }}>
-                    <NMPHLevel />
+                    <NMPHLevel {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Ammonia Level</p>
                   <div style={{ height: "350px" }}>
-                    <NMAmmonia />
+                    <NMAmmonia {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Temperature</p>
                   <div style={{ height: "350px" }}>
-                    <NMTemperature />
+                    <NMTemperature {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-8">
                   <p className="text-sm text-center">Water Level</p>
                   <div style={{ height: "400px", width: "100%" }}>
-                    <NMWaterLevel />
+                    <NMWaterLevel {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Electric Conductivity</p>
                   <div style={{ height: "350px" }}>
-                    <NMElecCond />
+                    <NMElecCond {...{ data, frequency }} />
                   </div>
                 </ChartCard>
               </div>
