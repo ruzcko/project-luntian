@@ -2,10 +2,11 @@ import React from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import ChartCard from "../ChartCard";
 import { ACRelHumidity, ACTemperature } from "./AC";
+import data from "./hydroponics.json";
 
-interface ACGraphsProps {}
+const ACGraphs: React.FC = () => {
+  const frequency = 1500;
 
-const ACGraphs: React.FC<ACGraphsProps> = () => {
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -47,14 +48,14 @@ const ACGraphs: React.FC<ACGraphsProps> = () => {
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
                   <p className="text-sm text-center">Temperature</p>
                   <div style={{ height: "350px" }}>
-                    <ACTemperature />
+                    <ACTemperature {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
                   <p className="text-sm text-center">Relative Humidity</p>
                   <div style={{ height: "350px" }}>
-                    <ACRelHumidity />
+                    <ACRelHumidity {...{ data, frequency }} />
                   </div>
                 </ChartCard>
               </div>
