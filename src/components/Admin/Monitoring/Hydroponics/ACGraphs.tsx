@@ -1,7 +1,7 @@
 import React from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import ChartCard from "../ChartCard";
-import { ACRelHumidity, ACTemperature } from "./AC";
+import { ACFanStatus, ACRelHumidity, ACTemperature } from "./AC";
 import data from "./hydroponics.json";
 
 const ACGraphs: React.FC = () => {
@@ -45,14 +45,20 @@ const ACGraphs: React.FC = () => {
                 To turn on/off the exhaust fans and lights
               </p>
               <div className="grid grid-cols-12 gap-6 mt-4">
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                <ChartCard className="col-span-12 p-4 lg:col-span-5 xl:col-span-4">
+                  <div style={{ height: "350px" }}>
+                    <ACFanStatus {...{ data, frequency }} />
+                  </div>
+                </ChartCard>
+
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Temperature</p>
                   <div style={{ height: "350px" }}>
                     <ACTemperature {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
-                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
+                <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Relative Humidity</p>
                   <div style={{ height: "350px" }}>
                     <ACRelHumidity {...{ data, frequency }} />
