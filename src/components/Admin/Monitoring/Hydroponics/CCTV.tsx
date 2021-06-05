@@ -1,11 +1,25 @@
 import { Disclosure, Transition } from "@headlessui/react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChartCard from "../ChartCard";
-import { LightStatus } from "./Chamber";
+import { ChamberMain, ChamberStatic, LightStatus } from "./Chamber";
 import data from "./hydroponics.json";
 
 const CCTV: React.FC = () => {
   const frequency = 1500;
+  const n = useRef(9);
+  const [on, setOn] = useState(false);
+  const [isAuto, setIsAuto] = useState(true);
+  const [isOn, setIsOn] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      n.current = n.current >= 23 ? 0 : n.current + 1;
+      if (data[n.current].cctv_light_status === 1) setOn(true);
+      else setOn(false);
+    }, frequency);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Disclosure defaultOpen>
@@ -47,21 +61,23 @@ const CCTV: React.FC = () => {
               <div className="grid grid-cols-12 gap-6 mt-4">
                 <ChartCard className="col-span-12 p-4 lg:col-span-5 xl:col-span-4">
                   <div style={{ height: "350px" }}>
-                    <LightStatus {...{ data, frequency }} />
+                    <LightStatus
+                      {...{ isAuto, isOn, on, setIsAuto, setIsOn, setOn }}
+                    />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
-                  <p className="text-sm text-center">Temperature</p>
+                  <p className="pb-2 text-sm text-center">Chamber 1</p>
                   <div style={{ height: "350px" }}>
-                    {/* <ACTemperature {...{ data, frequency }} /> */}
+                    <ChamberMain {...{ on, isAuto, isOn }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
-                  <p className="text-sm text-center">Relative Humidity</p>
+                  <p className="pb-2 text-sm text-center">Chamber 2</p>
                   <div style={{ height: "350px" }}>
-                    {/* <ACRelHumidity {...{ data, frequency }} /> */}
+                    <ChamberStatic />
                   </div>
                 </ChartCard>
               </div>

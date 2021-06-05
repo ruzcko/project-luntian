@@ -1,28 +1,22 @@
 import { Switch } from "@headlessui/react";
-import React, { useEffect, useRef, useState } from "react";
-import { HydroponicsData } from "../../../../../luntian-types";
-
+import React from "react";
 interface Props {
-  data: Array<HydroponicsData>;
-  frequency: number;
+  isAuto: boolean;
+  isOn: boolean;
+  on: boolean;
+  setIsAuto: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOn: React.Dispatch<React.SetStateAction<boolean>>;
+  setOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LightStatus: React.FC<Props> = ({ data, frequency }) => {
-  const n = useRef(9);
-  const [on, setOn] = useState(false);
-  const [isAuto, setIsAuto] = useState(true);
-  const [isOn, setIsOn] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      n.current = n.current >= 23 ? 0 : n.current + 1;
-      if (data[n.current].cctv_light_status === 1) setOn(true);
-      else setOn(false);
-    }, frequency);
-
-    return () => clearInterval(interval);
-  }, [data, frequency]);
-
+const LightStatus: React.FC<Props> = ({
+  isAuto,
+  isOn,
+  on,
+  setIsAuto,
+  setIsOn,
+  setOn,
+}) => {
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex justify-between">
