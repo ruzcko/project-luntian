@@ -41,4 +41,5 @@ export {
   googleProvider,
   facebookProvider,
   githubProvider,
+  firebase,
 };

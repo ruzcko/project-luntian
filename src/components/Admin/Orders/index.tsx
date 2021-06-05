@@ -8,7 +8,6 @@ const AdminOrders: React.FC = () => {
   const history = useHistory();
   let { url } = useRouteMatch();
   const { orders } = useContext(AdminContext);
-  console.log({ orders });
 
   return (
     <div>

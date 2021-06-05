@@ -56,8 +56,11 @@ const UserDashboard: React.FC = () => {
         >
           <Switch>
             <Route exact path={path} component={HomeDashboard} />
-            <Route path={`${path}/marketplace`} component={Marketplace} />
-            <Route path={`${path}/product/:id`} component={ProductItem} />
+            <Route exact path={`${path}/marketplace`} component={Marketplace} />
+            <Route
+              path={`${path}/marketplace/product/:id`}
+              component={ProductItem}
+            />
             <Route exact path={`${path}/orders`} component={OrderList} />
             <Route path={`${path}/orders/:id`} component={OrderItem} />
             <Route path={`${path}/rate/:id`} />

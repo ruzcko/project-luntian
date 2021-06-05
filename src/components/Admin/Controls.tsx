@@ -61,7 +61,7 @@ const AdminControls: React.FC = () => {
               {user.photoURL ? (
                 <img
                   src={user.photoURL}
-                  alt={user.email}
+                  alt={user.id}
                   className="flex-shrink-0 object-cover w-14 h-14"
                 />
               ) : (

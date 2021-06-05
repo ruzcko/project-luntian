@@ -1,7 +1,9 @@
 import React from "react";
+import { useParams } from "react-router";
 
 const OrderItem: React.FC = () => {
-  return <div>Order X</div>;
+  const { id } = useParams<{ id: string }>();
+  return <div>Order {id}</div>;
 };
 
 export default OrderItem;

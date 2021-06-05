@@ -54,6 +54,7 @@ const HomeDashboard: React.FC = () => {
       link: `/home/profile/${userData.id}`,
       icon: profileIcon,
     },
+    { title: "My Orders", link: "/home/orders", icon: order1Icon },
     { title: "Marketplace", link: "/home/marketplace", icon: marketplaceIcon },
   ];
 
