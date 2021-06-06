@@ -35,11 +35,13 @@ const FeedAmount: React.FC<Props> = ({ data, frequency }) => {
       let _time = ref.current?.data.labels as Array<string>;
       n.current = n.current >= 23 ? 0 : n.current + 1;
 
+      console.log(data[n.current]);
+
       _time?.splice(0, 1);
-      _time?.push(formatDate(new Date(data[n.current].unix_time * 1000)));
+      _time?.push(formatDate(new Date(data[n.current]?.unix_time * 1000)));
 
       _data?.splice(0, 1);
-      _data?.push(data[n.current].pond_feed_amount);
+      _data?.push(data[n.current]?.pond_feed_amount);
 
       ref.current?.update();
     }, frequency);

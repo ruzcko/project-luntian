@@ -37,10 +37,10 @@ const PondDissolved: React.FC<Props> = ({ data, frequency }) => {
       n.current = n.current >= 23 ? 0 : n.current + 1;
 
       _time?.splice(0, 1);
-      _time?.push(formatDate(new Date(data[n.current].unix_time * 1000)));
+      _time?.push(formatDate(new Date(data[n.current]?.unix_time * 1000)));
 
       _data?.splice(0, 1);
-      _data?.push(data[n.current].pond_dissolved_oxygen);
+      _data?.push(data[n.current]?.pond_dissolved_oxygen);
 
       ref.current?.update();
     }, frequency);

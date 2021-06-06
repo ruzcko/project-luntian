@@ -1,9 +1,14 @@
 import React from "react";
+import Battery from "../../components/Admin/Monitoring/Energy/Battery";
+import Solar from "../../components/Admin/Monitoring/Energy/Solar";
 
-interface EnergyProps {}
-
-const Energy: React.FC<EnergyProps> = () => {
-  return <div>Energy</div>;
+const Energy: React.FC = () => {
+  return (
+    <div className="w-full">
+      <Battery />
+      <Solar />
+    </div>
+  );
 };
 
 export default Energy;

@@ -102,3 +102,15 @@ interface AquacultureData {
   pond_turbidity_voltage: number;
   pond_water_temperature: number;
 }
+
+interface EnergyData {
+  unix_time: number;
+  battery_temperature: number;
+  battery_charge: number;
+  battery_discharge: number;
+  battery_health: string;
+  solar_temperature: number;
+  solar_power: number;
+  solar_voltage: number;
+  solar_current: number;
+}

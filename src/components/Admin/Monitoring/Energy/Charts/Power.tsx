@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
-import { AquacultureData } from "../../../../../luntian-types";
+import { EnergyData } from "../../../../../luntian-types";
 import { formatDate } from "../../../../../utils/helpers";
 
 const options: ChartOptions = {
@@ -10,24 +10,24 @@ const options: ChartOptions = {
     y: {
       ticks: {
         callback: function (value) {
-          return value + "%";
+          return value + "W";
         },
       },
       min: 0,
-      max: 100,
+      max: 300,
     },
   },
   maintainAspectRatio: false,
 };
 
 interface Props {
-  data: Array<AquacultureData>;
+  data: Array<EnergyData>;
   frequency: number;
 }
 
-const FeedLevel: React.FC<Props> = ({ data, frequency }) => {
+const SolarPower: React.FC<Props> = ({ data, frequency }) => {
   const n = useRef(9);
-  const toShow: Array<AquacultureData> = data.slice(0, 10);
+  const toShow: Array<EnergyData> = data.slice(0, 10);
   const ref = useRef<any>(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const FeedLevel: React.FC<Props> = ({ data, frequency }) => {
       _time?.push(formatDate(new Date(data[n.current]?.unix_time * 1000)));
 
       _data?.splice(0, 1);
-      _data?.push(data[n.current]?.pond_feed_level);
+      _data?.push(data[n.current]?.solar_power);
 
       ref.current?.update();
     }, frequency);
@@ -49,16 +49,16 @@ const FeedLevel: React.FC<Props> = ({ data, frequency }) => {
   }, [data, frequency]);
 
   return (
-    <Bar
-      type="bar"
+    <Line
+      type="line"
       ref={ref}
       data={{
         labels: toShow?.map((el) => formatDate(new Date(el.unix_time * 1000))),
         datasets: [
           {
-            type: "bar",
-            label: `Pond Feed Level (%)`,
-            data: toShow?.map((el) => el.pond_feed_level),
+            type: "line",
+            label: `Solar Power (Watts)`,
+            data: toShow?.map((el) => el.solar_power),
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,
@@ -70,4 +70,4 @@ const FeedLevel: React.FC<Props> = ({ data, frequency }) => {
   );
 };
 
-export default FeedLevel;
+export default SolarPower;

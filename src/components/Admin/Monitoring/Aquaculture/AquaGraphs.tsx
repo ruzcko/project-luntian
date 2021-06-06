@@ -12,7 +12,6 @@ import {
   PondTurbidity,
   PondWaterTemp,
 } from "./Graphs";
-
 import data from "./aquaculture.json";
 
 const AquaGraphs: React.FC = () => {

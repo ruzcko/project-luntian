@@ -37,10 +37,10 @@ const PondWaterTemp: React.FC<Props> = ({ data, frequency }) => {
       n.current = n.current >= 23 ? 0 : n.current + 1;
 
       _time?.splice(0, 1);
-      _time?.push(formatDate(new Date(data[n.current].unix_time * 1000)));
+      _time?.push(formatDate(new Date(data[n.current]?.unix_time * 1000)));
 
       _data?.splice(0, 1);
-      _data?.push(data[n.current].pond_water_temperature);
+      _data?.push(data[n.current]?.pond_water_temperature);
 
       ref.current?.update();
     }, frequency);
