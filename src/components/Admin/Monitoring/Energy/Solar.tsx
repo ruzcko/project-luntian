@@ -9,6 +9,7 @@ import data from "./energy.json";
 
 const Solar: React.FC = () => {
   const frequency = 1500;
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
