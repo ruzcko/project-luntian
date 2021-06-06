@@ -9,7 +9,7 @@ export { default as hyrdroponicsIcon } from "./hydroponics.svg";
 export { default as inventoryIcon } from "./inventory.svg";
 export { default as marketplaceIcon } from "./marketplace.svg";
 export { default as order1Icon } from "./orders_1.svg";
-export { default as orer2Icon } from "./orders_2.svg";
+export { default as order2Icon } from "./orders_2.svg";
 export { default as profileIcon } from "./profile.svg";
 export { default as projection1Icon } from "./projections_1.svg";
 export { default as projection2Icon } from "./projections_2.svg";

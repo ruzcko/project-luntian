@@ -38,8 +38,8 @@ const AdminOrders: React.FC = () => {
         className="flex flex-col mt-8 space-y-2"
       >
         {orders.map((order, idx) => (
-          <motion.div variants={fadeInUp}>
-            <Link key={order.id} to={`${url}/${order.id}`}>
+          <motion.div key={order.id} variants={fadeInUp}>
+            <Link to={`${url}/${order.id}`}>
               <div className="flex flex-row items-center justify-between px-4 py-2 bg-white shadow">
                 <p>
                   {`${idx + 1}. `}

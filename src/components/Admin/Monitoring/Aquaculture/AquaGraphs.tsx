@@ -13,9 +13,11 @@ import {
   PondWaterTemp,
 } from "./Graphs";
 
-interface AquaGraphsProps {}
+import data from "./aquaculture.json";
 
-const AquaGraphs: React.FC<AquaGraphsProps> = () => {
+const AquaGraphs: React.FC = () => {
+  const frequency = 1500;
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
@@ -58,21 +60,21 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Water Temperature</p>
                   <div style={{ height: "300px" }}>
-                    <PondWaterTemp />
+                    <PondWaterTemp {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Ammonia Level</p>
                   <div style={{ height: "300px" }}>
-                    <PondAmmonia />
+                    <PondAmmonia {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-3">
                   <p className="text-sm text-center">Pond Dissolved Oxygen</p>
                   <div style={{ height: "300px" }}>
-                    <PondDissolved />
+                    <PondDissolved {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
@@ -82,7 +84,7 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                     Pond Electric Conductivity
                   </p>
                   <div style={{ height: "300px" }}>
-                    <PondElecCond />
+                    <PondElecCond {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
@@ -91,7 +93,7 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                     Pond Total Dissolved Solids
                   </p>
                   <div style={{ height: "300px" }}>
-                    <PondTotalSolids />
+                    <PondTotalSolids {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
@@ -99,28 +101,28 @@ const AquaGraphs: React.FC<AquaGraphsProps> = () => {
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Pond Turbidity Voltage</p>
                   <div style={{ height: "300px" }}>
-                    <PondTurbidity />
+                    <PondTurbidity {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-4">
                   <p className="text-sm text-center">Pond pH Level</p>
                   <div style={{ height: "300px" }}>
-                    <PondPHLevel />
+                    <PondPHLevel {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
                   <p className="text-sm text-center">Pond pH Level</p>
                   <div style={{ height: "300px" }}>
-                    <PondNitrate />
+                    <PondNitrate {...{ data, frequency }} />
                   </div>
                 </ChartCard>
 
                 <ChartCard className="col-span-12 p-4 lg:col-span-6 xl:col-span-6">
                   <p className="text-sm text-center">Pond pH Level</p>
                   <div style={{ height: "300px" }}>
-                    <PondNitrite />
+                    <PondNitrite {...{ data, frequency }} />
                   </div>
                 </ChartCard>
               </div>

@@ -38,8 +38,6 @@ const FishData: React.FC<{ index: number }> = ({ index }) => {
   const [data, setData] = useState<Array<PDoutput>>();
   const ref = useRef<any>(null);
 
-  console.log({ data });
-
   useEffect(() => {
     csv("/data/aquaculture/fish_growth_parameters.csv", (_): PDoutput => {
       const d = _ as PDinput;

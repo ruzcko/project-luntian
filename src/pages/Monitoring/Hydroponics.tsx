@@ -9,9 +9,9 @@ const Hydroponics: React.FC = () => {
   return (
     <div className="w-full">
       <CCTV />
+      <ACGraphs />
       <LPGraphs />
       <DTGraphs />
-      <ACGraphs />
       <NMGraphs />
     </div>
   );

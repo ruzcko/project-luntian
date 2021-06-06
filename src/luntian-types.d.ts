@@ -1,4 +1,8 @@
 import firebase from "firebase";
+declare module "*.mp4" {
+  const src: string;
+  export default src;
+}
 
 export type Privilege = "USER" | "FARMER" | "ADMIN";
 
@@ -82,4 +86,19 @@ interface HydroponicsData {
   nm_ph_level: number;
   nm_temperature: number;
   nm_water_level: number;
+}
+
+interface AquacultureData {
+  unix_time: number;
+  pond_ammonia_level: number;
+  pond_dissolved_oxygen: number;
+  pond_electric_conductivity: number;
+  pond_feed_amount: number;
+  pond_feed_level: number;
+  pond_nitrate: number;
+  pond_nitrite: number;
+  pond_ph_level: number;
+  pond_total_dissolved_solids: number;
+  pond_turbidity_voltage: number;
+  pond_water_temperature: number;
 }

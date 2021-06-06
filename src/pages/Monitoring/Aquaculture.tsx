@@ -2,17 +2,13 @@ import React from "react";
 import AquaGraphs from "../../components/Admin/Monitoring/Aquaculture/AquaGraphs";
 import PondFeed from "../../components/Admin/Monitoring/Aquaculture/PondFeed";
 import FishGrowth from "../../components/Admin/Monitoring/Aquaculture/FishGrowth";
-import FishVideo from "../../components/Admin/Monitoring/Aquaculture/FishVideo";
 
-interface AquacultureProps {}
-
-const Aquaculture: React.FC<AquacultureProps> = () => {
+const Aquaculture: React.FC = () => {
   return (
     <div className="w-full">
-      <FishVideo />
+      <PondFeed />
       <FishGrowth />
       <AquaGraphs />
-      <PondFeed />
     </div>
   );
 };

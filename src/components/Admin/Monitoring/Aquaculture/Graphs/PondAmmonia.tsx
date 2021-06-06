@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
-import { csv } from "d3-fetch";
+import { AquacultureData } from "../../../../../luntian-types";
+import { formatDate } from "../../../../../utils/helpers";
 
 const options: ChartOptions = {
   animation: { duration: 300 },
@@ -19,71 +20,45 @@ const options: ChartOptions = {
   maintainAspectRatio: false,
 };
 
-type PDinput = {
-  unix_time: string;
-  ammonia_level: string;
-};
+interface Props {
+  data: Array<AquacultureData>;
+  frequency: number;
+}
 
-type PDoutput = {
-  date: Date;
-  ammonia_level: number;
-};
-
-const formatDate = (n: Date) => {
-  return `${n.getMinutes()}:${n.getSeconds()}`;
-};
-
-const PondAmmonia: React.FC = () => {
-  const [data, setData] = useState<Array<PDoutput>>();
-  const bars = 10;
-  const frequency = 1500;
+const PondAmmonia: React.FC<Props> = ({ data, frequency }) => {
+  const n = useRef(9);
+  const toShow: Array<AquacultureData> = data.slice(0, 10);
   const ref = useRef<any>(null);
 
   useEffect(() => {
-    csv("/data/aquaculture/pond_ammonia_level.csv", (_): PDoutput => {
-      const d = _ as PDinput;
-      return {
-        date: new Date(+d.unix_time * 1000),
-        ammonia_level: +d.ammonia_level,
-      };
-    }).then((data) => {
-      setData(() => {
-        data.splice(0, data.length - bars - 1);
-        return data;
-      });
-    });
-  }, [bars]);
-
-  useEffect(() => {
     const interval = setInterval(() => {
-      let bar = ref.current?.data.datasets[0].data as Array<number>;
-      let labels = ref.current?.data.labels as Array<string>;
+      let _data = ref.current?.data.datasets[0].data as Array<number>;
+      let _time = ref.current?.data.labels as Array<string>;
+      n.current = n.current >= 23 ? 0 : n.current + 1;
 
-      const n = bar.length;
+      _time?.splice(0, 1);
+      _time?.push(formatDate(new Date(data[n.current].unix_time * 1000)));
 
-      bar?.splice(0, n - bars);
-      bar?.push(Math.floor(Math.random() * 8));
-
-      labels?.splice(0, n - bars);
-      labels?.push(formatDate(new Date()));
+      _data?.splice(0, 1);
+      _data?.push(data[n.current].pond_ammonia_level);
 
       ref.current?.update();
     }, frequency);
 
     return () => clearInterval(interval);
-  }, [bars, frequency]);
+  }, [data, frequency]);
 
   return (
     <Line
       type="line"
       ref={ref}
       data={{
-        labels: data?.map((el) => formatDate(el.date)),
+        labels: toShow?.map((el) => formatDate(new Date(el.unix_time * 1000))),
         datasets: [
           {
             type: "line",
             label: `Ammonia Level (mg/L)`,
-            data: data?.map((el) => el.ammonia_level),
+            data: toShow?.map((el) => el.pond_ammonia_level),
             backgroundColor: "#1D4ED84D",
             borderColor: "#1D4ED880",
             borderWidth: 1,

@@ -8,6 +8,7 @@ import {
   marketplaceIcon,
   monitoringIcon,
   order1Icon,
+  order2Icon,
   profileIcon,
   projection1Icon,
 } from "../../assets/Dashboard";
@@ -54,7 +55,7 @@ const HomeDashboard: React.FC = () => {
       link: `/home/profile/${userData.id}`,
       icon: profileIcon,
     },
-    { title: "My Orders", link: "/home/orders", icon: order1Icon },
+    { title: "My Orders", link: "/home/orders", icon: order2Icon },
     { title: "Marketplace", link: "/home/marketplace", icon: marketplaceIcon },
   ];
 

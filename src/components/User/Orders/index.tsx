@@ -68,7 +68,7 @@ const UserOrders: React.FC = () => {
           className="flex flex-col mt-8 space-y-2"
         >
           {orders.map((order, idx) => (
-            <motion.div variants={fadeInUp}>
+            <motion.div key={order.id} variants={fadeInUp}>
               <Link key={order.id} to={`${url}/${order.id}`}>
                 <div className="flex flex-row items-center justify-between px-4 py-2 bg-white shadow">
                   <p>

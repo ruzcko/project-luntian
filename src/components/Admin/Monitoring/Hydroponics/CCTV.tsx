@@ -14,6 +14,7 @@ const CCTV: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       n.current = n.current >= 23 ? 0 : n.current + 1;
+      console.log(data[n.current]);
       if (data[n.current].cctv_light_status === 1) setOn(true);
       else setOn(false);
     }, frequency);
