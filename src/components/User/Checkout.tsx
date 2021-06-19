@@ -42,14 +42,8 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const getDeliveryAddress = () => {
-    const {
-      houseNumber,
-      barangay,
-      city,
-      province,
-      region,
-      zipCode,
-    } = userData as User;
+    const { houseNumber, barangay, city, province, region, zipCode } =
+      userData as User;
     return `${houseNumber} ${barangay}, ${city}, ${province}, ${region}, ${zipCode}`;
   };
 
@@ -101,16 +95,12 @@ const Checkout: React.FC<CheckoutProps> = ({
     accountNumber: string;
   }> = [
     {
-      name: "GCash-e-Wallet",
-      accountNumber: "823794012897",
+      name: "COD (Cash on Delivery)",
+      accountNumber: "",
     },
     {
-      name: "Credit/Debit Card",
-      accountNumber: "26378041095",
-    },
-    {
-      name: "PayMaya-e-Wallet",
-      accountNumber: "028361723892",
+      name: "Online Payment",
+      accountNumber: "",
     },
   ];
 
@@ -123,6 +113,7 @@ const Checkout: React.FC<CheckoutProps> = ({
   };
 
   const getShipping = () => {
+    // return Math.floor(Math.random() * 10 + 45);
     return 45;
   };
 
@@ -200,75 +191,80 @@ const Checkout: React.FC<CheckoutProps> = ({
       ))}
 
       {/* ADDRESS */}
-      <h1 className="mt-6 text-lg font-bold">Delivery Address</h1>
-      <div className="flex flex-col w-full p-4 mt-4 bg-white border border-green-500 rounded-md">
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold">{getFullName()}</h1>
-          <p className="text-gray-500">{userData.phoneNumber}</p>
+      <div className="w-full p-4 mt-6 bg-white rounded shadow">
+        <h1 className="text-lg font-bold">Delivery Address</h1>
+        <div className="flex flex-col w-full p-4 mt-4 bg-white border-2 border-green-500 rounded-md">
+          <div className="flex items-center justify-between">
+            <h1 className="text-lg font-semibold">{getFullName()}</h1>
+            <p className="text-gray-500">{userData.phoneNumber}</p>
+          </div>
+          <p>{getDeliveryAddress()}</p>
         </div>
-        <p>{getDeliveryAddress()}</p>
       </div>
 
       {/* DELIVERY OPTIONS */}
-      <h1 className="mt-6 text-lg font-bold">Select Courier</h1>
-      <div className="flex flex-row w-full overflow-x-scroll">
-        {deliveryOptions.map((option, i) => (
-          <div
-            key={option.name}
-            onClick={() => setSelectedDelivery(i)}
-            className={`flex cursor-pointer flex-col flex-shrink-0 bg-white p-4 mt-4 border ${
-              selectedDelivery === i ? "border-green-500" : "border-gray-300"
-            } rounded-md w-96 ${i !== 0 && "ml-4"}`}
-          >
-            <div className="flex items-center justify-between">
-              <h1 className="text-lg font-semibold">{option.name}</h1>
-              <p className="text-gray-500">₱{getShipping().toFixed(2)}</p>
+      <div className="w-full p-4 mt-6 bg-white rounded shadow">
+        <h1 className="text-lg font-bold">Select Courier</h1>
+        <div className="flex flex-row w-full pb-4 overflow-x-scroll">
+          {deliveryOptions.map((option, i) => (
+            <div
+              key={option.name}
+              onClick={() => setSelectedDelivery(i)}
+              className={`flex cursor-pointer flex-col flex-shrink-0 p-4 mt-4 border-2 ${
+                selectedDelivery === i ? "border-green-500" : "border-gray-300"
+              } rounded-md w-64 ${i !== 0 && "ml-4"}`}
+            >
+              <div className="flex items-center justify-between">
+                <h1 className="text-lg font-semibold">{option.name}</h1>
+                <p className="text-gray-500">₱{getShipping().toFixed(2)}</p>
+              </div>
+              <p>Est. Arrival: {option.eta}</p>
             </div>
-            <p>Est. Arrival: {option.eta}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* PAYMENT METHOD */}
-      <div className="flex flex-row items-center justify-between w-full mt-6">
+      <div className="w-full p-4 mt-6 bg-white rounded shadow">
         <h1 className="text-lg font-bold">Select Payment Method</h1>
-        <p className="text-gray-500">View all methods {">"}</p>
-      </div>
-      <div className="flex flex-row w-full overflow-x-scroll">
-        {paymentOptions.map((option, i) => (
-          <div
-            key={option.name}
-            onClick={() => setSelectedPayment(i)}
-            className={`flex cursor-pointer flex-col bg-white flex-shrink-0 p-4 mt-4 border ${
-              selectedPayment === i ? "border-green-500" : "border-gray-300"
-            } rounded-md w-96 ${i !== 0 && "ml-4"}`}
-          >
-            <h1>{option.accountNumber}</h1>
-            <p>{option.name}</p>
-          </div>
-        ))}
+        <div className="flex flex-row w-full pb-4 overflow-x-scroll">
+          {paymentOptions.map((option, i) => (
+            <div
+              key={option.name}
+              onClick={() => setSelectedPayment(i)}
+              className={`flex cursor-pointer flex-col flex-shrink-0 p-4 mt-4 border-2 ${
+                selectedPayment === i ? "border-green-500" : "border-gray-300"
+              } rounded-md w-64 ${i !== 0 && "ml-4"}`}
+            >
+              <p>{option.name}</p>
+              {/* <h1>{option.accountNumber}</h1> */}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* OVERVIEW */}
       <div className="flex w-full h-px mt-8 bg-gray-300"></div>
 
-      <div className="flex items-center justify-between w-full mt-8">
-        <h1 className="font-semibold">
-          Merchandise Subtotal ({selectedProducts.length} Item/s)
-        </h1>
-        <p className="text-lg font-bold">₱{getTotal().toFixed(2)}</p>
-      </div>
+      <div className="w-full p-4 mt-8 bg-white rounded shadow">
+        <div className="flex items-center justify-between w-full">
+          <h1 className="font-semibold">
+            Merchandise Subtotal ({selectedProducts.length} Item/s)
+          </h1>
+          <p className="text-lg font-bold">₱{getTotal().toFixed(2)}</p>
+        </div>
 
-      <div className="flex items-center justify-between w-full mt-4">
-        <h1>Shipping Fee</h1>
-        <p className="text-lg font-bold">₱{getShipping().toFixed(2)}</p>
-      </div>
+        <div className="flex items-center justify-between w-full mt-4">
+          <h1>Shipping Fee</h1>
+          <p className="text-lg font-bold">₱{getShipping().toFixed(2)}</p>
+        </div>
 
-      <div className="flex items-center justify-between w-full mt-4">
-        <h1 className="text-lg font-bold">Order Amount</h1>
-        <p className="text-lg font-bold">
-          ₱{(getShipping() + getTotal()).toFixed(2)}
-        </p>
+        <div className="flex items-center justify-between w-full mt-4">
+          <h1 className="text-lg font-bold">Order Amount</h1>
+          <p className="text-lg font-bold">
+            ₱{(getShipping() + getTotal()).toFixed(2)}
+          </p>
+        </div>
       </div>
 
       {/* FIXED BOTTOM */}

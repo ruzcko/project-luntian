@@ -27,10 +27,7 @@ export interface Order {
   receiverPhoto: string;
 }
 
-export type PaymentMethod =
-  | "GCash-e-Wallet"
-  | "Credit/Debit Card"
-  | "PayMaya-e-Wallet";
+export type PaymentMethod = "COD (Cash on Delivery)" | "Online Payment";
 
 export interface Product {
   id?: string;

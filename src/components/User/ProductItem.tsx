@@ -69,8 +69,13 @@ const ProductItem: React.FC = () => {
           <div className="flex flex-col flex-1">
             <div className="relative w-full md:flex">
               <button
+                disabled={quantity === 0}
                 onClick={addToCart}
-                className="absolute hidden px-4 py-2 text-gray-100 bg-green-500 md:block bottom-4 right-4 active:bg-gray-600 focus:outline-none"
+                className={`absolute hidden px-4 py-2 text-gray-100 md:block bottom-4 right-4 focus:outline-none bg-green-500 ${
+                  quantity === 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : "opacity-100 active:bg-green-600"
+                }`}
               >
                 Add to Cart
               </button>
@@ -238,8 +243,15 @@ const ProductItem: React.FC = () => {
             </div>
             <div className="flex-1">
               <button
+                disabled={quantity === 0}
                 onClick={addToCart}
-                className="w-full py-4 bg-green-500 active:bg-gray-600 focus:outline-none"
+                className={`w-full py-4 bg-green-500 focus:outline-none 
+                  ${
+                    quantity === 0
+                      ? "opacity-50 cursor-not-allowed"
+                      : "opacity-100 active:bg-gray-600 "
+                  }
+                `}
               >
                 Add to Cart
               </button>
